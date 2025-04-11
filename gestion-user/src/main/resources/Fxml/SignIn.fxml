@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="879.0" prefWidth="1555.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.SignInController">
+   <children>
+      <ImageView fitHeight="879.0" fitWidth="1555.0" layoutX="19.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="name_signIn_field" layoutX="885.0" layoutY="263.0" prefHeight="25.0" prefWidth="209.0" />
+      <TextField fx:id="email_signIn_field" layoutX="887.0" layoutY="373.0" prefHeight="25.0" prefWidth="209.0" />
+      <TextField fx:id="password_signIn_field" layoutX="1168.0" layoutY="374.0" prefHeight="25.0" prefWidth="209.0" />
+      <TextField fx:id="phoneNumber_signIn_field" layoutX="887.0" layoutY="603.0" prefHeight="25.0" prefWidth="209.0" />
+      <TextField fx:id="lastName_signIn_field" layoutX="1168.0" layoutY="264.0" prefHeight="25.0" prefWidth="209.0" />
+      <TextField fx:id="cin_signIn_field" layoutX="887.0" layoutY="483.0" prefHeight="25.0" prefWidth="209.0" />
+      <TextField fx:id="adress_signIn_field" layoutX="1168.0" layoutY="484.0" prefHeight="25.0" prefWidth="209.0" />
+      <Text fx:id="email_error_txt" layoutX="935.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="phoneNumber_error_txt" layoutX="888.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="name_error_txt" layoutX="944.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lastName_error_txt" layoutX="1261.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="password_error_txt" layoutX="1239.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="cin_error_txt" layoutX="898.0" layoutY="538.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <SplitMenuButton fx:id="splitmenu_signin_fld" layoutX="1218.0" layoutY="603.0" mnemonicParsing="false" text="SplitMenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="enseignant" />
+          <MenuItem mnemonicParsing="false" text="artiste" />
+            <MenuItem mnemonicParsing="false" text="user" />
+        </items>
+      </SplitMenuButton>
+      <Button fx:id="register_signIn_btn" layoutX="1282.0" layoutY="735.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="96.0" text="REGISTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
