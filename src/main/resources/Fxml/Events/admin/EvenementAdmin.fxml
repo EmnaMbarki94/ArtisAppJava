@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="contenuPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.evenement.AdminEvenementController">
+
+    <StackPane fx:id="mainContainer" prefHeight="600" prefWidth="1000" style="-fx-font-family: 'Segoe UI'; -fx-background-color: #f8f8fc;">
+
+        <children>
+            <!-- Sidebar -->
+            <VBox prefWidth="180.0" style="-fx-background-color: #7f56d9; -fx-alignment: center; -fx-spacing: 20; -fx-padding: 20;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <children>
+                    <ImageView fitHeight="80.0" fitWidth="80.0" />
+                    <Text fill="white" text="Admin Panel">
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                    </Text>
+                </children>
+            </VBox>
+
+            <!-- Main Content -->
+            <AnchorPane layoutX="180.0" style="-fx-background-color: #f5f5f5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <!-- Bouton pour afficher les réservations -->
+
+
+                <children>
+                    <!-- Title -->
+                    <Text layoutX="30.0" layoutY="50.0" style="-fx-font-size: 26px; -fx-fill: #4B0082; -fx-font-weight: bold;" text="Liste des Événements" />
+
+                    <!-- Search Field -->
+                    <TextField fx:id="searchField" layoutX="30.0" layoutY="100.0" prefWidth="300.0" promptText="Rechercher..." style="-fx-background-color: #e0e0e0; -fx-border-radius: 20; -fx-padding: 10; -fx-font-size: 16px;" />
+
+                    <!-- ListView -->
+                    <ListView fx:id="listViewEvenements" layoutX="30.0" layoutY="150.0" prefHeight="410.0" prefWidth="903.0" style="-fx-background-color: transparent;" />
+
+                    <!-- Add Event Button -->
+                    <Button fx:id="addEventButton" layoutX="690.0" layoutY="100.0" style="-fx-background-color: #7f56d9; -fx-text-fill: white; -fx-padding: 10 20; -fx-font-size: 14px; -fx-background-radius: 10;" text="➕ Ajouter un événement" />
+                    <Button fx:id="showReservationsButton" layoutX="418.0" layoutY="100.0" style="-fx-background-color: #03A9F4; -fx-text-fill: white; -fx-padding: 10 20; -fx-font-size: 14px; -fx-background-radius: 10;" text="Afficher les réservations" />
+
+                    <!-- Show Grid View Button (Redirection) -->
+
+                </children>
+            </AnchorPane>
+        </children>
+    </StackPane>
+</AnchorPane>

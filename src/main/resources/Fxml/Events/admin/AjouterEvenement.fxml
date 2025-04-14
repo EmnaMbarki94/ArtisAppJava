@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="contenuPane"
+            fx:controller="tn.esprit.controller.evenement.AjouterEvenementController"
+            prefWidth="600" prefHeight="650"
+            style="-fx-background-color: #f5f0ff;">
+
+    <VBox spacing="10" alignment="TOP_CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <Button text="← Retour à la liste" onAction="#handleRetour"
+                style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px;" />
+
+        <Label text="Ajouter un Événement" style="-fx-font-size: 22px; -fx-text-fill:  #4B0082;"/>
+
+        <VBox>
+            <TextField fx:id="nomField" promptText="Nom de l'événement" />
+            <Label fx:id="errorNom" textFill="red" style="-fx-font-size: 11;" />
+        </VBox>
+
+        <VBox>
+            <TextField fx:id="typeField" promptText="Type de l'événement" />
+            <Label fx:id="errorType" textFill="red" style="-fx-font-size: 11;" />
+        </VBox>
+
+        <VBox>
+            <TextArea fx:id="infoField" promptText="Informations" prefRowCount="3"/>
+            <Label fx:id="errorInfo" textFill="red" style="-fx-font-size: 11;" />
+        </VBox>
+
+        <VBox>
+            <DatePicker fx:id="datePicker" />
+            <Label fx:id="errorDate" textFill="red" style="-fx-font-size: 11;" />
+        </VBox>
+
+        <HBox spacing="10">
+            <VBox>
+                <TextField fx:id="prixStandardField" promptText="Prix Standard" />
+                <Label fx:id="errorPrixStandard" textFill="red" style="-fx-font-size: 11;" />
+            </VBox>
+            <VBox>
+                <TextField fx:id="prixVIPField" promptText="Prix VIP" />
+                <Label fx:id="errorPrixVIP" textFill="red" style="-fx-font-size: 11;" />
+            </VBox>
+        </HBox>
+
+        <VBox>
+            <TextField fx:id="nbTicketField" promptText="Nombre de tickets disponibles" />
+            <Label fx:id="errorNbTicket" textFill="red" style="-fx-font-size: 11;" />
+        </VBox>
+
+        <HBox spacing="10">
+            <TextField fx:id="photoField" promptText="Nom ou chemin de l'image" />
+            <Button text="Parcourir" onAction="#handleChooseImage"/>
+        </HBox>
+        <ImageView fx:id="imageView" fitWidth="200" fitHeight="200" preserveRatio="true"/>
+
+        <Button text="Ajouter l'Événement" onAction="#ajouterEvenement"
+                style="-fx-background-color: #8A2BE2; -fx-text-fill: white; -fx-font-weight: bold;" />
+    </VBox>
+</AnchorPane>

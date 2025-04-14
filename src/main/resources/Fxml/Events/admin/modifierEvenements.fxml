@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="contenuPane" prefHeight="600" prefWidth="600" style="-fx-background-color: #f5f0ff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="tn.esprit.controller.evenement.modifierEvenementController">
+
+    <VBox layoutX="14.0" layoutY="17.0" prefHeight="702.0" prefWidth="550.0" spacing="10" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="17.0">
+
+        <!-- Bouton retour -->
+        <HBox alignment="CENTER_LEFT">
+            <Button onAction="#handleRetour" style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px; -fx-cursor: hand;" text="← Retour à la liste" />
+        </HBox>
+
+        <!-- Titre -->
+        <Label style="-fx-font-size: 20px; -fx-text-fill: #4B0082;" text="✏️ Modifier un événement" />
+
+        <!-- Nom -->
+        <Label text="Nom de l'événement" style="-fx-font-weight: bold;" />
+        <TextField fx:id="nomField" promptText="Nom de l'événement" />
+        <Label fx:id="nomErrorLabel" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+        <!-- Type -->
+        <Label text="Type d'événement" style="-fx-font-weight: bold;" />
+        <TextField fx:id="typeField" promptText="Type" />
+        <Label fx:id="typeErrorLabel" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+        <!-- Informations -->
+        <Label text="Informations sur l'événement" style="-fx-font-weight: bold;" />
+        <TextField fx:id="infoField" promptText="Informations" />
+        <Label fx:id="infoErrorLabel" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+        <!-- Date -->
+        <Label text="Date de l'événement" style="-fx-font-weight: bold;" />
+        <DatePicker fx:id="datePicker" promptText="Date" />
+        <Label fx:id="dateErrorLabel" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+        <!-- Nombre de tickets -->
+        <Label text="Nombre de tickets disponibles" style="-fx-font-weight: bold;" />
+        <TextField fx:id="nbTicketsField" promptText="Nombre de tickets" />
+        <Label fx:id="nbTicketsErrorLabel" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+        <!-- Prix Standard -->
+        <Label text="Prix Standard (DT)" style="-fx-font-weight: bold;" />
+        <TextField fx:id="prixSField" promptText="Prix Standard (DT)" />
+        <Label fx:id="prixSErrorLabel" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+        <!-- Prix VIP -->
+        <Label text="Prix VIP (DT)" style="-fx-font-weight: bold;" />
+        <TextField fx:id="prixVIPField" promptText="Prix VIP (DT)" />
+        <Label fx:id="prixVIPErrorLabel" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+        <!-- Bouton Sauvegarder -->
+        <Button onAction="#handleSave" style="-fx-background-color: #4B0082; -fx-text-fill: white;" text="💾 Sauvegarder les modifications" />
+    </VBox>
+</AnchorPane>

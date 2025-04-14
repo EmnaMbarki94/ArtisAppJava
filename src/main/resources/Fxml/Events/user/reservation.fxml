@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="contenuPane"
+            fx:controller="tn.esprit.controller.reservation.ReservationController"
+            prefWidth="600" prefHeight="600"
+            style="-fx-background-color: #f5f0ff;">
+
+    <VBox spacing="15" alignment="TOP_CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <HBox alignment="CENTER_LEFT">
+            <Button text="← Retour à la liste" onAction="#handleRetour"
+                    style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px; -fx-cursor: hand;" />
+        </HBox>
+
+        <Label text="Réservation pour l'Événement"
+               style="-fx-font-size: 22px; -fx-text-fill: #4B0082;" />
+
+        <!-- Infos de l'événement -->
+        <TextField fx:id="eventNameField" style="-fx-font-size: 16px; -fx-text-fill: #000;" editable="false" />
+        <TextField fx:id="eventDateField" style="-fx-font-size: 14px; -fx-text-fill: #555;" editable="false" />
+
+        <!-- Nombre de places -->
+        <VBox>
+            <TextField fx:id="nbPlaceField" promptText="Nombre de places" />
+            <Label fx:id="errorNbPlace" textFill="red" style="-fx-font-size: 11;" />
+        </VBox>
+
+        <!-- Libellé -->
+        <VBox>
+            <TextField fx:id="libelleField" promptText="Libellé" />
+            <Label fx:id="errorLibelle" textFill="red" style="-fx-font-size: 11;" />
+        </VBox>
+
+        <!-- État -->
+        <VBox>
+            <ComboBox fx:id="etatComboBox" style="-fx-font-size: 14px; -fx-text-fill: #555;" promptText="Sélectionner l'état" />
+            <Label fx:id="errorEtat" textFill="red" style="-fx-font-size: 11;" />
+        </VBox>
+
+        <Button text="Réserver" onAction="#handleReservation"
+                style="-fx-background-color: #8A2BE2; -fx-text-fill: white; -fx-font-weight: bold;" />
+    </VBox>
+</AnchorPane>

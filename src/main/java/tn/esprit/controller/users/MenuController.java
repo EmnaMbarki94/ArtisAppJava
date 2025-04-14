@@ -29,11 +29,11 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Personne user=Session.getUser();
-        if (user.getRoles().contains("ROLE_ENSEIGNANT")) {
+        /*if (user.getRoles().contains("ROLE_ENSEIGNANT")) {
             artiste_user_btn.setDisable(true);
         }else if(user.getRoles().contains("ROLE_ARTISTE")){
             enseignement_user_btn.setDisable(true);
-        }
+        }*/
 
             addListeners();
     }

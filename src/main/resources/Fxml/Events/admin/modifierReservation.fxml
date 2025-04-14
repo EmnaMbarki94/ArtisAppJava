@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="contenuPane" prefHeight="600" prefWidth="600" style="-fx-background-color: #f5f0ff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="tn.esprit.controller.reservation.ModifierReservationController">
+
+    <VBox layoutX="50" layoutY="42.4" prefHeight="496.0" prefWidth="564.0" spacing="10" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="42.0">
+        <!-- Retour à la liste -->
+        <HBox alignment="CENTER_LEFT">
+            <Button onAction="#handleRetour" style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px; -fx-cursor: hand;" text="← Retour à la liste" />
+        </HBox>
+
+        <!-- Titre -->
+        <Label style="-fx-font-size: 20px; -fx-text-fill: #4B0082;" text="✏️ Modifier une réservation" />
+
+        <!-- Libellé -->
+        <Label text="Libellé de la réservation" style="-fx-font-weight: bold;" />
+        <TextField fx:id="libelleField" promptText="Libellé de la réservation" />
+        <Label fx:id="libelleErrorLabel" style="-fx-font-size: 12px;" textFill="red" />
+
+        <!-- État -->
+        <Label text="État de la réservation" style="-fx-font-weight: bold;" />
+        <ComboBox fx:id="etatComboBox" />
+        <Label fx:id="etatErrorLabel" style="-fx-font-size: 12px;" textFill="red" />
+
+        <!-- Nombre de places -->
+        <Label text="Nombre de places" style="-fx-font-weight: bold;" />
+        <TextField fx:id="nbPlaceField" promptText="Nombre de places" />
+        <Label fx:id="nbPlaceErrorLabel" style="-fx-font-size: 12px;" textFill="red" />
+
+        <!-- ID Utilisateur -->
+        <Label text="ID de l'utilisateur" style="-fx-font-weight: bold;" />
+        <TextField fx:id="userIdField" promptText="ID Utilisateur" />
+        <Label fx:id="userIdErrorLabel" style="-fx-font-size: 12px;" textFill="red" />
+
+        <!-- ID Événement -->
+        <Label text="ID de l'événement" style="-fx-font-weight: bold;" />
+        <TextField fx:id="eventIdField" promptText="ID Événement" />
+        <Label fx:id="eventIdErrorLabel" style="-fx-font-size: 12px;" textFill="red" />
+
+        <!-- Nom événement (readonly) -->
+        <Label text="Nom de l'événement" style="-fx-font-weight: bold;" />
+        <TextField fx:id="eventNameField" editable="false" />
+
+        <!-- Bouton Sauvegarder -->
+        <Button onAction="#handleSave" style="-fx-background-color: #4B0082; -fx-text-fill: white;" text="💾 Sauvegarder les modifications" />
+    </VBox>
+
+</AnchorPane>
