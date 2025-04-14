@@ -171,20 +171,6 @@ public class ViewFactory
         return magasinView;
     }
 
-    public AnchorPane getReclamationView()
-    {
-        if(reclamationView == null)
-        {
-            try{
-                reclamationView = new FXMLLoader(getClass().getResource("/Fxml/users/Reclamation.fxml")).load();
-            }catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-
-        }
-        return reclamationView;
-    }
 
     public AnchorPane getEvenementView()
     {
@@ -254,17 +240,47 @@ public class ViewFactory
 
     }
 
-    public AnchorPane getReclamationAdminView()
+    public AnchorPane getReclamationView()
     {
-        if(reclamationAdminView == null)
+        if(reclamationView == null)
         {
             try{
-                reclamationAdminView = new FXMLLoader(getClass().getResource("/Fxml/Admin/ReclamationAdmin.fxml")).load();
+                reclamationView = new FXMLLoader(getClass().getResource("/Fxml/Reclamation/AfficherRecl.fxml")).load();
             }catch(Exception e)
             {
                 e.printStackTrace();
             }
 
+        }
+        return reclamationView;
+    }
+
+    //    public AnchorPane getReclamationView()
+//    {
+//        if(reclamationView == null)
+//        {
+//            try {
+//                reclamationView = new FXMLLoader(getClass().getResource("/Fxml/Reclamation/AfficherRecl.fxml")).load();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                System.err.println("❌ Erreur de chargement de AjouterRec.fxml pour admin.");
+//            }
+//        }
+//        return reclamationView;
+//    }
+    public AnchorPane getReclamationAdminView()
+
+    {
+        if(reclamationAdminView == null)
+        {
+            try {
+                reclamationAdminView = new FXMLLoader(getClass().getResource("/Fxml/Reponse/ListReclamation.fxml")).load();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("❌ Erreur de chargement de AjouterRec.fxml pour admin.");
+            }
         }
         return reclamationAdminView;
     }

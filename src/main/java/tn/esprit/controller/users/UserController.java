@@ -24,7 +24,7 @@ public class UserController implements Initializable{
                 case "Artiste" -> users_parent.setCenter(gui.getInstance().getViewFactory().getArtisteView());
                 case "Magasin" -> users_parent.setCenter(gui.getInstance().getViewFactory().getMagasinView());
                 case "Evenement" -> users_parent.setCenter(gui.getInstance().getViewFactory().getEvenementView());
-                case "reclamation" -> users_parent.setCenter(gui.getInstance().getViewFactory().getReclamationView());
+                case "Reclamation" -> users_parent.setCenter(gui.getInstance().getViewFactory().getReclamationView()); // ICI
                 case "Profile" -> users_parent.setCenter(gui.getInstance().getViewFactory().getProfileView());
 
                 default ->users_parent.setCenter(gui.getInstance().getViewFactory().getDashboardView());
