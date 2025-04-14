@@ -147,7 +147,7 @@ public class ViewFactory
     public AnchorPane getArtisteView(){
         if(artistView == null){
             try{
-                artistView = new FXMLLoader(getClass().getResource("/Fxml/users/Artiste.fxml")).load();
+                artistView = new FXMLLoader(getClass().getResource("/Fxml/Galerie/AfficherGalerie.fxml")).load();
             }catch(Exception e)
             {
                 e.printStackTrace();

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="users_parent" prefHeight="569.0" prefWidth="775.0" stylesheets="@../Styles/global.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.DetailsPieceArt">
+    <children>
+        <Label fx:id="detailsLabel" layoutX="314.0" layoutY="33.0" prefHeight="59.0" prefWidth="146.0" text="Details de la Pièce" />
+        <Label layoutX="47.0" layoutY="147.0" text="Nom:" />
+        <Label layoutX="47.0" layoutY="199.0" text="Description:" />
+        <Label layoutX="40.0" layoutY="251.0" text="Date de création:" />
+        <ImageView fx:id="photoP" fitHeight="174.0" fitWidth="308.0" layoutX="408.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" />
+        <TextField fx:id="nomP" editable="false" layoutX="148.0" layoutY="141.0" />
+        <TextField fx:id="descP" editable="false" layoutX="148.0" layoutY="193.0" />
+        <TextField fx:id="dateP" editable="false" layoutX="148.0" layoutY="245.0" />
+        <Button fx:id="modP" layoutX="88.0" layoutY="347.0" mnemonicParsing="false" onAction="#modifierPiece" text="Modifier votre pièce" />
+
+        <Button fx:id="suppP" layoutX="706.0" layoutY="15.0" mnemonicParsing="false" onAction="#supprimerPiece">
+            <graphic>
+                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/image/photos_galeries/corbeille.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="retour" layoutX="12.0" layoutY="15.0" mnemonicParsing="false" onAction="#retourVersDetailsG" prefHeight="7.0" prefWidth="15.0">
+            <graphic>
+                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/image/photos_galeries/retour.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </children>
+</AnchorPane>

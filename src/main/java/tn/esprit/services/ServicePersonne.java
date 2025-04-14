@@ -114,6 +114,7 @@ public class ServicePersonne implements CRUD<Personne> {
 
     private Personne mapResultSetToPersonne(ResultSet rs) throws SQLException {
         Personne p = new Personne();
+        p.setId(rs.getInt("id"));
         p.setEmail(rs.getString("email"));
         p.setRoles(rs.getString("roles"));
         p.setFirst_Name(rs.getString("first_name"));
@@ -201,6 +202,7 @@ public class ServicePersonne implements CRUD<Personne> {
     }
 
     private void mapResultSetToPersonne(ResultSet rs, Personne p) throws SQLException {
+        p.setId(rs.getInt("id"));
         p.setEmail(rs.getString("email"));
         p.setRoles(rs.getString("roles"));
         p.setLast_Name(rs.getString("last_name"));
