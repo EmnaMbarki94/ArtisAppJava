@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="admin_parent" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.esprit.controller.Admin.AdminController" prefWidth="1200" prefHeight="780">
+
+   <!-- Left Side: Load MenuAdmin.fxml -->
+   <left>
+      <fx:include source="MenuAdmin.fxml" />
+   </left>
+
+   <!-- Center: Load DashboardAdmin.fxml -->
+   <center>
+      <fx:include source="DashboardAdmin.fxml" />
+   </center>
+
+</BorderPane>
