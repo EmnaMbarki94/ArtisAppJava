@@ -190,7 +190,7 @@ public class ViewFactory
     {
         if(evenementView == null)
             try{
-                evenementView = new FXMLLoader(getClass().getResource("/Fxml/users/Evenement.fxml")).load();
+                evenementView = new FXMLLoader(getClass().getResource("/Fxml/Events/user/Evenement.fxml")).load();
             }catch (Exception e )
             {
                 e.printStackTrace();
