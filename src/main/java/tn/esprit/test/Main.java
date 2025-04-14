@@ -8,9 +8,9 @@ import tn.esprit.gui.gui;
 public class Main extends Application {
     @Override
     public void start(Stage stage)   {
-        gui.getInstance().getViewFactory().showAdminWindow();
+        //gui.getInstance().getViewFactory().showAdminWindow();
           //gui.getInstance().getViewFactory().showUsersWindow();
-          //gui.getInstance().getViewFactory().showLoginWindow();
+          gui.getInstance().getViewFactory().showLoginWindow();
 
     }
 }

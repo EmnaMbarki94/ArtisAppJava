@@ -11,6 +11,10 @@ public interface CRUD<T>{
     void ajouter(T t) throws SQLException;
     boolean supprimer(T t) throws SQLException;
     void modifier(T t) throws SQLException;
-    public List<Personne> selectAll() throws SQLException;
+    public List<T> selectAll() throws SQLException;
     //List<T> afficher() throws SQLException;
+
+
+    void supprimer (int id) throws SQLException;
+
 }

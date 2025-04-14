@@ -9,6 +9,6 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="tn.esprit.controller.users.DashboardController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="690.0" prefWidth="1456.0">
 
 </AnchorPane>

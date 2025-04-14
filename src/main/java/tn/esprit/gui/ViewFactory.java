@@ -49,7 +49,7 @@ public class ViewFactory
     public AnchorPane getDashboardView() {
         if (dashboardView == null) {
             try {
-                dashboardView = new FXMLLoader(getClass().getResource("/Fxml/User/Dashboard.fxml")).load();
+                dashboardView = new FXMLLoader(getClass().getResource("/Fxml/users/Dashboard.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
