@@ -7,23 +7,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="569.0" prefWidth="775.0" stylesheets="@../Styles/AjoutGalerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.ModifierPieceArt">
+<AnchorPane prefHeight="690.0" prefWidth="1456.0" stylesheets="@../Styles/AjoutGalerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.ModifierPieceArt">
     <children>
-        <Label fx:id="titreG" layoutX="306.0" layoutY="54.0" text="Modifer votre pièce d'art">
+        <Label fx:id="titreG" layoutX="580.0" layoutY="61.0" text="Modifer votre pièce d'art">
             <font>
                 <Font size="32.0" />
             </font></Label>
-        <Label layoutX="54.0" layoutY="107.0" text="Nom:" />
-        <Label layoutX="55.0" layoutY="209.0" />
-        <Label layoutX="57.0" layoutY="274.0" text="Type:" />
-        <TextField fx:id="nompTF" layoutX="56.0" layoutY="142.0" />
-        <TextField fx:id="descpTF" layoutX="56.0" layoutY="234.0" />
-        <TextField fx:id="datepTF" layoutX="56.0" layoutY="309.0" />
-        <Button layoutX="325.0" layoutY="497.0" mnemonicParsing="false" onAction="#modifierP" prefHeight="40.0" prefWidth="106.0" text="Valider" />
-        <Label layoutX="56.0" layoutY="191.0" text="Description:" />
+        <Label layoutX="276.0" layoutY="154.0" text="Nom:" />
+        <Label layoutX="277.0" layoutY="256.0" />
+        <Label layoutX="279.0" layoutY="321.0" text="Type:" />
+        <TextField fx:id="nompTF" layoutX="278.0" layoutY="189.0" />
+        <TextField fx:id="descpTF" layoutX="278.0" layoutY="281.0" />
+        <TextField fx:id="datepTF" layoutX="278.0" layoutY="356.0" />
+        <Button layoutX="448.0" layoutY="499.0" mnemonicParsing="false" onAction="#modifierP" prefHeight="47.0" prefWidth="142.0" text="Valider" />
+        <Label layoutX="278.0" layoutY="238.0" text="Description:" />
 
         <!-- Ajout de l'ImageView pour afficher l'image -->
-        <ImageView fx:id="imageView" fitHeight="158.0" fitWidth="237.0" layoutX="425.0" layoutY="103.0" />
-        <Button layoutX="464.0" layoutY="265.0" mnemonicParsing="false" onAction="#importerImage" text="Importer une photo..." />
+        <ImageView fx:id="imageView" fitHeight="213.0" fitWidth="395.0" layoutX="710.0" layoutY="168.0" />
+        <Button layoutX="828.0" layoutY="384.0" mnemonicParsing="false" onAction="#importerImage" text="Importer une photo..." />
     </children>
 </AnchorPane>

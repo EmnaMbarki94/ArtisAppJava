@@ -163,9 +163,20 @@ public class ServicePersonne implements CRUD<Personne> {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
                 if(rs.next()) {
-                    Personne user = new Personne();
-                    // ... remplir les champs ...
-                    return user;
+                    Personne p = new Personne();
+                    p.setId(rs.getInt("id"));
+                    p.setEmail(rs.getString("email"));
+                    p.setRoles(rs.getString("roles"));
+                    p.setFirst_Name(rs.getString("first_name"));
+                    p.setLast_Name(rs.getString("last_name"));
+                    p.setPassword(rs.getString("password"));
+                    p.setNum_tel(rs.getString("num_tel"));
+                    p.setCin(rs.getString("cin"));
+                    p.setAddress(rs.getString("address"));
+                    p.setIs_verified(rs.getInt("is_verified"));
+                    p.setSpecialite(rs.getString("specialite"));
+                    p.setPoint(rs.getInt("point"));
+                    return p;
                 }
             }
         } catch(SQLException e) {

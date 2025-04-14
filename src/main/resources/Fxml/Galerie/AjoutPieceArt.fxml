@@ -3,24 +3,24 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.image.Image?>
-<AnchorPane fx:id="users_parent" prefHeight="569.0" prefWidth="775.0" stylesheets="@../Styles/AjoutGalerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.AjoutPieceArt">
+<AnchorPane fx:id="users_parent" prefHeight="690.0" prefWidth="1456.0" stylesheets="@../Styles/AjoutGalerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.AjoutPieceArt">
    <children>
-      <Label fx:id="ajoutPL" layoutX="291.0" layoutY="33.0" prefHeight="31.0" prefWidth="138.0" text="Ajouter une pièce d'art" />
-      <Label fx:id="nomPL" layoutX="52.0" layoutY="71.0" text="Nom:" />
-      <Label fx:id="datePL" layoutX="52.0" layoutY="175.0" text="Date de création:" />
-      <Label fx:id="descPL" layoutX="54.0" layoutY="275.0" text="Description:" />
-      <Button layoutX="439.0" layoutY="265.0" mnemonicParsing="false" onAction="#importerPTF" text="Importer une photo..." />
-      <TextField fx:id="nomPTF" layoutX="52.0" layoutY="99.0" />
-      <TextField fx:id="datePTF" layoutX="52.0" layoutY="200.0" />
-      <TextField fx:id="descPTF" layoutX="52.0" layoutY="308.0" />
-      <ImageView fx:id="photoPTF" fitHeight="146.0" fitWidth="267.0" layoutX="385.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="316.0" layoutY="407.0" mnemonicParsing="false" onAction="#AjouterPiece" prefHeight="38.0" prefWidth="87.0" text="Valider" />
-      <Label fx:id="nompErrorLabel" layoutX="52.0" layoutY="139.0" prefHeight="28.0" prefWidth="267.0" style="-fx-text-fill: red;" visible="false" />
-      <Label fx:id="datepErrorLabel" layoutX="52.0" layoutY="240.0" prefHeight="28.0" prefWidth="267.0" style="-fx-text-fill: red;" visible="false" />
+      <Label fx:id="ajoutPL" layoutX="449.0" layoutY="36.0" prefHeight="31.0" prefWidth="138.0" text="Ajouter une pièce d'art" />
+      <Label fx:id="nomPL" layoutX="221.0" layoutY="117.0" text="Nom:" />
+      <Label fx:id="datePL" layoutX="221.0" layoutY="221.0" text="Date de création:" />
+      <Label fx:id="descPL" layoutX="223.0" layoutY="321.0" text="Description:" />
+      <Button layoutX="765.0" layoutY="329.0" mnemonicParsing="false" onAction="#importerPTF" text="Importer une photo..." />
+      <TextField fx:id="nomPTF" layoutX="221.0" layoutY="145.0" />
+      <TextField fx:id="datePTF" layoutX="221.0" layoutY="246.0" />
+      <TextField fx:id="descPTF" layoutX="221.0" layoutY="354.0" />
+      <ImageView fx:id="photoPTF" fitHeight="206.0" fitWidth="381.0" layoutX="654.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="440.0" layoutY="461.0" mnemonicParsing="false" onAction="#AjouterPiece" prefHeight="48.0" prefWidth="146.0" text="Valider" />
+      <Label fx:id="nompErrorLabel" layoutX="221.0" layoutY="185.0" prefHeight="28.0" prefWidth="267.0" style="-fx-text-fill: red;" visible="false" />
+      <Label fx:id="datepErrorLabel" layoutX="221.0" layoutY="286.0" prefHeight="28.0" prefWidth="267.0" style="-fx-text-fill: red;" visible="false" />
       <Label fx:id="descpErrorLabel" layoutX="52.0" layoutY="351.0" prefHeight="28.0" prefWidth="267.0" style="-fx-text-fill: red;" visible="false" />
       <Button fx:id="retour" layoutX="12.0" layoutY="15.0" mnemonicParsing="false" onAction="#retourVersDetails" prefHeight="7.0" prefWidth="15.0">
          <graphic>
