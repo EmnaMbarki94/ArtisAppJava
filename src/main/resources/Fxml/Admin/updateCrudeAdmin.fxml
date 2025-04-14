@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="UpdateUserAdminCrudWindow" prefHeight="864.0" prefWidth="1458.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.AdminUpdateCrudController">
+   <children>
+      <Text layoutX="79.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tools">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Text>
+      <Button fx:id="addCrud_btn" layoutX="371.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="30.0" prefWidth="130.0" text="add">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Line endX="961.066650390625" endY="7.62939453125E-6" layoutX="204.0" layoutY="88.0" startX="-113.06666564941406" startY="7.62939453125E-6" />
+      <Button fx:id="deleteCrud_btn" layoutX="542.0" layoutY="42.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="delete">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="statsCrud_btn" layoutX="700.0" layoutY="42.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="stats">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="metierCrud_btn" layoutX="860.0" layoutY="42.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="metiers">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Text layoutX="111.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update User" wrappingWidth="160.92657470703125">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Text layoutX="128.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="810.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last Name">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="136.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="1135.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="470.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cin">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="811.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="463.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="name_adminCrud_fld" layoutX="130.0" layoutY="272.0" prefHeight="26.0" prefWidth="211.0" />
+      <TextField fx:id="lastName_adminCrud_fld" layoutX="810.0" layoutY="271.0" prefHeight="26.0" prefWidth="211.0" />
+      <TextField fx:id="email_adminCrud_fldd" layoutX="134.0" layoutY="373.0" prefHeight="26.0" prefWidth="211.0" />
+      <TextField fx:id="password_adminCrud_fld" layoutX="1135.0" layoutY="271.0" prefHeight="26.0" prefWidth="211.0" />
+      <TextField fx:id="cin_adminCrud_fld" layoutX="472.0" layoutY="271.0" prefHeight="26.0" prefWidth="211.0" />
+      <TextField fx:id="phoneNumber_adminCrud_fld" layoutX="811.0" layoutY="371.0" prefHeight="26.0" prefWidth="211.0" />
+      <TextField fx:id="adress_adminCrud_fld" layoutX="471.0" layoutY="371.0" prefHeight="26.0" prefWidth="211.0" />
+      <SplitMenuButton fx:id="splitMenu_adminCrud_fld" layoutX="135.0" layoutY="426.0" mnemonicParsing="false" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="SplitMenuButton">
+         <items>
+            <MenuItem mnemonicParsing="false" text="enseignant" />
+            <MenuItem mnemonicParsing="false" text="artiste" />
+            <MenuItem mnemonicParsing="false" text="user" />
+            <MenuItem mnemonicParsing="false" text="admin" />
+         </items>
+      </SplitMenuButton>
+      <Button fx:id="register_adminCrud_btn" layoutX="1162.0" layoutY="425.0" mnemonicParsing="false" onAction="#onUpdate" prefHeight="34.0" prefWidth="91.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="Update" />
+      <TableView fx:id="user_adminCrud_tableView" layoutX="134.0" layoutY="508.0" prefHeight="296.0" prefWidth="1159.0" />
+      <Text fx:id="name_error_txt" layoutX="147.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="144.60000000000008" />
+      <Text fx:id="lastName_error_txt" layoutX="822.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="97.79999999999995" />
+      <Text fx:id="email_error_txt" layoutX="153.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="144.60000000000008" />
+      <Text fx:id="password_error_txt" layoutX="1171.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="144.60000000000008" />
+      <Text fx:id="phoneNumber_error_txt" layoutX="823.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="165.26654052734375" />
+      <Text fx:id="Adress_error_txt" layoutX="495.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.933349609375" />
+      <Text fx:id="cin_error_txt" layoutX="486.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="173.86663818359375" />
+   </children>
+</AnchorPane>
