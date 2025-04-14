@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="540.0" prefWidth="746.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reponse.AfficherRpController">
+   <children>
+      <AnchorPane layoutY="-2.0" prefHeight="121.0" prefWidth="746.0" style="-fx-background-color: #dbb3f5;">
+         <children>
+            <Label alignment="CENTER" contentDisplay="TOP" layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="358.0" text="Listes Des Reponse">
+               <font>
+                  <Font name="System Bold Italic" size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="116.0" layoutY="146.0" prefHeight="34.0" prefWidth="403.0" text="Les Reponses:">
+         <font>
+            <Font name="System Bold Italic" size="19.0" />
+         </font>
+      </Label>
+      <TableView fx:id="TabelViewRec" layoutX="20.0" layoutY="223.0" prefHeight="254.0" prefWidth="561.0">
+         <columns>
+            <TableColumn fx:id="DescRep" prefWidth="268.0" text="Description" />
+            <TableColumn fx:id="DateRep" prefWidth="126.0" text="Date" />
+            <TableColumn fx:id="ActionRep" prefWidth="163.0" text="Action" />
+         </columns>
+         <effect>
+            <DropShadow />
+         </effect>
+      </TableView>
+   </children>
+</AnchorPane>
