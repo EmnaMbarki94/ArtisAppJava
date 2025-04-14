@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="569.0" prefWidth="775.0" stylesheets="@../Styles/AjoutGalerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.ModifierPieceArt">
+    <children>
+        <Label fx:id="titreG" layoutX="306.0" layoutY="54.0" text="Modifer votre pièce d'art">
+            <font>
+                <Font size="32.0" />
+            </font></Label>
+        <Label layoutX="54.0" layoutY="107.0" text="Nom:" />
+        <Label layoutX="55.0" layoutY="209.0" />
+        <Label layoutX="57.0" layoutY="274.0" text="Type:" />
+        <TextField fx:id="nompTF" layoutX="56.0" layoutY="142.0" />
+        <TextField fx:id="descpTF" layoutX="56.0" layoutY="234.0" />
+        <TextField fx:id="datepTF" layoutX="56.0" layoutY="309.0" />
+        <Button layoutX="325.0" layoutY="497.0" mnemonicParsing="false" onAction="#modifierP" prefHeight="40.0" prefWidth="106.0" text="Valider" />
+        <Label layoutX="56.0" layoutY="191.0" text="Description:" />
+
+        <!-- Ajout de l'ImageView pour afficher l'image -->
+        <ImageView fx:id="imageView" fitHeight="158.0" fitWidth="237.0" layoutX="425.0" layoutY="103.0" />
+        <Button layoutX="464.0" layoutY="265.0" mnemonicParsing="false" onAction="#importerImage" text="Importer une photo..." />
+    </children>
+</AnchorPane>

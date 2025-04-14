@@ -1,0 +1,50 @@
+
+.anchor-pane {
+    -fx-background-color: #7e33bd; /* Couleur de fond */
+    -fx-padding: 20; /* Padding autour du contenu */
+}
+
+/* Style pour les TextField */
+.text-field {
+    -fx-background-color: White; /* Couleur de fond pour les TextFields */
+    -fx-border-color: #ccc; /* Bordure propre */
+    -fx-border-radius: 5; /* Coins arrondis */
+    -fx-padding: 10; /* Padding interne */
+}
+
+/* Style pour les Buttons */
+.button {
+    -fx-background-color: #5d29a8; /* Couleur de fond des boutons */
+    -fx-text-fill: white; /* Couleur du texte des boutons */
+    -fx-font-family: 'Garamond', serif;
+    -fx-font-size: 14; /* Taille de police */
+    -fx-padding: 10 20; /* Padding interne pour les boutons */
+    -fx-border-radius: 5; /* Coins arrondis */
+}
+
+
+.button:hover {
+    -fx-background-color: #4c2190; /* Couleur de fond lors du survol */
+}
+
+/* Style pour les Labels */
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 15;
+    -fx-text-alignment: center;
+    -fx-padding: 5;
+    -fx-font-family: 'Garamond', serif;
+}
+
+.image-view {
+    -fx-border-color: black; /* Couleur de la bordure */
+    -fx-border-width: 2; /* Épaisseur de la bordure */
+    -fx-border-radius: 10; /* Coins arrondis */
+    -fx-background-color: rgba(255, 255, 255, 0.8); /* Fond blanc semi-transparent */
+    -fx-padding: 5; /* Padding interne */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 2); /* Ombre portée pour un effet de profondeur */
+    -fx-opacity: 1; /* Opacité réglable (0 pour transparent, 1 pour opaque) */
+    -fx-pref-width: 150; /* Largeur préférée */
+    -fx-pref-height: 150;
+    -fx-alignment: center;
+}
