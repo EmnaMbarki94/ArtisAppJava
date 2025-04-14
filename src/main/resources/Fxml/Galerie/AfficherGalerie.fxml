@@ -8,10 +8,11 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="users_parent" prefHeight="569.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.AfficherGalerie">
+<AnchorPane fx:id="users_parent" prefHeight="690.0" prefWidth="1456.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.AfficherGalerie">
     <children>
-        <GridPane fx:id="galerieGrid" layoutX="38.0" layoutY="70.0" prefHeight="510.0" prefWidth="698.0">
+        <GridPane fx:id="galerieGrid" layoutX="38.0" layoutY="70.0" prefHeight="606.0" prefWidth="1139.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
@@ -23,9 +24,12 @@
             </rowConstraints>
         </GridPane>
 
-        <Label fx:id="titreLabel" layoutX="287.0" layoutY="6.0" prefHeight="47.0" prefWidth="200.0" style="-fx-font-size: 24px;" text="Galeries" textAlignment="CENTER" />
+        <Label fx:id="titreLabel" layoutX="605.0" layoutY="20.0" prefHeight="62.0" prefWidth="235.0" style="-fx-font-size: 24px;" text="Galeries" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
 
-        <Button fx:id="addG" layoutX="713.0" layoutY="14.0" mnemonicParsing="false" onAction="#addG" prefHeight="37.0" prefWidth="47.0">
+        <Button fx:id="addG" layoutX="1123.0" layoutY="31.0" mnemonicParsing="false" onAction="#addG" prefHeight="37.0" prefWidth="47.0">
             <graphic>
                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                     <image>

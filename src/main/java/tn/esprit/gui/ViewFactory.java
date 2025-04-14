@@ -290,7 +290,7 @@ public class ViewFactory
         if(evenementAdminView == null)
         {
             try{
-                evenementAdminView = new FXMLLoader(getClass().getResource("/Fxml/Admin/EvenementAdmin.fxml")).load();
+                evenementAdminView = new FXMLLoader(getClass().getResource("/Fxml/Events/admin/EvenementAdmin.fxml")).load();
             }catch(Exception e)
             {
                 e.printStackTrace();

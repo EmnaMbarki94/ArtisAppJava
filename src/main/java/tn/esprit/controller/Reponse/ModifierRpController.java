@@ -41,7 +41,7 @@ public class ModifierRpController {
         this.reponse = reponse;
         // Pré-remplir les champs avec les données actuelles
         DescriptionTextFieldRpMf.setText(reponse.getDescr_rep());
-        dateRpMf.setValue(java.time.LocalDate.parse(reponse.getDate_rep()));  // Assurez-vous que la date est bien formatée
+        //dateRpMf.setValue(java.time.LocalDate.parse(reponse.getDate_rep()));  // Assurez-vous que la date est bien formatée
     }
 
     private final List<String> badWords = Arrays.asList("idiot", "nul", "stupide", "bête");

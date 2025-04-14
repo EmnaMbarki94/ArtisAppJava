@@ -271,7 +271,11 @@ public class AdminUpdateCrudController implements Initializable {
             selectedUser.setNum_tel(phoneNumber_adminCrud_fld.getText());
             selectedUser.setAddress(adress_adminCrud_fld.getText());
             selectedUser.setEmail(email_adminCrud_fldd.getText());
-            selectedUser.setRoles(selectedRole);
+            if (selectedSpeciality.equals("SplitMenuButton")){
+
+            }else{
+                selectedUser.setRoles(selectedRole);
+            }
             selectedUser.setSpecialite(selectedSpeciality);
 
             // Si le mot de passe a été modifié

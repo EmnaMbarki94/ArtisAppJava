@@ -97,15 +97,14 @@ public class AfficherRpController {
                         e.printStackTrace();
                     }
                 });
-
-
+                
                 btnSupprimer.setOnAction(event -> {
                     Reponse reponse = getTableView().getItems().get(getIndex());
-                    System.out.println("Supprimer : " + reponse);
 
                     // Appel à la suppression dans le service
                     try {
-                        serviceReponse.supprimer(reponse);
+                        serviceReponse.supprimer1(reponse);
+                        System.out.println("Supprimer : " + reponse+" rp id: "+reponse.getIdreponse());
                         refreshTable();  // Rafraîchit la table après suppression
                     } catch (SQLException e) {
                         e.printStackTrace();
