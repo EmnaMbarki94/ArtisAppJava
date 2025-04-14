@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="805.0" prefWidth="1293.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.esprit.controller.Admin.Magasins.ModifierMagasin"
+            styleClass="root"
+            stylesheets="@../../Styles/magasin.css">
+
+    <children>
+        <VBox alignment="TOP_CENTER" layoutX="240.0" layoutY="97.0"
+              prefHeight="573.0" prefWidth="802.0"
+              spacing="10" styleClass="vbox-form">
+
+            <Label text="Modifier un Magasin" styleClass="label-title"/>
+
+            <TextField fx:id="tfNom" promptText="Nom du magasin" styleClass="text-field-style" />
+            <Label fx:id="lblErrorNom" text="" styleClass="label-error" />
+
+            <TextField fx:id="tfType" promptText="Type de magasin" styleClass="text-field-style" />
+            <Label fx:id="lblErrorType" text="" styleClass="label-error" />
+
+            <HBox spacing="10" alignment="CENTER">
+                <ImageView fx:id="imageViewMagasin" fitWidth="128.0" fitHeight="128.0" styleClass="image-view-style" />
+                <Button text="Choisir une image" onAction="#choisirImage"
+                        prefWidth="181.0" prefHeight="41.0"
+                        styleClass="button-style" />
+            </HBox>
+            <Label fx:id="lblErrorImage" text="" styleClass="label-error" />
+
+            <Button text="Modifier"
+                    fx:id="btnModifier"
+                    onAction="#modifierMagasin"
+                    prefWidth="250"
+                    styleClass="button-style">
+                <font>
+                    <Font name="Arial Nova" size="15.0" />
+                </font>
+            </Button>
+
+            <Button text="Retour"
+                    fx:id="btnRetour"
+                    onAction="#retournerAccueil"
+                    prefWidth="250"
+                    styleClass="button-style">
+                <font>
+                    <Font name="Arial" size="15.0" />
+                </font>
+            </Button>
+
+        </VBox>
+    </children>
+</AnchorPane>

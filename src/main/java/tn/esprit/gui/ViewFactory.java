@@ -245,7 +245,7 @@ public class ViewFactory
     {
         if(magasinAdminView == null)
             try{
-                magasinAdminView = new FXMLLoader(getClass().getResource("/Fxml/Admin/MagasinAdmin.fxml")).load();
+                magasinAdminView = new FXMLLoader(getClass().getResource("/Fxml/Admin/GestionMagasins/MagasinAdmin.fxml")).load();
             }catch (Exception e )
             {
                 e.printStackTrace();
