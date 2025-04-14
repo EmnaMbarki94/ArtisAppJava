@@ -107,6 +107,11 @@ public class ServicePersonne implements CRUD<Personne> {
         return Collections.unmodifiableList(personnes);
     }
 
+    @Override
+    public void supprimer(int id) throws SQLException {
+
+    }
+
     private Personne mapResultSetToPersonne(ResultSet rs) throws SQLException {
         Personne p = new Personne();
         p.setEmail(rs.getString("email"));

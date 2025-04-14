@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchor" prefHeight="662.0" prefWidth="1223.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Cours.CoursDetailsController">
+   <children>
+      <Label fx:id="titreLabel" layoutX="282.0" layoutY="371.0" prefHeight="35.0" prefWidth="465.0" text="Label" underline="true">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
+      <Label fx:id="categorieLabel" layoutX="284.0" layoutY="415.0" text="Label" textFill="#6f6f6f">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <Text fx:id="descriptionText" layoutX="284.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="465.0" />
+      <ImageView fitHeight="310.0" fitWidth="486.0" layoutX="284.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../image/art.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="retour" layoutX="36.0" layoutY="31.0" mnemonicParsing="false" onAction="#retour" text="&lt;--" />
+      <Label fx:id="datec" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="130.0" prefHeight="30.0" prefWidth="173.0" text="Label" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="heurec" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="185.0" prefHeight="30.0" prefWidth="173.0" text="Label" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Separator layoutX="51.0" layoutY="169.0" prefHeight="5.0" prefWidth="180.0" />
+      <Button fx:id="quizButton" layoutX="769.0" layoutY="573.0" mnemonicParsing="false" onAction="#handleQuizStart" prefHeight="35.0" prefWidth="173.0" text="Commencer le Quiz" />
+      <Button fx:id="deleteQuizBtn" layoutX="769.0" layoutY="623.0" onAction="#handleDeleteQuiz" text="Supprimer le quiz de ce cours" />
+      <Button fx:id="addQuizBtn" layoutX="770.0" layoutY="572.0" onAction="#handleAddQuiz" prefHeight="35.0" prefWidth="173.0" text="Ajouter un quiz à ce cours" visible="false" />
+      <Button fx:id="editButton" layoutX="780.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="25.0" prefWidth="58.0" text="edit" />
+      <Button fx:id="deleteButton" layoutX="876.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="25.0" prefWidth="58.0" text="delete" />
+      <Text layoutX="110.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ajouté par : ">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Text fx:id="user_flname" layoutX="51.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="180.0">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+      <Text fx:id="user_email" layoutX="43.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="198.0">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+   </children>
+</AnchorPane>
