@@ -7,41 +7,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import tn.esprit.controller.Reclamation.RecRepController;
 import tn.esprit.entities.Personne;
 import tn.esprit.entities.Reclamtion;
 import tn.esprit.entities.Session;
 import tn.esprit.services.ServiceReclamation;
-import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class AfficherReController {
-    private Personne user= Session.getUser();
+    private final Personne user = Session.getUser();
 
     @FXML
-    private TableColumn<Reclamtion, Void> ActionRec;
-
-    @FXML
-    private Button AjouterBt;
-
-    @FXML
-    private TableColumn<Reclamtion, String> Date;
-
-    @FXML
-    private TableColumn<Reclamtion, String> Desc;
-
-    @FXML
-    private TableView<Reclamtion> TabelViewRec;
-
-    @FXML
-    private TableColumn<Reclamtion, String> Type;
+    private ListView<Reclamtion> listViewRec;
 
     private final ObservableList<Reclamtion> list = FXCollections.observableArrayList();
     private final ServiceReclamation service = new ServiceReclamation();
@@ -49,238 +31,86 @@ public class AfficherReController {
     @FXML
     public void initialize() {
         loadReclamations();
-        Desc.setCellValueFactory(new PropertyValueFactory<>("desc_r"));
-        Date.setCellValueFactory(new PropertyValueFactory<>("date_r"));
-        Type.setCellValueFactory(new PropertyValueFactory<>("type_r"));
-        addActionButtons();
-        TabelViewRec.setItems(list);
-    }
-@FXML
-private void openAjouterRecWindow() {
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/AjouterRec.fxml"));
-        Parent root = loader.load();
-
-        Stage stage = new Stage();
-        stage.setTitle("Ajouter Réclamation");
-        stage.setScene(new Scene(root));
-
-        // Quand la fenêtre se ferme, recharge la table
-        stage.setOnHidden(e -> {
-            list.clear(); // vider l'ancienne liste
-            loadReclamations(); // recharger depuis la BD
-            TabelViewRec.refresh(); // rafraîchir la vue
-        });
-
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-
-
-    private void loadReclamations() {
-        try {
-
-            ResultSet rs = service.selectAll1();
-            while (rs.next()) {
-                int usr=rs.getInt("user_id");
-
-                if(user.getId()==usr){
-                    Personne user=new Personne();
-                    user.setId(usr);
-                    Reclamtion r = new Reclamtion(
-                            rs.getString("desc_r"),
-                            rs.getString("date_r"),
-                            rs.getString("type_r"),
-                            user
-                );
-                r.setId(rs.getInt("id"));
-                list.add(r);}
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void addActionButtons() {
-        ActionRec.setCellFactory(param -> new TableCell<Reclamtion, Void>() {
-            private final Button btnAction = new Button();
-            private final Button btnDelete = new Button("Supprimer");
-            private final Button btnEdit = new Button("Modifier");
-            private final HBox box = new HBox(10, btnEdit, btnDelete);
+        listViewRec.setItems(list);
+        listViewRec.setCellFactory(param -> new ListCell<>() {
+            private final Label description = new Label();
+            private final Label date = new Label();
+            private final Label type = new Label();
+            private final Button btnModifier = new Button("Modifier");
+            private final Button btnSupprimer = new Button("Supprimer");
+            private final Button btnVoir = new Button("Voir");
+            private final HBox buttonBox = new HBox(10, btnModifier, btnSupprimer);
+            private final VBox vbox = new VBox(description, date, type, buttonBox);
 
             {
-                // Action pour le bouton "Voir"
-                btnAction.setOnAction(event -> {
-                    Reclamtion rec = getTableView().getItems().get(getIndex());
-                    if (hasResponse(rec)) {
-                        openRecRepWindow(rec); // Si la réclamation a une réponse, on ouvre RecRep
-                    } else {
-                        openModifierRecWindow(rec); // Sinon, ouvrir la fenêtre de modification
-                    }
-                });
+                vbox.setSpacing(5);
+                vbox.setStyle("-fx-padding: 10; -fx-background-color: #f7f1ff; -fx-background-radius: 10;");
 
-                // Action pour le bouton "Modifier"
-                btnEdit.setOnAction(event -> {
-                    Reclamtion rec = getTableView().getItems().get(getIndex());
+                btnModifier.setOnAction(event -> {
+                    Reclamtion rec = getItem();
                     openModifierRecWindow(rec);
                 });
 
-                // Action pour le bouton "Supprimer"
-                btnDelete.setOnAction(event -> {
-                    Reclamtion rec = getTableView().getItems().get(getIndex());
+                btnSupprimer.setOnAction(event -> {
+                    Reclamtion rec = getItem();
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation de suppression");
                     alert.setHeaderText("Voulez-vous vraiment supprimer cette réclamation ?");
                     alert.setContentText("Cette action est irréversible.");
-
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
                             try {
                                 service.supprimer(rec);
                                 list.remove(rec);
-                                System.out.println("🗑️ Réclamation supprimée !");
                             } catch (SQLException e) {
                                 e.printStackTrace();
-                                System.out.println("❌ Erreur lors de la suppression !");
                             }
                         }
                     });
                 });
+
+                btnVoir.setOnAction(event -> {
+                    Reclamtion rec = getItem();
+                    openRecRepWindow(rec);
+                });
             }
 
             @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (!empty) {
-                    Reclamtion rec = getTableView().getItems().get(getIndex());
-                    if (hasResponse(rec)) {
-                        // Si une réponse est présente, on remplace les boutons Modifier/Supprimer par un bouton "Voir"
-                        btnEdit.setVisible(false);
-                        btnDelete.setVisible(false);
-                        btnAction.setText("Voir");
-                        box.getChildren().setAll(btnAction);
-                    } else {
-                        // Sinon, on affiche les boutons Modifier et Supprimer
-                        btnEdit.setVisible(true);
-                        btnDelete.setVisible(true);
-                        box.getChildren().setAll(btnEdit, btnDelete);
-                    }
-                    setGraphic(box);
-                } else {
+            protected void updateItem(Reclamtion rec, boolean empty) {
+                super.updateItem(rec, empty);
+                if (empty || rec == null) {
                     setGraphic(null);
-                }
-            }
+                } else {
+                    description.setText("📄 Description : " + rec.getDesc_r());
+                    date.setText("📅 Date : " + rec.getDate_r());
+                    type.setText("📂 Type : " + rec.getType_r());
 
-            // Méthode pour vérifier si la réclamation a une réponse
-            private boolean hasResponse(Reclamtion rec) {
-                // Ajoutez ici la logique pour vérifier si la réclamation a une réponse
-                return service.hasResponseForReclamation(rec.getId()); // Cette méthode à ajouter dans votre service
+                    if (service.hasResponseForReclamation(rec.getId())) {
+                        buttonBox.getChildren().setAll(btnVoir);
+                    } else {
+                        buttonBox.getChildren().setAll(btnModifier, btnSupprimer);
+                    }
+
+                    setGraphic(vbox);
+                }
             }
         });
     }
 
-    private void openRecRepWindow(Reclamtion rec) {
+    @FXML
+    private void openAjouterRecWindow() {
         try {
-            // Charger le fichier FXML avec le bon contrôleur
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/RecRep.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/AjouterRec.fxml"));
             Parent root = loader.load();
 
-            // Récupérer le contrôleur de RecRep
-            RecRepController controller = loader.getController();
-
-            // Récupérer la réponse pour la réclamation
-            String reponse = service.getReponseForReclamation(rec.getId());
-
-            // Passer la réclamation et la réponse au contrôleur
-            controller.setReclamationData(rec, reponse);
-
-            // Ouvrir la nouvelle fenêtre
             Stage stage = new Stage();
-            stage.setTitle("Voir Réponse");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
-
-    //    private void openModifierRecWindow(Reclamtion reclamation) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/ModifierRec.fxml"));
-//            Parent root = loader.load();
-//
-//            // Accéder au controller de ModifierRec.fxml
-//            ModifierReController controller = loader.getController();
-//
-//            // Envoyer la réclamation sélectionnée
-//            controller.setReclamationData(reclamation);
-//
-//            // Afficher la nouvelle fenêtre
-//            Stage stage = new Stage();
-//            stage.setTitle("Modifier Réclamation");
-//            stage.setScene(new Scene(root));
-//            stage.show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//private void openModifierRecWindow(Reclamtion reclamation) {
-//    try {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/ModifierRec.fxml"));
-//        Parent root = loader.load();
-//
-//        // Accéder au controller de ModifierRec.fxml
-//        ModifierReController controller = loader.getController();
-//
-//        // Envoyer la réclamation sélectionnée
-//        controller.setReclamationData(reclamation);
-//
-//        // Afficher la nouvelle fenêtre
-//        Stage stage = new Stage();
-//        stage.setTitle("Modifier Réclamation");
-//        stage.setScene(new Scene(root));
-//
-//        // Quand la fenêtre se ferme, rafraîchir la table
-//        stage.setOnHidden(e -> {
-//            list.clear(); // vider l'ancienne liste
-//            loadReclamations(); // recharger depuis la BD
-//            TabelViewRec.refresh(); // rafraîchir la vue
-//        });
-//
-//        stage.show();
-//    } catch (IOException e) {
-//        e.printStackTrace();
-//    }
-//}
-    private void openModifierRecWindow(Reclamtion reclamation) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/ModifierRec.fxml"));
-            Parent root = loader.load();
-
-            // Accéder au controller de ModifierRec.fxml
-            ModifierReController controller = loader.getController();
-
-            // Envoyer la réclamation sélectionnée
-            controller.setReclamationData(reclamation);
-
-            // Afficher la nouvelle fenêtre
-            Stage stage = new Stage();
-            stage.setTitle("Modifier Réclamation");
+            stage.setTitle("Ajouter Réclamation");
             stage.setScene(new Scene(root));
 
-            // Lorsqu'on ferme, on recharge la liste
             stage.setOnHidden(e -> {
                 list.clear();
                 loadReclamations();
-                TabelViewRec.refresh();
+                listViewRec.refresh();
             });
 
             stage.show();
@@ -289,6 +119,68 @@ private void openAjouterRecWindow() {
         }
     }
 
+    private void loadReclamations() {
+        try {
+            ResultSet rs = service.selectAll1();
+            while (rs.next()) {
+                int usr = rs.getInt("user_id");
+                if (user.getId() == usr) {
+                    Personne u = new Personne();
+                    u.setId(usr);
+                    Reclamtion r = new Reclamtion(
+                            rs.getString("desc_r"),
+                            rs.getString("date_r"),
+                            rs.getString("type_r"),
+                            u
+                    );
+                    r.setId(rs.getInt("id"));
+                    list.add(r);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void openModifierRecWindow(Reclamtion rec) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/ModifierRec.fxml"));
+            Parent root = loader.load();
 
+            ModifierReController controller = loader.getController();
+            controller.setReclamationData(rec);
+
+            Stage stage = new Stage();
+            stage.setTitle("Modifier Réclamation");
+            stage.setScene(new Scene(root));
+
+            stage.setOnHidden(e -> {
+                list.clear();
+                loadReclamations();
+                listViewRec.refresh();
+            });
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openRecRepWindow(Reclamtion rec) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/RecRep.fxml"));
+            Parent root = loader.load();
+
+            RecRepController controller = loader.getController();
+            String reponse = service.getReponseForReclamation(rec.getId());
+            controller.setReclamationData(rec, reponse);
+
+            Stage stage = new Stage();
+            stage.setTitle("Voir Réponse");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

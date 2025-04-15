@@ -159,7 +159,10 @@ public class ModifierGalerie {
             galerie.setType_g(type);
 
             serviceGalerie.modifier(galerie);
-            System.out.println("Galerie modifiée avec succès !");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Modifiée avec succès!");
+            alert.setHeaderText("Votre galerie a été modifiée avec succès.");
+            alert.showAndWait();
         }  catch (SQLException e) {
             throw new RuntimeException(e);
         }
