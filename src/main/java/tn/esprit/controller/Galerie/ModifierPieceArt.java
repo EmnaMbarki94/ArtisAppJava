@@ -32,10 +32,25 @@ public class ModifierPieceArt {
     private ServicePieceArt servicePieceArt;
     private Piece_art pieceArt;
     private String imagePath;
+    @FXML
+    private Label descErrLabel;
+    @FXML
+    private Label nomErrLabel;
+    @FXML
+    private Label dateErrLabel;
 
     public ModifierPieceArt() {
         servicePieceArt = new ServicePieceArt();
     }
+
+    @FXML
+    public void initialize() {
+        // Validation dynamique des champs de texte
+        nompTF.textProperty().addListener((observable, oldValue, newValue) -> validateNom(newValue));
+        descpTF.textProperty().addListener((observable, oldValue, newValue) -> validateDescription(newValue));
+        datepTF.textProperty().addListener((observable, oldValue, newValue) -> validateDate(newValue));
+    }
+
 
     public void loadPieceArt(Piece_art pieceArt) {
         this.pieceArt = pieceArt;
@@ -52,6 +67,39 @@ public class ModifierPieceArt {
         imagePath = pieceArt.getPhoto_p(); // Stocke le chemin actuel de l'image
         descpTF.setText(pieceArt.getDesc_p());
         titreG.setText("Modifier la Pièce d'Art : " + pieceArt.getNom_p());
+    }
+
+    private void validateNom(String nom) {
+        if (nom.isEmpty()) {
+            nomErrLabel.setVisible(true);
+            nomErrLabel.setText("Le nom ne peut pas être vide.");
+        } else if (!nom.matches("[a-zA-Z ]+")) {
+            nomErrLabel.setVisible(true);
+            nomErrLabel.setText("Le nom doit contenir uniquement des lettres.");
+        } else {
+            nomErrLabel.setVisible(false); // Cache le message d'erreur si valide
+        }
+    }
+
+    private void validateDescription(String desc) {
+        if (desc.isEmpty()) {
+            descErrLabel.setVisible(true);
+            descErrLabel.setText("La description ne peut pas être vide.");
+        } else {
+            descErrLabel.setVisible(false);
+        }
+    }
+
+    private void validateDate(String dateStr) {
+        if (dateStr.isEmpty()) {
+            dateErrLabel.setVisible(true);
+            dateErrLabel.setText("La date ne peut pas être vide.");
+        } else if (!dateStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            dateErrLabel.setVisible(true);
+            dateErrLabel.setText("Format: yyyy-MM-dd.");
+        } else {
+            dateErrLabel.setVisible(false);
+        }
     }
 
     @FXML
@@ -76,24 +124,54 @@ public class ModifierPieceArt {
         String desc = descpTF.getText();
         String dateStr = datepTF.getText(); // Date sous forme de chaîne
 
-        try {
-            // Récupérer la date sous forme de LocalDate
-            LocalDate dateCrea = null;
-            if (!dateStr.isEmpty()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                dateCrea = LocalDate.parse(dateStr, formatter); // Parsing de la date
-            }
+        if (nomErrLabel.isVisible() || descErrLabel.isVisible() || dateErrLabel.isVisible()) {
+            return;
+        }
 
-            // Mettre à jour la pièce d'art
-            pieceArt.setNom_p(nom);
-            pieceArt.setDate_crea(Date.valueOf(dateCrea).toLocalDate()); // Conversion en java.sql.Date
-            pieceArt.setPhoto_p(imagePath); // Le chemin de l'image
-            pieceArt.setDesc_p(desc);
-            servicePieceArt.modifier(pieceArt);
-            System.out.println("La pièce d'art a été modifiée avec succès !");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Erreur : " + e.getMessage());
+        if (nomErrLabel.isVisible() || descErrLabel.isVisible() || dateErrLabel.isVisible()) {
+            return; // Quitte la méthode si une erreur est détectée
+        }
+
+        boolean hasError = false;
+
+        // Validation des champs
+        if (nom.isEmpty()) {
+            nomErrLabel.setVisible(true);
+            nomErrLabel.setText("Le nom ne peut pas être vide.");
+            hasError = true;
+        }
+
+        if (desc.isEmpty()) {
+            descErrLabel.setVisible(true);
+            descErrLabel.setText("La description ne peut pas être vide.");
+            hasError = true;
+        }
+
+        if (dateStr.isEmpty()) {
+            dateErrLabel.setVisible(true);
+            dateErrLabel.setText("La date ne peut pas être vide.");
+            hasError = true;
+        } else {
+
+            try {
+                // Récupérer la date sous forme de LocalDate
+                LocalDate dateCrea = null;
+                if (!dateStr.isEmpty()) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    dateCrea = LocalDate.parse(dateStr, formatter); // Parsing de la date
+                }
+
+                // Mettre à jour la pièce d'art
+                pieceArt.setNom_p(nom);
+                pieceArt.setDate_crea(Date.valueOf(dateCrea).toLocalDate()); // Conversion en java.sql.Date
+                pieceArt.setPhoto_p(imagePath); // Le chemin de l'image
+                pieceArt.setDesc_p(desc);
+                servicePieceArt.modifier(pieceArt);
+                System.out.println("La pièce d'art a été modifiée avec succès !");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Erreur : " + e.getMessage());
+            }
         }
     }
 }
