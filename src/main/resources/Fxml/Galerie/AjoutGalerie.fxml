@@ -24,8 +24,8 @@
         <Label layoutX="232.0" layoutY="235.0" text="Description:" />
 
               <!-- Ajout de l'ImageView pour afficher l'image -->
-        <ImageView fx:id="imageView" fitHeight="296.0" fitWidth="523.0" layoutX="738.0" layoutY="81.0" />
-        <Button layoutX="920.0" layoutY="389.0" mnemonicParsing="false" onAction="#importerImage" text="Importer une photo..." />
+        <ImageView fx:id="imageView" fitHeight="266.0" fitWidth="477.0" layoutX="768.0" layoutY="116.0" />
+        <Button layoutX="927.0" layoutY="396.0" mnemonicParsing="false" onAction="#importerImage" text="Importer une photo..." />
       <Label fx:id="descErrorLabel" layoutX="230.0" layoutY="313.0" prefHeight="28.0" prefWidth="285.0" style="-fx-text-fill: red;" visible="false" />
       <Label fx:id="typeErrorLabel" layoutX="231.0" layoutY="415.0" prefHeight="16.0" prefWidth="256.0" style="-fx-text-fill: red;" visible="false" />
       <Label fx:id="nomErrorLabel" layoutX="231.0" layoutY="201.0" prefHeight="28.0" prefWidth="239.0" style="-fx-text-fill: red;" visible="false" />

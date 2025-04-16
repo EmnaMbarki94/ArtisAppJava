@@ -15,15 +15,18 @@
             </font></Label>
         <Label layoutX="276.0" layoutY="154.0" text="Nom:" />
         <Label layoutX="277.0" layoutY="256.0" />
-        <Label layoutX="279.0" layoutY="321.0" text="Type:" />
+        <Label layoutX="287.0" layoutY="389.0" text="Date:" />
         <TextField fx:id="nompTF" layoutX="278.0" layoutY="189.0" />
-        <TextField fx:id="descpTF" layoutX="278.0" layoutY="281.0" />
-        <TextField fx:id="datepTF" layoutX="278.0" layoutY="356.0" />
-        <Button layoutX="448.0" layoutY="499.0" mnemonicParsing="false" onAction="#modifierP" prefHeight="47.0" prefWidth="142.0" text="Valider" />
-        <Label layoutX="278.0" layoutY="238.0" text="Description:" />
+        <TextField fx:id="descpTF" layoutX="278.0" layoutY="305.0" />
+        <TextField fx:id="datepTF" layoutX="286.0" layoutY="422.0" />
+        <Button layoutX="591.0" layoutY="526.0" mnemonicParsing="false" onAction="#modifierP" prefHeight="47.0" prefWidth="142.0" text="Valider" />
+        <Label layoutX="278.0" layoutY="270.0" text="Description:" />
 
         <!-- Ajout de l'ImageView pour afficher l'image -->
         <ImageView fx:id="imageView" fitHeight="213.0" fitWidth="395.0" layoutX="710.0" layoutY="168.0" />
         <Button layoutX="828.0" layoutY="384.0" mnemonicParsing="false" onAction="#importerImage" text="Importer une photo..." />
+      <Label fx:id="nomErrLabel" layoutX="276.0" layoutY="235.0" prefHeight="28.0" prefWidth="282.0" style="-fx-text-fill: red;" visible="false" />
+      <Label fx:id="descErrLabel" layoutX="276.0" layoutY="353.0" prefHeight="28.0" prefWidth="282.0" style="-fx-text-fill: red;" visible="false" />
+      <Label fx:id="dateErrLabel" layoutX="286.0" layoutY="462.0" prefHeight="28.0" prefWidth="282.0" style="-fx-text-fill: red;" visible="false" />
     </children>
 </AnchorPane>
