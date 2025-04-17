@@ -29,7 +29,6 @@
             <Font name="System Bold" size="15.0" />
          </font></Button>
       <Button fx:id="orderPoint_admin_btn" layoutX="1254.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleSortByPoints" prefHeight="40.0" prefWidth="140.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="order by points" />
-      <Button fx:id="statistic_admin_btn" layoutX="1312.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleOpenStatistique" text="statistique" />
       <Button fx:id="tools_btn" layoutX="1316.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="6.0" prefWidth="71.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="Tools">
          <font>
             <Font name="System Bold" size="15.0" />
