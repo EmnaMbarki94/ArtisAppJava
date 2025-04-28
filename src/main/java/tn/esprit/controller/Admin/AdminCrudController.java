@@ -84,7 +84,7 @@ public class AdminCrudController implements Initializable {
         }*/
 
         // Masquer le mot de passe avec des "*"
-        password_adminCrud_fld.setOnKeyTyped(event -> {
+      /*  password_adminCrud_fld.setOnKeyTyped(event -> {
             event.consume(); // Bloquer l'affichage du texte tapé
 
             String typedChar = event.getCharacter();
@@ -96,8 +96,29 @@ public class AdminCrudController implements Initializable {
 
             // Afficher des "*"
             password_adminCrud_fld.setText("*".repeat(realPassword.length()));
-        });
+        });*/
+
+        setupSplitMenuButton();
     }
+
+    private void setupSplitMenuButton() {
+        // ici j'ai créé les options
+        MenuItem enseignantItem = new MenuItem("enseignant");
+        MenuItem artisteItem = new MenuItem("Artiste");
+        MenuItem adminItem = new MenuItem("Admin");
+        MenuItem userItem = new MenuItem("user");
+
+        // quand on clique sur une option celle ci s'afiche sur le splitmenu
+        enseignantItem.setOnAction(e -> splitMenu_adminCrud_fld.setText("enseignant"));
+        artisteItem.setOnAction(e -> splitMenu_adminCrud_fld.setText("Artiste"));
+        adminItem.setOnAction(e -> splitMenu_adminCrud_fld.setText("Admin"));
+        userItem.setOnAction(e -> splitMenu_adminCrud_fld.setText("user"));
+
+        // je fini par integrer les option au splitmenu
+        splitMenu_adminCrud_fld.getItems().addAll(enseignantItem, artisteItem, adminItem, userItem);
+    }
+
+
 
 
     private void initTable() {
@@ -235,6 +256,14 @@ public class AdminCrudController implements Initializable {
                 controleDeSaisie.chekNumero(phoneNumber_adminCrud_fld.getText()) &&
                 controleDeSaisie.chekNumero(cin_adminCrud_fld.getText())) {
 
+            // Vérification si l'email existe déjà en utilisant la méthode searchByEmail
+            String email = email_adminCrud_fldd.getText();
+            Personne existingPerson = userService.searchByEmail(email);
+            if (existingPerson != null) {  // Si l'utilisateur avec cet email existe
+                email_error_txt.setText("Email already exists!");
+                return; // Arrêter le processus si l'email existe déjà
+            }
+
             user.setLast_Name(lastName_adminCrud_fld.getText());
             user.setFirst_Name(name_adminCrud_fld.getText());
             user.setCin(cin_adminCrud_fld.getText());
@@ -242,7 +271,8 @@ public class AdminCrudController implements Initializable {
             user.setAddress(adress_adminCrud_fld.getText());
             user.setEmail(email_adminCrud_fldd.getText());
             //user.setPassword(password_admin_fld.getText());
-            String hashedPassword = BCrypt.hashpw(password_adminCrud_fld.getText(), BCrypt.gensalt());
+           // String hashedPassword = BCrypt.hashpw(password_adminCrud_fld.getText(), BCrypt.gensalt());
+            String hashedPassword = BCrypt.hashpw(password_adminCrud_fld.getText(), BCrypt.gensalt(10));
             user.setPassword(hashedPassword);
 
 
@@ -277,7 +307,23 @@ public class AdminCrudController implements Initializable {
             phoneNumber_error_txt.setText("Phone number must be 8 numbers");
         }
 
+        //clear********
+        clearFields();
+
     }
+
+    //*********
+    private void clearFields() {
+        name_adminCrud_fld.clear();
+        lastName_adminCrud_fld.clear();
+        email_adminCrud_fldd.clear();
+        password_adminCrud_fld.clear();
+        cin_adminCrud_fld.clear();
+        phoneNumber_adminCrud_fld.clear();
+        adress_adminCrud_fld.clear();
+        splitMenu_adminCrud_fld.setText("Choisir spécialité"); // ou vide si tu veux: ""
+    }
+    //*****
 
     private void showAlert(String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
@@ -320,6 +366,17 @@ public class AdminCrudController implements Initializable {
         }*/
         // Utilisez le système de navigation au lieu de manipuler directement le BorderPane
         gui.getInstance().getViewFactory().getAdminSelectedMenuItem().set("UpdateUser");
+    }
+
+
+    public void handelMetier(ActionEvent actionEvent)
+    {
+        gui.getInstance().getViewFactory().getAdminSelectedMenuItem().set("Metiers");
+    }
+
+    public void handelstat(ActionEvent actionEvent)
+    {
+        gui.getInstance().getViewFactory().getAdminSelectedMenuItem().set("stat");
     }
 
 }

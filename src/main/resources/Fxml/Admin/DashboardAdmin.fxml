@@ -15,7 +15,6 @@
       <TableView fx:id="user_admin_tableView" layoutX="62.0" layoutY="453.0" prefHeight="291.0" prefWidth="1171.0" />
       <TextField fx:id="tableView_admin_fld" layoutX="849.0" layoutY="418.0" prefHeight="26.0" prefWidth="315.0" />
       <Button fx:id="delete_admin_btn" layoutX="1293.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleDeleteAction" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="Delete" />
-      <Button fx:id="search_admin_btn" layoutX="1293.0" layoutY="589.0" mnemonicParsing="false" onAction="#handleSearchAction" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="Search" />
       <Button fx:id="refresh_admin_btn" layoutX="1290.0" layoutY="649.0" mnemonicParsing="false" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="Refresh" />
       <Text fx:id="email_error_txt" layoutX="773.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="lastName_error_txt" layoutX="1070.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" />
@@ -24,7 +23,7 @@
       <Text fx:id="phoneNumber_error_txt" layoutX="1060.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="Adress_error_txt" layoutX="770.0" layoutY="458.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="cin_error_txt" layoutX="760.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Button fx:id="order_admin_btn" layoutX="1253.0" layoutY="474.0" mnemonicParsing="false" onAction="#handleSortAction" prefHeight="40.0" prefWidth="140.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="order by firstName">
+      <Button fx:id="order_admin_btn" layoutX="1253.0" layoutY="474.0" mnemonicParsing="false" onAction="#handleSortAction" prefHeight="41.0" prefWidth="167.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="ordonner par prenom">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Button>

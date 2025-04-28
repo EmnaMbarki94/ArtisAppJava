@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="617.0" prefWidth="907.0" stylesheets="@../../Styles/statsMagasin.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.Magasins.StatsMagasinsController">
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.esprit.controller.Admin.Magasins.StatsMagasinsController"
+            stylesheets="@../../Styles/statsMagasin.css"
+            prefHeight="600.0" prefWidth="800.0">
 
-    <VBox prefHeight="598.0" prefWidth="907.0" spacing="20" style="-fx-padding: 20;">
-            <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Statistiques des Magasins" />
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <!-- En-tête avec titre et bouton retour -->
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header-box">
+            <Button fx:id="btnRetourMagasins" text="Retour" styleClass="retour-btn" onAction="#retournerVersListeMagasins" />
+            <Label text="Statistiques des Magasins" styleClass="title-label"/>
+        </HBox>
 
-            <TabPane>
-                <Tab text="Articles les plus vendus">
-                    <VBox>
-                        <BarChart fx:id="articlesChart" prefWidth="834.0" title="Top 5 des articles les plus vendus">
-                            <xAxis>
-                                <CategoryAxis label="Articles" />
-                            </xAxis>
-                            <yAxis>
-                                <NumberAxis label="Quantité vendue" />
-                            </yAxis>
-                        </BarChart>
-                    </VBox>
-                </Tab>
+        <!-- Conteneur des graphiques -->
+        <TabPane styleClass="stats-tabpane">
+            <Tab text="Articles les plus vendus" styleClass="stats-tab">
+                <VBox styleClass="chart-container">
+                    <BarChart fx:id="articlesChart" title="Top 5 des articles les plus vendus" legendVisible="false">
+                        <xAxis>
+                            <CategoryAxis label="Articles" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Quantité vendue" />
+                        </yAxis>
+                    </BarChart>
+                </VBox>
+            </Tab>
 
-                <Tab text="Ventes par magasin">
-                    <VBox>
-                        <PieChart fx:id="magasinsChart" title="Répartition des ventes par magasin" />
-                    </VBox>
-                </Tab>
-            </TabPane>
-        </VBox>
-    </AnchorPane>
+            <Tab text="Ventes par magasin" styleClass="stats-tab">
+                <VBox styleClass="chart-container">
+                    <PieChart fx:id="magasinsChart" title="Répartition des ventes par magasin" legendVisible="false" />
+                </VBox>
+            </Tab>
+        </TabPane>
+    </VBox>
+</AnchorPane>

@@ -1,7 +1,5 @@
 package tn.esprit.services;
 
-import com.google.api.client.util.DateTime;
-import com.google.api.services.calendar.model.EventDateTime;
 import tn.esprit.entities.Event;
 import tn.esprit.utils.DBConnection;
 
@@ -134,57 +132,5 @@ public class ServiceEvent implements CRUD<Event>{
         }
 
         return rs;
-    }
-    public List<com.google.api.services.calendar.model.Event> fetchEvents() {
-        List<com.google.api.services.calendar.model.Event> googleEvents = new ArrayList<>();
-
-        String query = "SELECT * FROM event";
-
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Event dbEvent = new Event(
-                        rs.getInt("id"),
-                        rs.getString("nom"),
-                        rs.getString("type_e"),
-                        rs.getString("info_e"),
-                        rs.getDate("date_e").toLocalDate(),
-                        rs.getString("photo_e"),
-                        rs.getInt("prix_s"),
-                        rs.getInt("prix_vip"),
-                        rs.getInt("nb_ticket")
-                );
-
-                // Convertir votre Event en Google Event
-                com.google.api.services.calendar.model.Event googleEvent = convertToGoogleEvent(dbEvent);
-                googleEvents.add(googleEvent);
-            }
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération des événements: " + e.getMessage());
-        }
-
-        return googleEvents;
-    }
-
-    private com.google.api.services.calendar.model.Event convertToGoogleEvent(Event dbEvent) {
-        com.google.api.services.calendar.model.Event googleEvent = new com.google.api.services.calendar.model.Event();
-
-        // Convertir LocalDate en DateTime pour Google Calendar
-        LocalDate eventDate = dbEvent.getDate_e();
-        ZonedDateTime startZonedDateTime = eventDate.atStartOfDay(ZoneId.of("UTC"));
-        ZonedDateTime endZonedDateTime = eventDate.plusDays(1).atStartOfDay(ZoneId.of("UTC"));
-
-        googleEvent.setSummary(dbEvent.getNom())
-                .setDescription("Type: " + dbEvent.getType_e() + "\n" +
-                        "Info: " + dbEvent.getInfo_e() + "\n" +
-                        "Prix Standard: " + dbEvent.getPrix_s() + "\n" +
-                        "Prix VIP: " + dbEvent.getPrix_vip())
-                .setStart(new EventDateTime().setDateTime(
-                        new DateTime(startZonedDateTime.toInstant().toEpochMilli())))
-                .setEnd(new EventDateTime().setDateTime(
-                        new DateTime(endZonedDateTime.toInstant().toEpochMilli())));
-
-        return googleEvent;
     }
 }

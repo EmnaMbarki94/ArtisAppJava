@@ -6,37 +6,60 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="786.0" prefWidth="1393.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.AfficherReController">
+<AnchorPane prefHeight="837.0" prefWidth="1187.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.AfficherReController">
    <stylesheets>
       <URL value="@/styles/reclamation.css" />
    </stylesheets>
-   <children>
-      <AnchorPane prefHeight="792.0" prefWidth="1393.0" style="-fx-background-color: #dbb3f5;">
-         <children>
-            <Label alignment="CENTER" layoutX="550.0" layoutY="31.0" prefHeight="40.0" prefWidth="358.0" text="Listes Des Réclamations">
-               <font>
-                  <Font name="System Bold Italic" size="28.0" />
-               </font>
-            </Label>
 
-            <!-- Barre de recherche et filtre -->
-            <HBox layoutX="510.0" layoutY="90.0" spacing="10" alignment="CENTER_LEFT">
-               <TextField fx:id="searchField" promptText="Rechercher..." prefWidth="200.0" />
-               <ComboBox fx:id="typeFilterComboBox" promptText="Filtrer par type" prefWidth="150.0" />
-            </HBox>
+   <VBox layoutX="-4.0" layoutY="-1.0" prefHeight="840.0" prefWidth="1193.0" spacing="20" style="-fx-background-color: #f5f7fa;">
+      <!-- Header -->
+      <HBox alignment="CENTER" style="-fx-background-color: #6a1b9a; -fx-padding: 15;">
+         <Label styleClass="header-title" text="Mes Réclamations" />
+         <Region HBox.hgrow="ALWAYS" />
+         <Button onAction="#openAjouterRecWindow" styleClass="primary-button" text="Nouvelle Réclamation">
+            <graphic>
+               <ImageView fitHeight="20" fitWidth="20">
+                  <Image url="@/image/add-icon.png" />
+               </ImageView>
+            </graphic>
+         </Button>
+         <Button onAction="#openChatbotWindow" styleClass="secondary-button" text="Assistant">
+            <graphic>
+               <ImageView fitHeight="20" fitWidth="20">
+                  <Image url="@/image/chatbot-icon.png" />
+               </ImageView>
+            </graphic>
+         </Button>
+      </HBox>
 
-            <!-- ListView sans personnalisation des cellules ici -->
-            <ListView fx:id="listViewRec" layoutX="113.0" layoutY="180.0" prefHeight="500.0" prefWidth="1168.0" />
+      <!-- Search and Filter Bar -->
+      <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 0 20 0 20;">
+         <TextField fx:id="searchField" promptText="Rechercher une réclamation..." styleClass="search-field" />
+         <ComboBox fx:id="typeFilterComboBox" promptText="Tous les types" styleClass="filter-combo" />
+<!--         <Button styleClass="filter-button" text="Filtrer">-->
+<!--            <graphic>-->
+<!--               <ImageView fitHeight="16" fitWidth="16">-->
+<!--                  <Image url="@/image/filter-icon.png" />-->
+<!--               </ImageView>-->
+<!--            </graphic>-->
+<!--         </Button>-->
+<!--         <Button onAction="#refreshList" styleClass="refresh-button" text="Actualiser">-->
+<!--            <graphic>-->
+<!--               <ImageView fitHeight="16" fitWidth="16">-->
+<!--                  <Image url="@/image/refresh-icon.png" />-->
+<!--               </ImageView>-->
+<!--            </graphic>-->
+<!--         </Button>-->
+      </HBox>
 
-            <!-- Boutons d'ajout et chatbot -->
-            <Button layoutX="1193.0" layoutY="141.0" text="Ajouter" styleClass="add-button" onAction="#openAjouterRecWindow" />
-            <Button layoutX="1080.0" layoutY="141.0" text="Assistant" styleClass="action-button" onAction="#openChatbotWindow" />
-         </children>
-      </AnchorPane>
-   </children>
+      <!-- List View -->
+      <ListView fx:id="listViewRec" prefHeight="510.0" prefWidth="1025.0" styleClass="reclamation-list" />
+   </VBox>
 </AnchorPane>

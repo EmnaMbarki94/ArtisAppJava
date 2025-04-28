@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="643.0" prefWidth="610.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.ModifierReController">
+<AnchorPane prefHeight="643.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.ModifierReController">
    <children>
       <AnchorPane prefHeight="99.0" prefWidth="610.0" style="-fx-background-color: #dbb3f5;">
          <children>
@@ -53,19 +53,14 @@
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="AfficherBt" layoutX="112.0" layoutY="521.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="398.0" style="-fx-background-color: #dbb3f5;" text="Afficher la liste">
-         <font>
-            <Font name="System Bold Italic" size="15.0" />
-         </font>
-      </Button>
       <ComboBox fx:id="TypeComboBox1" editable="true" layoutX="112.0" layoutY="328.0" prefWidth="150.0" promptText="Choisissez....">
          <effect>
             <DropShadow />
          </effect>
       </ComboBox>
-      <Label fx:id="DescLabel1" layoutX="110.0" layoutY="266.0" prefHeight="17.0" prefWidth="276.0" textFill="red"/>
-      <Label fx:id="TypeLabel1" layoutX="110.0" layoutY="266.0" prefHeight="17.0" prefWidth="276.0" textFill="red"/>
-      <Label fx:id="DateLabel1" layoutX="110.0" layoutY="266.0" prefHeight="17.0" prefWidth="276.0" textFill="red"/>
+      <Label fx:id="DescLabel1" layoutX="110.0" layoutY="266.0" prefHeight="17.0" prefWidth="276.0" textFill="red" />
+      <Label fx:id="TypeLabel1" layoutX="110.0" layoutY="266.0" prefHeight="17.0" prefWidth="276.0" textFill="red" />
+      <Label fx:id="DateLabel1" layoutX="110.0" layoutY="266.0" prefHeight="17.0" prefWidth="276.0" textFill="red" />
 
    </children>
 </AnchorPane>

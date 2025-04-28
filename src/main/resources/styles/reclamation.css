@@ -1,12 +1,153 @@
-.add-button {
-    -fx-background-color: #8c6af9;
+/* Couleurs principales */
+.root {
+    /* Les variables ici ne seront pas utilisées car JavaFX ne les comprend pas */
+}
+
+/* Styles généraux */
+.header-title {
+    -fx-font-size: 24px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Boutons */
+.primary-button {
+    -fx-background-color: #6a1b9a;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #7b2cbf;
+}
+
+.secondary-button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #42a5f5;
+}
+
+.filter-button, .refresh-button {
+    -fx-background-color: #9c4dcc;
+    -fx-text-fill: white;
+    -fx-padding: 6 12 6 12;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.filter-button:hover, .refresh-button:hover {
+    -fx-background-color: #ab47bc;
+}
+
+/* Champ de recherche */
+.search-field {
+    -fx-pref-width: 300px;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #d1d1d1;
+    -fx-background-insets: 0;
+    -fx-font-size: 14px;
+}
+
+.search-field:focused {
+    -fx-border-color: #6a1b9a;
+    -fx-effect: dropshadow(gaussian, rgba(106, 27, 154, 0.3), 10, 0, 0, 0);
+}
+
+/* ComboBox */
+.filter-combo {
+    -fx-pref-width: 200px;
+    -fx-padding: 6 10 6 10;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-font-size: 14px;
+}
+
+/* ListView */
+.reclamation-list {
+    -fx-background-color: transparent;
+    -fx-padding: 0 20 20 20;
+    -fx-border-width: 0;
+}
+
+.reclamation-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 10 0;
+}
+
+.reclamation-list .list-cell:filled {
+    -fx-background-color: transparent;
+}
+
+.reclamation-list .list-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-pref-height: 0;
+}
+
+/* Cellule personnalisée */
+.reclamation-cell {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+    -fx-padding: 15;
+}
+
+.reclamation-cell:hover {
+    -fx-effect: dropshadow(gaussian, rgba(106, 27, 154, 0.2), 10, 0, 0, 3);
+}
+
+.reclamation-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6a1b9a;
+}
+
+.reclamation-date {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+}
+
+.reclamation-type {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-padding: 5 0 10 0;
+}
+
+.reclamation-desc {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
 }
 
 .action-button {
-    -fx-background-color: #4caf50;
+    -fx-background-radius: 5;
+    -fx-padding: 5 10 5 10;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.edit-button {
+    -fx-background-color: #2196f3;
     -fx-text-fill: white;
+}
+
+.edit-button:hover {
+    -fx-background-color: #42a5f5;
 }
 
 .delete-button {
@@ -14,68 +155,15 @@
     -fx-text-fill: white;
 }
 
-ListView {
-    -fx-background-color: #fff;
-    -fx-border-color: #dcdcdc;
-    -fx-border-radius: 10;
+.delete-button:hover {
+    -fx-background-color: #e53935;
 }
 
-ListCell {
-    -fx-padding: 10;
-    -fx-background-color: #f7f1ff;
-    -fx-background-radius: 10;
+.view-button {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
 }
 
-HBox {
-    -fx-padding: 10;
-}
-
-
-/* Styles pour le chatbot */
-.chatbot-container {
-    -fx-background-color: white;
-    -fx-border-color: #dbb3f5;
-    -fx-border-width: 2;
-    -fx-border-radius: 5;
-}
-
-.chat-message {
-    -fx-padding: 5 10 5 10;
-    -fx-background-radius: 10;
-    -fx-font-size: 14px;
-    -fx-font-family: 'System';
-}
-
-.user-message {
-    -fx-background-color: #dbb3f5;
-    -fx-text-fill: black;
-}
-
-/* Styles du chatbot */
-#messagesContainer {
-    -fx-padding: 10;
-}
-
-.user-message {
-    -fx-background-color: #dbb3f5;
-    -fx-background-radius: 10;
-    -fx-padding: 5 10 5 10;
-    -fx-font-size: 14px;
-}
-
-.ai-message {
-    -fx-background-color: #f0f0f0;
-    -fx-background-radius: 10;
-    -fx-padding: 5 10 5 10;
-    -fx-font-size: 14px;
-}
-
-#historyListView {
-    -fx-font-family: 'Segoe UI';
-    -fx-font-size: 13px;
-}
-
-#messageField {
-    -fx-prompt-text-fill: #a0a0a0;
-    -fx-background-radius: 15;
+.view-button:hover {
+    -fx-background-color: #43a047;
 }

@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
@@ -12,11 +13,14 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import tn.esprit.entities.ArticleStatDTO;
 import tn.esprit.entities.MagasinStatDTO;
 import tn.esprit.services.ServiceLigneCommande;
 import tn.esprit.services.ServiceMagasin;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -30,6 +34,8 @@ public class StatsMagasinsController implements Initializable {
 
     @FXML private BarChart<String, Number> articlesChart;
     @FXML private PieChart magasinsChart;
+    @FXML private Button btnRetourMagasins;
+
 
     private final ServiceLigneCommande serviceLigneCommande = new ServiceLigneCommande();
     private final ServiceMagasin serviceMagasin = new ServiceMagasin();
@@ -192,6 +198,20 @@ public class StatsMagasinsController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    private void retournerVersListeMagasins() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/GestionMagasins/MagasinAdmin.fxml"));
+            AnchorPane pageMagasins = loader.load();
+
+            AnchorPane root = (AnchorPane) btnRetourMagasins.getScene().lookup("#contenuPane");
+            root.getChildren().setAll(pageMagasins);
+
+//            System.out.println("Retour à la liste des magasins !");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

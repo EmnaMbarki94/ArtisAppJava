@@ -27,8 +27,6 @@ public class AjouterReController {
 
 
     @FXML
-    private Button AfficherBt;
-    @FXML
 //    private Label DateLabel;
     private DatePicker date;
     @FXML
@@ -50,6 +48,8 @@ public class AjouterReController {
 
     private final ServiceReclamation serviceReclamation = new ServiceReclamation();
     private final List<String> badWords = Arrays.asList("idiot", "nul", "stupide", "bête");
+    @FXML
+    private Label DateLabel;
 
     @FXML
     public void initialize() {
@@ -156,7 +156,7 @@ public class AjouterReController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
-    @FXML
+    @Deprecated
     void handleAfficher(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Reclamation/AfficherRecl.fxml"));

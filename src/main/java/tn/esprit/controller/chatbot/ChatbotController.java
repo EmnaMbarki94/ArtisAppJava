@@ -44,14 +44,14 @@ public class ChatbotController implements Initializable {
         showWelcomeMessage();
     }
 
-    private void showWelcomeMessage() {
-        addMessage("AI", "Bonjour! Je suis ArtisBot, votre assistant polyvalent.\n\n"
-                + "Je peux vous aider avec:\n"
-                + "- ArtisApp (galerie/cours/evenement/...)\n"
-                + "- Questions générales\n"
-                + "- Aide technique\n\n"
-                + "Comment puis-je vous aider?");
-    }
+//    private void showWelcomeMessage() {
+//        addMessage("AI", "Bonjour! Je suis ArtisBot, votre assistant polyvalent.\n\n"
+//                + "Je peux vous aider avec:\n"
+//                + "- ArtisApp (galerie/cours/evenement/...)\n"
+//                + "- Questions générales\n"
+//                + "- Aide technique\n\n"
+//                + "Comment puis-je vous aider?");
+//    }
 
     private void sendMessage() {
         String message = messageField.getText().trim();
@@ -72,51 +72,51 @@ public class ChatbotController implements Initializable {
         }
     }
 
-    private void showTypingIndicator() {
-        HBox typingBox = new HBox(10);
-        typingBox.setAlignment(Pos.CENTER_LEFT);
-        typingBox.setPadding(new Insets(5, 10, 5, 10));
-        typingBox.setId("typing-indicator");
-
-        ProgressIndicator progress = new ProgressIndicator();
-        progress.setPrefSize(20, 20);
-
-        TextFlow textFlow = new TextFlow(new Text("ArtisBot réfléchit..."));
-        textFlow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10;");
-        textFlow.setPadding(new Insets(5, 10, 5, 10));
-
-        typingBox.getChildren().addAll(progress, textFlow);
-        messagesContainer.getChildren().add(typingBox);
-        scrollToBottom();
-    }
+//    private void showTypingIndicator() {
+//        HBox typingBox = new HBox(10);
+//        typingBox.setAlignment(Pos.CENTER_LEFT);
+//        typingBox.setPadding(new Insets(5, 10, 5, 10));
+//        typingBox.setId("typing-indicator");
+//
+//        ProgressIndicator progress = new ProgressIndicator();
+//        progress.setPrefSize(20, 20);
+//
+//        TextFlow textFlow = new TextFlow(new Text("ArtisBot réfléchit..."));
+//        textFlow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10;");
+//        textFlow.setPadding(new Insets(5, 10, 5, 10));
+//
+//        typingBox.getChildren().addAll(progress, textFlow);
+//        messagesContainer.getChildren().add(typingBox);
+//        scrollToBottom();
+//    }
 
     private void removeTypingIndicator() {
         messagesContainer.getChildren().removeIf(node ->
                 node.getId() != null && node.getId().equals("typing-indicator"));
     }
 
-    private void addMessage(String sender, String message) {
-        HBox messageContainer = new HBox();
-        messageContainer.setPadding(new Insets(5, 10, 5, 10));
-
-        Text text = new Text(message);
-        TextFlow textFlow = new TextFlow(text);
-        textFlow.setPadding(new Insets(5, 10, 5, 10));
-
-        if (sender.equals("User")) {
-            messageContainer.setAlignment(Pos.CENTER_RIGHT);
-            textFlow.setStyle("-fx-background-color: #dbb3f5; -fx-background-radius: 10;");
-            text.setFill(Color.BLACK);
-        } else {
-            messageContainer.setAlignment(Pos.CENTER_LEFT);
-            textFlow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10;");
-            text.setFill(Color.BLACK);
-        }
-
-        messageContainer.getChildren().add(textFlow);
-        messagesContainer.getChildren().add(messageContainer);
-        scrollToBottom();
-    }
+//    private void addMessage(String sender, String message) {
+//        HBox messageContainer = new HBox();
+//        messageContainer.setPadding(new Insets(5, 10, 5, 10));
+//
+//        Text text = new Text(message);
+//        TextFlow textFlow = new TextFlow(text);
+//        textFlow.setPadding(new Insets(5, 10, 5, 10));
+//
+//        if (sender.equals("User")) {
+//            messageContainer.setAlignment(Pos.CENTER_RIGHT);
+//            textFlow.setStyle("-fx-background-color: #dbb3f5; -fx-background-radius: 10;");
+//            text.setFill(Color.BLACK);
+//        } else {
+//            messageContainer.setAlignment(Pos.CENTER_LEFT);
+//            textFlow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 10;");
+//            text.setFill(Color.BLACK);
+//        }
+//
+//        messageContainer.getChildren().add(textFlow);
+//        messagesContainer.getChildren().add(messageContainer);
+//        scrollToBottom();
+//    }
 
     private void scrollToBottom() {
         scrollPane.setVvalue(1.0);
@@ -151,4 +151,86 @@ public class ChatbotController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    private void addMessage(String sender, String message) {
+        HBox messageContainer = new HBox();
+        messageContainer.setPadding(new Insets(5, 10, 5, 10));
+        messageContainer.setAlignment(sender.equals("User") ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
+
+        Text text = new Text(message);
+        TextFlow textFlow = new TextFlow(text);
+        textFlow.setPadding(new Insets(8, 12, 8, 12));
+        textFlow.setMaxWidth(300); // Limite la largeur des bulles
+
+        if (sender.equals("User")) {
+            textFlow.setStyle("-fx-background-color: #dbb3f5; -fx-background-radius: 15 15 0 15;");
+            text.setFill(Color.BLACK);
+        } else {
+            textFlow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 15 15 15 0;");
+            text.setFill(Color.BLACK);
+        }
+
+        // Ajout d'un label pour le nom de l'expéditeur et l'heure
+        VBox messageWithMeta = new VBox();
+        Label senderLabel = new Label(sender.equals("User") ? "Vous" : "ArtisBot");
+        senderLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 11;");
+        Label timeLabel = new Label(java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")));
+        timeLabel.setStyle("-fx-font-size: 10; -fx-text-fill: #666;");
+
+        HBox metaBox = new HBox(5, senderLabel, timeLabel);
+        metaBox.setAlignment(Pos.CENTER_LEFT);
+
+        messageWithMeta.getChildren().addAll(metaBox, textFlow);
+        messageWithMeta.setSpacing(2);
+
+        messageContainer.getChildren().add(messageWithMeta);
+        messagesContainer.getChildren().add(messageContainer);
+        scrollToBottom();
+    }
+
+    private void showWelcomeMessage() {
+        VBox welcomeBox = new VBox(10);
+        welcomeBox.setPadding(new Insets(10));
+        welcomeBox.setAlignment(Pos.CENTER_LEFT);
+        welcomeBox.setStyle("-fx-background-color: #f8f8f8; -fx-background-radius: 10; -fx-border-color: #ddd; -fx-border-radius: 10; -fx-border-width: 1;");
+
+        Label title = new Label("ArtisBot");
+        title.setStyle("-fx-font-size: 16; -fx-font-weight: bold;");
+
+        Text welcomeText = new Text("Bonjour! Je suis ArtisBot, votre assistant polyvalent.\n\n"
+                + "Je peux vous aider avec:\n"
+                + "- ArtisApp (galerie/cours/evenement/...)\n"
+                + "- Questions générales\n"
+                + "- Aide technique");
+
+        Label timeLabel = new Label(java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")));
+        timeLabel.setStyle("-fx-font-size: 10; -fx-text-fill: #666;");
+
+        welcomeBox.getChildren().addAll(title, welcomeText, timeLabel);
+
+        HBox container = new HBox(welcomeBox);
+        container.setAlignment(Pos.CENTER_LEFT);
+        container.setPadding(new Insets(5, 10, 5, 10));
+
+        messagesContainer.getChildren().add(container);
+    }
+
+    private void showTypingIndicator() {
+        HBox typingBox = new HBox(10);
+        typingBox.setAlignment(Pos.CENTER_LEFT);
+        typingBox.setPadding(new Insets(5, 10, 5, 10));
+        typingBox.setId("typing-indicator");
+
+        ProgressIndicator progress = new ProgressIndicator();
+        progress.setPrefSize(15, 15);
+        progress.setStyle("-fx-progress-color: #666;");
+
+        TextFlow textFlow = new TextFlow(new Text("ArtisBot réfléchit..."));
+        textFlow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 15 15 15 0;");
+        textFlow.setPadding(new Insets(8, 12, 8, 12));
+
+        typingBox.getChildren().addAll(progress, textFlow);
+        messagesContainer.getChildren().add(typingBox);
+        scrollToBottom();
+    }
+
 }

@@ -2,13 +2,11 @@ package tn.esprit.controller.Admin;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -26,15 +24,14 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.concurrent.Task;
+import tn.esprit.gui.gui;
 import tn.esprit.utils.DBConnection;
 
 public class AdminStatistiqueController implements Initializable {
@@ -42,32 +39,39 @@ public class AdminStatistiqueController implements Initializable {
     public MenuItem show_barChart_btn;
     public MenuItem show_pieChart_btn;
     public MenuItem close_chart_btn;
+    public Button refreshButton;
     @FXML
     private BorderPane borderPane;
+
+    @FXML private TextField enseignantField;
+    @FXML private TextField artisteField;
+    @FXML private TextField userField;
+
+    @FXML
+    private Label topSpecialtyLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         borderPane.setCenter(buildPieChart());
 
-        try (Connection connection = DBConnection.getInstance().getCnx()) {
-            if (connection != null) {
-                System.out.println("Connexion HikariCP réussie dans la fenêtre de statistiques !");
-            } else {
-                System.out.println("Erreur de connexion !");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+
+        // Initialiser les champs
+        updateSpecialtyTextFields();
+        updateTopSpecialty();
+        // Démarrer la mise à jour automatique
+        startLiveUpdate();
     }
 
     private ObservableList<Integer> getSpecialtyCounts() {
         ObservableList<Integer> counts = FXCollections.observableArrayList();
 
+      //  String query = "SELECT specialite, COUNT(*) AS count FROM user GROUP BY specialite";
+
         String query = "SELECT specialite, COUNT(*) AS count FROM user GROUP BY specialite";
 
-        try (Connection conn = DBConnection.getInstance().getCnx();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try (PreparedStatement ps = DBConnection.getInstance().getCnx().prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
 
             int enseignementCount = 0, artisteCount = 0, userCount = 0;
 
@@ -167,6 +171,11 @@ public class AdminStatistiqueController implements Initializable {
             createToolTips(pc);
         }
     }
+    @FXML
+    private void handleManualUpdate(ActionEvent event) {
+        updateSpecialtyTextFields();
+        updateTopSpecialty();
+    }
 
     private void createToolTips(PieChart pc) {
 
@@ -195,5 +204,98 @@ public class AdminStatistiqueController implements Initializable {
 
         // Fermer la fenêtre
         stage.close();
+    }
+
+
+    //*********stat anim +text
+
+    private void animateTextChange(TextField field, int newValue) {
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), field);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setOnFinished(e -> {
+            field.setText(String.valueOf(newValue));
+
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), field);
+            fadeIn.setFromValue(0.0);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        });
+        fadeOut.play();
+    }
+
+
+
+    private void updateSpecialtyTextFields() {
+        ObservableList<Integer> counts = getSpecialtyCounts();
+
+        int enseignant = counts.size() > 0 ? counts.get(0) : 0;
+        int artiste = counts.size() > 1 ? counts.get(1) : 0;
+        int user = counts.size() > 2 ? counts.get(2) : 0;
+
+        animateTextChange(enseignantField, enseignant);
+        animateTextChange(artisteField, artiste);
+        animateTextChange(userField, user);
+    }
+
+
+
+    private void startLiveUpdate() {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                while (true) {
+                    try {
+                        Thread.sleep(10000); // 10 secondes
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+
+                    Platform.runLater(() -> {
+                        updateSpecialtyTextFields();
+                        updateTopSpecialty();
+                    });
+                }
+                return null; // ✅ Correction ici
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    private void updateTopSpecialty() {
+        ObservableList<Integer> counts = getSpecialtyCounts();
+        if (counts == null || counts.size() < 3) return;
+
+        String topSpecialty;
+        int max = Math.max(counts.get(0), Math.max(counts.get(1), counts.get(2)));
+
+        if (max == counts.get(0)) {
+            topSpecialty = "🏆 Spécialité la plus populaire : Enseignant (" + max + ")";
+        } else if (max == counts.get(1)) {
+            topSpecialty = "🏆 Spécialité la plus populaire : Artiste (" + max + ")";
+        } else {
+            topSpecialty = "🏆 Spécialité la plus populaire : User (" + max + ")";
+        }
+
+        topSpecialtyLabel.setText(topSpecialty);
+
+        // petite animation de mise à jour
+        FadeTransition fade = new FadeTransition(Duration.seconds(1), topSpecialtyLabel);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.play();
+    }
+
+    public void handleaddUser(ActionEvent actionEvent)
+    {
+
+        gui.getInstance().getViewFactory().getAdminSelectedMenuItem().set("AddUser");
+    }
+
+    public void handelMetier(ActionEvent actionEvent)
+    {
+        gui.getInstance().getViewFactory().getAdminSelectedMenuItem().set("Metiers");
     }
 }

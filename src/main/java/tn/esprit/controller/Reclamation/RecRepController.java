@@ -8,9 +8,6 @@ import tn.esprit.entities.Reclamtion;
 public class RecRepController {
 
     @FXML
-    private Button AfficherBtRp;
-
-    @FXML
     private Label LabelRec;
 
     @FXML

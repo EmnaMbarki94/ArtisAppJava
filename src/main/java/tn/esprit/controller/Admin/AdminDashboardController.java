@@ -51,8 +51,8 @@ public class AdminDashboardController implements Initializable {
     public TextField tableView_admin_fld;
     @FXML
     public Button delete_admin_btn;
-    @FXML
-    public Button search_admin_btn;
+   // @FXML
+    //public Button search_admin_btn;
     @FXML
     public Button order_admin_btn;
     @FXML
@@ -82,10 +82,16 @@ public class AdminDashboardController implements Initializable {
     Personne user = new Personne();
 
 
+
+
+    private List<Personne> allUsers;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTable();
         loadTableData();
+
+
         delete_admin_btn.setOnAction(event -> {
             try {
                 handleDeleteAction();
@@ -94,7 +100,7 @@ public class AdminDashboardController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-        search_admin_btn.setOnAction(event -> handleSearchAction());
+        //search_admin_btn.setOnAction(event -> handleSearchAction());
        /* register_admin_btn.setOnAction(event-> {
             try {
                 onSignIn();
@@ -123,6 +129,12 @@ public class AdminDashboardController implements Initializable {
             // Afficher des "*"
             password_admin_fld.setText("*".repeat(realPassword.length()));
         });*/
+
+    //*****************
+        tableView_admin_fld.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterUsers(newValue);
+        });
+        //************************
     }
 
 
@@ -190,9 +202,25 @@ public class AdminDashboardController implements Initializable {
         ;
     }
 
+    private void filterUsers(String query) {
+        if (query.isEmpty()) {
+            loadTableData(); // pour réafficher tous les utilisateurs
+            return;
+        }
+
+        List<Personne> allUsers = userService.selectAll();
+        List<Personne> filteredList = allUsers.stream()
+                .filter(user -> user.getFirst_Name().toLowerCase().contains(query.toLowerCase())
+                        || user.getLast_Name().toLowerCase().contains(query.toLowerCase())
+                        || user.getEmail().toLowerCase().contains(query.toLowerCase()))
+                .toList();
+
+        ObservableList<Personne> observableList = FXCollections.observableArrayList(filteredList);
+        user_admin_tableView.setItems(observableList);
+    }
     @FXML
     private void handleSearchAction() {
-        String email = tableView_admin_fld.getText().trim();
+        /*String email = tableView_admin_fld.getText().trim();
 
         if(email.isEmpty()) {
             showAlert("Veuillez entrer un email", Alert.AlertType.WARNING);
@@ -206,8 +234,12 @@ public class AdminDashboardController implements Initializable {
             user_admin_tableView.setItems(userList);
         } else {
             showAlert("Aucun utilisateur trouvé avec l'email: " + email, Alert.AlertType.INFORMATION);
-        }
+        }*/
+
     }
+
+
+
 
     @FXML
     private void handleSortAction() {
@@ -344,6 +376,8 @@ public class AdminDashboardController implements Initializable {
         // Au lieu de manipuler directement le BorderPane, utilisez le système de navigation
         gui.getInstance().getViewFactory().getAdminSelectedMenuItem().set("AddUser");
     }
+
+
 
 }
 

@@ -1,32 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.AdminStatistiqueController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-         <menus>
-            <Menu mnemonicParsing="false" text="File">
-               <items>
-                  <MenuItem fx:id="show_barChart_btn" mnemonicParsing="false" onAction="#handleShowBarChart" text="Show Bar Chart" />
-                  <MenuItem fx:id="show_pieChart_btn" mnemonicParsing="false" onAction="#handleShowPieChart" text="Show Pie Chart" />
-                  <MenuItem fx:id="close_chart_btn" mnemonicParsing="false" onAction="#handleClose" text="Close" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Edit">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleUpdatePieData" text="Update Data" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-   </top>
-</BorderPane>
+<AnchorPane fx:id="AdminStatWindow" prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.AdminStatistiqueController">
+   <children>
+      <BorderPane fx:id="borderPane" layoutX="91.0" layoutY="112.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="560.0">
+         <top>
+            <MenuBar BorderPane.alignment="CENTER">
+               <menus>
+                  <Menu mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem fx:id="show_barChart_btn" mnemonicParsing="false" onAction="#handleShowBarChart" text="Show Bar Chart" />
+                        <MenuItem fx:id="show_pieChart_btn" mnemonicParsing="false" onAction="#handleShowPieChart" text="Show Pie Chart" />
+                        <MenuItem fx:id="close_chart_btn" mnemonicParsing="false" onAction="#handleClose" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Edit">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleUpdatePieData" text="Update Data" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </top>
+      </BorderPane>
+      <TextField fx:id="enseignantField" editable="false" layoutX="777.0" layoutY="164.0" prefHeight="26.0" prefWidth="301.0" style="-fx-font-size: 24px;" />
+      <TextField fx:id="artisteField" editable="false" layoutX="777.0" layoutY="244.0" prefHeight="26.0" prefWidth="301.0" style="-fx-font-size: 24px;" />
+      <TextField fx:id="userField" editable="false" layoutX="777.0" layoutY="323.0" prefHeight="26.0" prefWidth="301.0" style="-fx-font-size: 24px;" />
+      <Label layoutX="777.0" layoutY="131.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #8A2BE2, #4169E1);" text="Le nombre d'Enseignants en ce moment est : " />
+
+      <Label layoutX="777.0" layoutY="214.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #8A2BE2, #4169E1);" text="Le nombre d'Artistes en ce moment est : " />
+
+      <Label layoutX="780.0" layoutY="290.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #8A2BE2, #4169E1);" text="Le nombre d'utilisateurs en ce moment est : " />
+
+      <Label fx:id="topSpecialtyLabel" layoutX="250.0" layoutY="544.0" style="-fx-font-size: 36px; -fx-text-fill: #2b9348;" text="Label">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font></Label>
+      <Text layoutX="91.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tools">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Text>
+      <Button fx:id="updateCrud_btn" layoutX="383.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleaddUser" prefHeight="30.0" prefWidth="130.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="add">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Line endX="961.066650390625" endY="7.62939453125E-6" layoutX="216.0" layoutY="77.0" startX="-113.06666564941406" startY="7.62939453125E-6" />
+      <Button fx:id="deleteCrud_btn" layoutX="544.0" layoutY="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="delete">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="statsCrud_btn" layoutX="702.0" layoutY="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="stats">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="metierCrud_btn" layoutX="862.0" layoutY="30.0" mnemonicParsing="false" onAction="#handelMetier" prefHeight="30.0" prefWidth="130.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" text="metiers">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <!--<Button fx:id="refreshButton" layoutX="780.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleManualUpdate" styleClass="refresh-btn" stylesheets="@../Styles/Admin/refersh.css" text="Actualiser les statistiques" /> -->
+   </children>
+</AnchorPane>

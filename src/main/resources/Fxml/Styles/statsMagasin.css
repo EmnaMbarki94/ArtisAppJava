@@ -20,3 +20,16 @@
 .chart-bar {
     -fx-background-radius: 3 3 0 0;
 }
+/* Bouton Retour */
+.retour-btn {
+    -fx-background-color: #6b46c1;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.retour-btn:hover {
+    -fx-background-color: #805ad5;
+}

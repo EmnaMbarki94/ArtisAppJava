@@ -6,10 +6,13 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tn.esprit.entities.Personne;
@@ -54,65 +57,134 @@ public class AfficherReController {
 //        }
 //    }
 
-    private void setupListView() {
-        listViewRec.setItems(filteredData);
-        listViewRec.setCellFactory(param -> new ListCell<Reclamtion>() {
-            private final Label description = new Label();
-            private final Label date = new Label();
-            private final Label type = new Label();
-            private final Button btnModifier = new Button("Modifier");
-            private final Button btnSupprimer = new Button("Supprimer");
-            private final Button btnVoir = new Button("Voir");
-            private final HBox buttonBox = new HBox(10, btnModifier, btnSupprimer);
-            private final VBox vbox = new VBox(description, date, type, buttonBox);
+//    private void setupListView() {
+//        listViewRec.setItems(filteredData);
+//        listViewRec.setCellFactory(param -> new ListCell<Reclamtion>() {
+//            private final Label description = new Label();
+//            private final Label date = new Label();
+//            private final Label type = new Label();
+//            private final Button btnModifier = new Button("Modifier");
+//            private final Button btnSupprimer = new Button("Supprimer");
+//            private final Button btnVoir = new Button("Voir");
+//            private final HBox buttonBox = new HBox(10, btnModifier, btnSupprimer);
+//            private final VBox vbox = new VBox(description, date, type, buttonBox);
+//
+//            {
+//                vbox.setSpacing(5);
+//                vbox.setStyle("-fx-padding: 10; -fx-background-color: #f7f1ff; -fx-background-radius: 10;");
+//
+//                btnModifier.setOnAction(event -> {
+//                    Reclamtion rec = getItem();
+//                    if (rec != null) {
+//                        openModifierRecWindow(rec);
+//                    }
+//                });
+//
+//                btnSupprimer.setOnAction(event -> {
+//                    Reclamtion rec = getItem();
+//                    if (rec != null) {
+//                        showDeleteConfirmation(rec);
+//                    }
+//                });
+//
+//                btnVoir.setOnAction(event -> {
+//                    Reclamtion rec = getItem();
+//                    if (rec != null) {
+//                        openRecRepWindow(rec);
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            protected void updateItem(Reclamtion rec, boolean empty) {
+//                super.updateItem(rec, empty);
+//                if (empty || rec == null) {
+//                    setGraphic(null);
+//                } else {
+//                    description.setText("📄 Description : " + rec.getDesc_r());
+//                    date.setText("📅 Date : " + rec.getDate_r());
+//                    type.setText("📂 Type : " + rec.getType_r());
+//
+//                    if (service.hasResponseForReclamation(rec.getId())) {
+//                        buttonBox.getChildren().setAll(btnVoir);
+//                    } else {
+//                        buttonBox.getChildren().setAll(btnModifier, btnSupprimer);
+//                    }
+//
+//                    setGraphic(vbox);
+//                }
+//            }
+//        });
+//    }
+private void setupListView() {
+    listViewRec.setItems(filteredData);
+    listViewRec.setCellFactory(param -> new ListCell<Reclamtion>() {
+        private final VBox container = new VBox();
+        private final HBox headerBox = new HBox();
+        private final HBox footerBox = new HBox();
+        private final Label titleLabel = new Label();
+        private final Label dateLabel = new Label();
+        private final Label typeLabel = new Label();
+        private final Label descLabel = new Label();
+        private final Button btnModifier = new Button("Modifier");
+        private final Button btnSupprimer = new Button("Supprimer");
+        private final Button btnVoir = new Button("Voir la réponse");
 
-            {
-                vbox.setSpacing(5);
-                vbox.setStyle("-fx-padding: 10; -fx-background-color: #f7f1ff; -fx-background-radius: 10;");
+        {
+            // Configuration des styles
+            container.getStyleClass().add("reclamation-cell");
+            titleLabel.getStyleClass().add("reclamation-title");
+            dateLabel.getStyleClass().add("reclamation-date");
+            typeLabel.getStyleClass().add("reclamation-type");
+            descLabel.getStyleClass().add("reclamation-desc");
+            btnModifier.getStyleClass().add("action-button");
+            btnModifier.getStyleClass().add("edit-button");
+            btnSupprimer.getStyleClass().add("action-button");
+            btnSupprimer.getStyleClass().add("delete-button");
+            btnVoir.getStyleClass().add("action-button");
+            btnVoir.getStyleClass().add("view-button");
 
-                btnModifier.setOnAction(event -> {
-                    Reclamtion rec = getItem();
-                    if (rec != null) {
-                        openModifierRecWindow(rec);
-                    }
-                });
+            // Configuration de la mise en page
+            headerBox.setSpacing(10);
+            headerBox.getChildren().addAll(titleLabel, dateLabel);
 
-                btnSupprimer.setOnAction(event -> {
-                    Reclamtion rec = getItem();
-                    if (rec != null) {
-                        showDeleteConfirmation(rec);
-                    }
-                });
+            footerBox.setSpacing(10);
+            footerBox.setAlignment(Pos.CENTER_RIGHT);
 
-                btnVoir.setOnAction(event -> {
-                    Reclamtion rec = getItem();
-                    if (rec != null) {
-                        openRecRepWindow(rec);
-                    }
-                });
-            }
+            VBox contentBox = new VBox(5, headerBox, typeLabel, descLabel, footerBox);
+            container.getChildren().add(contentBox);
+            VBox.setVgrow(contentBox, Priority.ALWAYS);
+            container.setPadding(new Insets(15));
+        }
 
-            @Override
-            protected void updateItem(Reclamtion rec, boolean empty) {
-                super.updateItem(rec, empty);
-                if (empty || rec == null) {
-                    setGraphic(null);
+        @Override
+        protected void updateItem(Reclamtion rec, boolean empty) {
+            super.updateItem(rec, empty);
+
+            if (empty || rec == null) {
+                setGraphic(null);
+            } else {
+                titleLabel.setText("Réclamation #" + rec.getId());
+                dateLabel.setText("Date: " + rec.getDate_r());
+                typeLabel.setText("Type: " + rec.getType_r());
+                descLabel.setText(rec.getDesc_r());
+
+                // Gestion des boutons en fonction de la présence de réponse
+                footerBox.getChildren().clear();
+                if (service.hasResponseForReclamation(rec.getId())) {
+                    footerBox.getChildren().add(btnVoir);
+                    btnVoir.setOnAction(event -> openRecRepWindow(rec));
                 } else {
-                    description.setText("📄 Description : " + rec.getDesc_r());
-                    date.setText("📅 Date : " + rec.getDate_r());
-                    type.setText("📂 Type : " + rec.getType_r());
-
-                    if (service.hasResponseForReclamation(rec.getId())) {
-                        buttonBox.getChildren().setAll(btnVoir);
-                    } else {
-                        buttonBox.getChildren().setAll(btnModifier, btnSupprimer);
-                    }
-
-                    setGraphic(vbox);
+                    footerBox.getChildren().addAll(btnModifier, btnSupprimer);
+                    btnModifier.setOnAction(event -> openModifierRecWindow(rec));
+                    btnSupprimer.setOnAction(event -> showDeleteConfirmation(rec));
                 }
+
+                setGraphic(container);
             }
-        });
-    }
+        }
+    });
+}
 
 
     private void loadReclamations() {
@@ -201,6 +273,7 @@ public class AfficherReController {
             showAlert("Erreur", "Impossible d'ouvrir le chatbot", "Une erreur est survenue lors de l'ouverture du chatbot.");
         }
     }
+
 
     private void showAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

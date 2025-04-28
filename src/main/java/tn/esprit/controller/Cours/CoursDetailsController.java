@@ -142,7 +142,7 @@ public class CoursDetailsController implements Initializable {
             editButton.setVisible(false);
             deleteButton.setVisible(false);
         }
-        Image icon=new Image(getClass().getResourceAsStream("/icons/translate.jpg"));
+        Image icon=new Image(getClass().getResourceAsStream("/icons/translate.png"));
         ImageView iconView = new ImageView(icon);
         iconView.setFitHeight(40);
         iconView.setFitWidth(40);

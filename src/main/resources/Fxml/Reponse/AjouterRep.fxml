@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="606.0" prefWidth="620.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reponse.AjouterRpController">
+<AnchorPane prefHeight="606.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reponse.AjouterRpController">
    <children>
       <AnchorPane layoutY="-2.0" prefHeight="106.0" prefWidth="620.0" style="-fx-background-color: #dbb3f5;">
          <children>
@@ -43,11 +43,6 @@
          </effect>
       </DatePicker>
       <Button fx:id="AjouterBtRp" layoutX="112.0" layoutY="431.0" mnemonicParsing="false" onAction="#handleAjouter" prefHeight="25.0" prefWidth="398.0" style="-fx-background-color: #dbb3f5;" text="Ajouter" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold Italic" size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="AfficherBtRp" layoutX="112.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="398.0" style="-fx-background-color: #dbb3f5;" text="Afficher la liste">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>

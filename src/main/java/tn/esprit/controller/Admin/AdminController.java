@@ -41,6 +41,23 @@ public class AdminController implements Initializable {
                         admin_parent.setCenter(gui.getInstance().getViewFactory().getUpdateUserAdminCrudWindow());
                 //***********************
 
+                case "Metiers" ->
+                        admin_parent.setCenter(gui.getInstance().getViewFactory().getAdminMetiersdWindow());
+                //*************
+
+                case "editfile" ->
+                        admin_parent.setCenter(gui.getInstance().getViewFactory().getAdminEditFileWindow());
+
+                //*************************
+                case "exportfile" ->
+                        admin_parent.setCenter(gui.getInstance().getViewFactory().getAdminExportFileWindow());
+                //**************************
+
+                case "stat" ->
+                        admin_parent.setCenter(gui.getInstance().getViewFactory().getAdminStatistcWindow());
+
+                //****************************
+
                 default -> admin_parent.setCenter(gui.getInstance().getViewFactory().getDashboardAdminView());
             }
         });

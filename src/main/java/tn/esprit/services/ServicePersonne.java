@@ -61,7 +61,7 @@ public class ServicePersonne implements CRUD<Personne> {
         }
     }
 
-    @Override
+    /*@Override
     public void modifier(Personne user) {
         String req = "UPDATE user SET roles=?, password=?, cin=?, last_name=?, first_name=?, num_tel=?, address=?, verification_code=?, is_verified=? WHERE email=?";
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
@@ -82,19 +82,40 @@ public class ServicePersonne implements CRUD<Personne> {
         } catch (SQLException e) {
             System.err.println("Erreur de modification : " + e.getMessage());
         }
-    }
+    }*/
 
-    public void modifierPoint(Personne user) {
-        String req = "UPDATE user SET point=? WHERE email=?";
+    public void modifier(Personne user) {
+        String req = "UPDATE user SET roles=?, password=?, cin=?, last_name=?, first_name=?, num_tel=?, address=?, verification_code=?, is_verified=? WHERE email=?";
+
+        // On vérifie si le mot de passe a été changé, si non, on garde le mot de passe actuel sans le re-hasher
+        String passwordToSave;
+        if (user.getPassword().startsWith("$2a$") || user.getPassword().startsWith("$2b$") || user.getPassword().startsWith("$2y$")) {
+            // Si le mot de passe est déjà haché, on ne le modifie pas
+            passwordToSave = user.getPassword();
+        } else {
+            // Si ce n'est pas haché, on le hache avant de l'envoyer à la base de données
+            passwordToSave = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        }
+
         try (PreparedStatement ps = cnx.prepareStatement(req)) {
-            ps.setInt(1, user.getPoint());
-            ps.setString(2, user.getEmail());
+            ps.setString(1, user.getRoles());
+            ps.setString(2, passwordToSave);  // Utilisation du mot de passe traité
+            ps.setString(3, user.getCin());
+            ps.setString(4, user.getLast_Name());
+            ps.setString(5, user.getFirst_Name());
+            ps.setString(6, user.getNum_tel());
+            ps.setString(7, user.getAddress());
+            ps.setString(8, user.getVerificationCode());  // Si tu n'utilises pas ce champ, tu peux le mettre à null
+            ps.setInt(9, user.getIs_verified());
+            ps.setString(10, user.getEmail());
+
             int rows = ps.executeUpdate();
             System.out.println(rows > 0 ? "Mise à jour réussie" : "Échec de la mise à jour");
         } catch (SQLException e) {
             System.err.println("Erreur de modification : " + e.getMessage());
         }
     }
+
 
     @Override
     public List<Personne> selectAll() {
@@ -237,5 +258,17 @@ public class ServicePersonne implements CRUD<Personne> {
         p.setIs_verified(rs.getInt("is_verified"));
         p.setSpecialite(rs.getString("specialite"));
         p.setPoint(rs.getInt("point"));
+    }
+
+    public void modifierPoint(Personne user) {
+        String req = "UPDATE user SET point=? WHERE email=?";
+        try (PreparedStatement ps = cnx.prepareStatement(req)) {
+            ps.setInt(1, user.getPoint());
+            ps.setString(2, user.getEmail());
+            int rows = ps.executeUpdate();
+            System.out.println(rows > 0 ? "Mise à jour réussie" : "Échec de la mise à jour");
+        } catch (SQLException e) {
+            System.err.println("Erreur de modification : " + e.getMessage());
+        }
     }
 }

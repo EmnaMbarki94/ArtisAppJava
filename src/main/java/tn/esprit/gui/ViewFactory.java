@@ -24,6 +24,7 @@ public class ViewFactory
     private AnchorPane evenementView;
     private AnchorPane profileView;
 
+
 //Admin
 
     private final StringProperty adminSelectedMenuItem;
@@ -36,7 +37,10 @@ public class ViewFactory
     private AnchorPane profileAdminView;
     private AnchorPane AdminAddUserView;
     private AnchorPane UpdateUserAdminCrudWindow;
-
+    private AnchorPane AdminMetiersWindow;
+    private AnchorPane AdminEditFileWindow;
+    private AnchorPane AdminStatWindow;
+    private AnchorPane AdminExportFileWindow;
     public ViewFactory() {
         this.UserSelectedMenuItem = new SimpleStringProperty("");
         this.adminSelectedMenuItem = new SimpleStringProperty("");
@@ -70,6 +74,11 @@ public class ViewFactory
 
     public void showSignInWindow(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/SignIn.fxml"));
+        createStage(loader);
+    }
+
+    public void showForgotPasswordnWindow(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/ForgotPassword.fxml"));
         createStage(loader);
     }
 
@@ -131,6 +140,63 @@ public class ViewFactory
         }
         return UpdateUserAdminCrudWindow;
     }
+
+    //******* admin metier ************
+
+    public AnchorPane getAdminMetiersdWindow() {
+        if (AdminMetiersWindow == null) {
+            try {
+                AdminMetiersWindow = new FXMLLoader(getClass().getResource("/Fxml/Admin/AdminMetier.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return AdminMetiersWindow;
+    }
+    //*********************************
+
+    //admin metier editer file *********
+    public AnchorPane getAdminEditFileWindow() {
+        if (AdminEditFileWindow == null) {
+            try {
+                AdminEditFileWindow = new FXMLLoader(getClass().getResource("/Fxml/Admin/editfile.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return AdminEditFileWindow;
+    }
+    //****************************
+
+    //admin export file ********
+    public AnchorPane getAdminExportFileWindow() {
+        if (AdminExportFileWindow == null) {
+            try {
+                AdminExportFileWindow = new FXMLLoader(getClass().getResource("/Fxml/Admin/AdminexportFiles.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return AdminExportFileWindow;
+    }
+    //*************
+
+    //admin static *********
+    public AnchorPane getAdminStatistcWindow() {
+        if (AdminStatWindow == null) {
+            try {
+                AdminStatWindow = new FXMLLoader(getClass().getResource("/Fxml/Admin/adminStatistique.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return AdminStatWindow;
+    }
+    //****************************
+
+
+    //************************
+
 
     public AnchorPane getEnseignementView() {
         if(enseignementView == null)
@@ -216,14 +282,14 @@ public class ViewFactory
     }
 
     public AnchorPane getArtisteAdminView(){
-        if(artistAdminView == null){
+        //if(artistAdminView == null){
             try{
                 artistAdminView = new FXMLLoader(getClass().getResource("/Fxml/Admin/ArtisteAdmin.fxml")).load();
             }catch(Exception e)
             {
                 e.printStackTrace();
             }
-        }
+        //}
         return artistAdminView;
     }
 
@@ -242,8 +308,8 @@ public class ViewFactory
 
     public AnchorPane getReclamationView()
     {
-        //if(reclamationView == null)
-        //{
+        if(reclamationView == null)
+        {
             try{
                 reclamationView = new FXMLLoader(getClass().getResource("/Fxml/Reclamation/AfficherRecl.fxml")).load();
             }catch(Exception e)
@@ -251,7 +317,7 @@ public class ViewFactory
                 e.printStackTrace();
             }
 
-        //}
+        }
         return reclamationView;
     }
 

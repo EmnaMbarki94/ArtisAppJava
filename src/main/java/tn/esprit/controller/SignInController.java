@@ -1,6 +1,7 @@
 package tn.esprit.controller;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -25,6 +26,7 @@ public class SignInController implements Initializable {
     public Button register_signIn_btn;
     @FXML
     public Text email_error_txt, phoneNumber_error_txt, name_error_txt, lastName_error_txt, password_error_txt, cin_error_txt;
+    public Button retour_btn;
     @FXML
     private SplitMenuButton splitmenu_signin_fld;
     @FXML
@@ -197,5 +199,11 @@ public class SignInController implements Initializable {
         }
     }
 
+    public void handleReturnToLogin(ActionEvent actionEvent)
+    {
+        Stage stage = (Stage) retour_btn.getScene().getWindow();
+        gui.getInstance().getViewFactory().closeStage(stage);
+        gui.getInstance().getViewFactory().showLoginWindow();
+    }
 }
 

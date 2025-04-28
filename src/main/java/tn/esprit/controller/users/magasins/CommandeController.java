@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -59,16 +60,18 @@ public class CommandeController implements Initializable, JavaBridge.NavigationH
         }
 
         // Map initialization
+        mapView.setPrefHeight(600); // Force une hauteur correcte
+        mapView.setPrefWidth(800);  // Force une largeur correcte
         webEngine = mapView.getEngine();
         configureWebEngine();
-        webEngine.loadContent(getMapHTML(36.8065, 10.1815));
+        webEngine.loadContent(getMapHtml());
     }
 
     private void configureWebEngine() {
         // Enable necessary permissions
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
         webEngine.setJavaScriptEnabled(true);
-        webEngine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+        webEngine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.115 Safari/537.36");
 
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
@@ -174,69 +177,105 @@ public class CommandeController implements Initializable, JavaBridge.NavigationH
     private Image getDefaultImage() {
         return new Image(getClass().getResourceAsStream("/image/magasin/imagedf.jpg"));
     }
-    private String getMapHTML(double lat, double lon) {
-        return String.format("""
+    private String getMapHtml() {
+        return """
         <!DOCTYPE html>
-        <html>
+        <html lang="fr">
         <head>
-            <meta charset="utf-8">
-            <title>Carte de localisation</title>
+            <meta charset="UTF-8">
+            <title>Carte Tunisie</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-                  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-                  crossorigin=""/>
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
             <style>
-                body { margin: 0; padding: 0; }
-                #map { height: 100vh; width: 100%%; }
+                html, body {
+                    margin: 0;
+                    padding: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                    background: #f8f9fa;
+                }
+                #map {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                }
+                img.leaflet-tile {
+                    image-rendering: optimizeSpeed; /* améliore chargement */
+                }
+                .leaflet-popup-content-wrapper {
+                    font-size: 14px;
+                    line-height: 1.4;
+                }
             </style>
         </head>
         <body>
             <div id="map"></div>
-            
-            <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-                    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-                    crossorigin=""></script>
-            
+
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
             <script>
-                var map = L.map('map').setView([%f, %f], 13);
-                
+                var map = L.map('map', {
+                    preferCanvas: true,
+                    zoomControl: true,
+                    attributionControl: true
+                }).setView([34.0, 9.0], 6);
+
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    attribution: '&copy; OpenStreetMap contributors',
                     maxZoom: 19
                 }).addTo(map);
-                
-                var marker = L.marker([%f, %f]).addTo(map);
-                
-                map.on('click', function(e) {
-                    var lat = e.latlng.lat;
-                    var lon = e.latlng.lng;
-                    marker.setLatLng(e.latlng);
-                    getAddress(lat, lon);
-                });
-                
-                function getAddress(lat, lon) {
-                    var url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon + '&zoom=18&addressdetails=1';
-                    
-                    fetch(url, {
-                        headers: {
-                            'User-Agent': 'JavaFX Mapping App'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.display_name) {
-                            alert('adresse:' + data.display_name);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+
+                var marker = null;
+
+                function sendAddressToJava(address) {
+                    alert('adresse:' + address);
                 }
+
+                function reverseGeocode(lat, lon) {
+                    var url = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lon;
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            var address = data.display_name || ("Lat: " + lat + ", Lng: " + lon);
+
+                            if (marker) {
+                                marker.remove();
+                            }
+                            marker = L.marker([lat, lon]).addTo(map)
+                                .bindPopup("<b>Adresse :</b><br>" + address)
+                                .openPopup();
+
+                            sendAddressToJava(address);
+                        })
+                        .catch(error => {
+                            console.error('Erreur de géocodage inverse:', error);
+                            var fallback = "Lat: " + lat.toFixed(5) + ", Lng: " + lon.toFixed(5);
+                            if (marker) {
+                                marker.remove();
+                            }
+                            marker = L.marker([lat, lon]).addTo(map)
+                                .bindPopup("<b>Coordonnées :</b><br>" + fallback)
+                                .openPopup();
+                            sendAddressToJava(fallback);
+                        });
+                }
+
+                map.on('click', function(e) {
+                    var latlng = e.latlng;
+                    reverseGeocode(latlng.lat, latlng.lng);
+                });
             </script>
         </body>
         </html>
-        """, lat, lon, lat, lon);
+        """;
     }
+
+
+
+
+
 
     private double calculerTotalCommande() {
         return Panier.getItems().stream()
@@ -343,6 +382,7 @@ public class CommandeController implements Initializable, JavaBridge.NavigationH
             Platform.runLater(() -> {
                 Stage stripeStage = new Stage();
                 WebView webView = new WebView();
+
                 WebEngine engine = webView.getEngine();
 
                 // Configuration essentielle

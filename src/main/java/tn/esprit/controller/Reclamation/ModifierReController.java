@@ -124,9 +124,6 @@ import java.util.List;
 public class ModifierReController {
 
     @FXML
-    private Button AfficherBt;
-
-    @FXML
     private TextField DescriptionTextField1;
 
     @FXML

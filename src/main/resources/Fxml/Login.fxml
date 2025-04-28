@@ -19,30 +19,26 @@
       <TextField fx:id="email_login_field" layoutX="884.0" layoutY="161.0" prefHeight="43.0" prefWidth="442.0" />
       <Label fx:id="email_login_lbl" layoutX="854.0" layoutY="83.0" text="E-mail:">
          <font>
-            <Font size="26.0" />
+            <Font name="System Bold" size="26.0" />
          </font>
       </Label>
       <Label fx:id="password_login_lbl" layoutX="855.0" layoutY="214.0" prefHeight="38.0" prefWidth="145.0" text="Password:">
          <font>
-            <Font size="26.0" />
+            <Font name="System Bold" size="26.0" />
          </font>
       </Label>
       <PasswordField fx:id="password_login_field" accessibleRole="PASSWORD_FIELD" layoutX="884.0" layoutY="270.0" prefHeight="45.0" prefWidth="441.0" />
-      <Button fx:id="login_btn" layoutX="884.0" layoutY="395.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="51.0" prefWidth="442.0" text="log  In">
+      <Button fx:id="login_btn" layoutX="884.0" layoutY="395.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="51.0" prefWidth="442.0" stylesheets="@Styles/Admin/profile.css" text="log  In">
          <font>
             <Font name="Segoe UI Semibold" size="24.0" />
          </font>
       </Button>
-      <Label fx:id="email_fp_lbl" layoutX="1162.0" layoutY="340.0" prefHeight="46.0" prefWidth="236.0" text="forgot your password?">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Text fx:id="error_login_lbl" layoutX="915.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="145.60000000000014" />
-      <Button fx:id="signIn_btn" layoutX="884.0" layoutY="458.0" mnemonicParsing="false" onAction="#onSignIn" prefHeight="51.0" prefWidth="442.0" text="Sign Up">
+      <Text fx:id="error_login_lbl" fill="#ec0505" layoutX="915.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="145.60000000000014" />
+      <Button fx:id="signIn_btn" layoutX="884.0" layoutY="458.0" mnemonicParsing="false" onAction="#onSignIn" prefHeight="51.0" prefWidth="442.0" stylesheets="@Styles/Admin/profile.css" text="Sign Up">
          <font>
             <Font name="Segoe UI Semibold" size="24.0" />
          </font>
       </Button>
+      <Button layoutX="1248.0" layoutY="332.0" mnemonicParsing="false" onAction="#onForgotPassWord" stylesheets="@Styles/Admin/profile.css" text="mot de passe oublié ?" />
    </children>
 </AnchorPane>

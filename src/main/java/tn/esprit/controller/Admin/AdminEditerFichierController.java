@@ -41,9 +41,8 @@ public class AdminEditerFichierController {
         cp.setOnAction(e -> {
             String hexColor = "#" + cp.getValue().toString().substring(2, 8);
             ta.setStyle("-fx-text-fill:" + hexColor);
-          //  ta.setText(cp.getValue() + "\n" + ta.getText());
+            ta.setText(cp.getValue() + "\n" + ta.getText());
         });
-
 
         openFileBtn.setOnAction(e -> {
             FileChooser fc = new FileChooser();
@@ -55,26 +54,52 @@ public class AdminEditerFichierController {
             File file = fc.showOpenDialog(new Stage());
 
             if (file != null) {
+                //if (file.length() == 0) {
+                //    ta.setText("Le fichier est vide !");
+                //    return;
+                //}
+
                 String fileName = file.getName().toLowerCase();
 
-                if (fileName.endsWith(".docx")) {
-                    // ➤ Lire le fichier Word avec Apache POI
-                    try (FileInputStream fis = new FileInputStream(file);
-                         XWPFDocument doc = new XWPFDocument(fis)) {
+                if (fileName.endsWith(".docx") && file.length()>0) {
+                    try (FileInputStream fis = new FileInputStream(file)) {
+                        XWPFDocument doc = new XWPFDocument(fis);
 
-                        StringBuilder sb = new StringBuilder();
-                        for (XWPFParagraph p : doc.getParagraphs()) {
-                            sb.append(p.getText()).append("\n");
+                        StringBuilder content = new StringBuilder();
+
+                            for (XWPFParagraph paragraph : doc.getParagraphs()) {
+                                String paragraphText = paragraph.getText();
+                                if (!paragraphText.contains("Voici un nouveau texte ajouté au fichier Word.")) {
+                                    content.append(paragraphText).append("\n");
+                                }
+                            }
+
+
+
+                        if (content.toString().trim().isEmpty()) {
+                            System.out.println("Le fichier Word est vide.");
+                        } else {
+                            ta.setText(content.toString());
                         }
-                        ta.setText(sb.toString());
+
                         currentFile = file;
 
-                    } catch (Exception ex) {
-                        ta.setText("Erreur de lecture du fichier Word !");
-                    }
+                        // Ajouter du texte sans la phrase indésirable
+                        XWPFParagraph paragraph = doc.createParagraph();
+                        XWPFRun run = paragraph.createRun();
+                        run.setText("Ajout d'un nouveau texte sans la phrase indésirable.");
 
+                        try (FileOutputStream fos = new FileOutputStream(file)) {
+                            doc.write(fos);
+                        }
+
+                    } catch (org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException ex) {
+                        ta.setText("Fichier Word invalide !");
+                    } catch (Exception ex) {
+                        ta.setText("Erreur de lecture ou écriture du fichier Word !");
+                        ex.printStackTrace();
+                    }
                 } else {
-                    // ➤ Lire un fichier CSV ou TXT avec Scanner
                     try (Scanner sc = new Scanner(new FileInputStream(file))) {
                         StringBuilder content = new StringBuilder();
                         while (sc.hasNextLine()) {
@@ -85,8 +110,15 @@ public class AdminEditerFichierController {
                             }
                             content.append("\n");
                         }
-                        ta.setText(content.toString());
+
+                        if (content.toString().trim().isEmpty()) {
+                            System.out.println("Fichier CSV/TXT vide !");
+                        } else {
+                            ta.setText(content.toString());
+                        }
+
                         currentFile = file;
+
                     } catch (Exception ex) {
                         ta.setText("Erreur de lecture du fichier !");
                     }
@@ -97,12 +129,21 @@ public class AdminEditerFichierController {
 
 
 
+
+
+
+
+
+
+
+
         saveFileBtn.setOnAction(e -> {
             if (currentFile != null) {
                 String fileName = currentFile.getName().toLowerCase();
+
                 if (fileName.endsWith(".docx")) {
                     try {
-                        writeTextAreaToWord(currentFile);
+                        writeTextAreaToWord(currentFile); // Appel à la méthode d'écriture pour le fichier Word
 
                         // ✅ Alerte succès Word
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -121,7 +162,7 @@ public class AdminEditerFichierController {
                     }
                 } else {
                     try (java.io.FileWriter fw = new java.io.FileWriter(currentFile)) {
-                        fw.write(ta.getText());
+                        fw.write(ta.getText()); // Sauvegarde du texte du TextArea dans un fichier texte ou CSV
 
                         // ✅ Alerte succès fichier texte/csv
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -131,7 +172,7 @@ public class AdminEditerFichierController {
                         alert.showAndWait();
 
                     } catch (Exception ex) {
-                        // probleme au niveau lors de la sauvegarde du fichier
+                        // ❌ Alerte erreur fichier texte/csv
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Erreur");
                         alert.setHeaderText("Échec de la sauvegarde");
@@ -140,7 +181,7 @@ public class AdminEditerFichierController {
                     }
                 }
             } else {
-                // pas de fichier
+                // Pas de fichier sélectionné
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Aucun fichier");
                 alert.setHeaderText("Pas de fichier sélectionné");

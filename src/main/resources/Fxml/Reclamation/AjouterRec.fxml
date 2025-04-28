@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="642.0" prefWidth="610.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.AjouterReController">
+<AnchorPane prefHeight="642.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.AjouterReController">
    <children>
       <AnchorPane layoutY="-5.0" prefHeight="99.0" prefWidth="610.0" style="-fx-background-color: #dbb3f5;">
          <children>
@@ -48,7 +48,7 @@
 <!--            <DropShadow />-->
 <!--         </effect>-->
 <!--      </DatePicker>-->
-      <DatePicker fx:id="date" layoutX="102.0" layoutY="390.0" prefHeight="33.0" prefWidth="398.0" promptText="Date" editable="false" disable="true">
+      <DatePicker fx:id="date" disable="true" editable="false" layoutX="102.0" layoutY="390.0" prefHeight="33.0" prefWidth="398.0" promptText="Date">
          <effect>
             <DropShadow />
          </effect>
@@ -56,11 +56,6 @@
 
 
       <Button fx:id="AjouterBt" layoutX="102.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleAjouter" prefHeight="25.0" prefWidth="398.0" style="-fx-background-color: #dbb3f5;" text="Ajouter" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold Italic" size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="AfficherBt" layoutX="102.0" layoutY="510.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="398.0" style="-fx-background-color: #dbb3f5;" text="Afficher la liste">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>

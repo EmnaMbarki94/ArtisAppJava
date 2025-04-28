@@ -6,16 +6,88 @@
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="tn.esprit.controller.chatbot.ChatbotController"
-      spacing="10" style="-fx-padding: 10; -fx-background-color: white;">
+      spacing="0" style="-fx-padding: 0; -fx-background-color: #f5f5f5;"
+      prefWidth="400" prefHeight="600">
 
-    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vvalue="1.0">
-        <VBox fx:id="messagesContainer" spacing="5"/>
+    <!-- Header -->
+    <HBox style="-fx-background-color: #dbb3f5; -fx-padding: 15;" alignment="CENTER_LEFT" spacing="10">
+        <Label text="ArtisBot" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        <Label text="Chat" style="-fx-font-size: 16; -fx-text-fill: white;"/>
+    </HBox>
+
+    <!-- Chat area -->
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vvalue="1.0"
+                style="-fx-background: #f5f5f5; -fx-padding: 0;"
+                VBox.vgrow="ALWAYS">
+        <VBox fx:id="messagesContainer" spacing="10" style="-fx-padding: 15;"/>
     </ScrollPane>
 
-    <HBox spacing="10" alignment="CENTER">
-        <TextField fx:id="messageField" promptText="Tapez votre message..." HBox.hgrow="ALWAYS"/>
-        <Button fx:id="sendButton" text="Envoyer" style="-fx-background-color: #dbb3f5; -fx-text-fill: white;"/>
-        <Button fx:id="historyButton" text="Historique" style="-fx-background-color: #a3a3a3; -fx-text-fill: white;"/>
-        <Button fx:id="clearButton" text="Effacer" style="-fx-background-color: #f5b3b3; -fx-text-fill: white;"/>
+    <!-- Input area -->
+    <HBox style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-width: 1 0 0 0;"
+          spacing="10" alignment="CENTER">
+        <TextField fx:id="messageField" promptText="Tapez votre message..."
+                   style="-fx-background-radius: 20; -fx-padding: 8 15;"
+                   HBox.hgrow="ALWAYS"/>
+        <Button fx:id="sendButton" text="Envoyer"
+                style="-fx-background-color: #dbb3f5; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 15;"/>
+        <Button fx:id="historyButton" text="Historique"
+                style="-fx-background-color: #a3a3a3; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 15;"/>
+        <Button fx:id="clearButton" text="Effacer"
+                style="-fx-background-color: #f5b3b3; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 15;"/>
     </HBox>
 </VBox>
+
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+
+<!--<?import javafx.scene.control.*?>-->
+<!--<?import javafx.scene.layout.*?>-->
+<!--<?import javafx.scene.text.*?>-->
+
+<!--<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"-->
+<!--      fx:controller="tn.esprit.controller.chatbot.ChatbotController"-->
+<!--      spacing="0" style="-fx-padding: 0; -fx-background-color: #f5f5f5;">-->
+
+<!--    &lt;!&ndash; Header &ndash;&gt;-->
+<!--    <HBox style="-fx-background-color: #dbb3f5; -fx-padding: 10;" alignment="CENTER_LEFT" spacing="10">-->
+<!--        <Label text="ArtisBot" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;"/>-->
+<!--        <Label text="Chat" style="-fx-font-size: 14; -fx-text-fill: white;"/>-->
+<!--    </HBox>-->
+
+<!--    &lt;!&ndash; Chat area &ndash;&gt;-->
+<!--    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vvalue="1.0" style="-fx-background: #f5f5f5;">-->
+<!--        <VBox fx:id="messagesContainer" spacing="5" style="-fx-padding: 10;"/>-->
+<!--    </ScrollPane>-->
+
+<!--    &lt;!&ndash; Input area &ndash;&gt;-->
+<!--    <HBox style="-fx-background-color: white; -fx-padding: 10; -fx-border-color: #ddd; -fx-border-width: 1 0 0 0;"-->
+<!--          spacing="10" alignment="CENTER">-->
+<!--        <TextField fx:id="messageField" promptText="Tapez votre message..." style="-fx-background-radius: 20;"-->
+<!--                   HBox.hgrow="ALWAYS"/>-->
+<!--        <Button fx:id="sendButton" text="Envoyer" style="-fx-background-color: #dbb3f5; -fx-text-fill: white; -fx-background-radius: 20;"/>-->
+<!--        <Button fx:id="historyButton" text="Historique" style="-fx-background-color: #a3a3a3; -fx-text-fill: white; -fx-background-radius: 20;"/>-->
+<!--        <Button fx:id="clearButton" text="Effacer" style="-fx-background-color: #f5b3b3; -fx-text-fill: white; -fx-background-radius: 20;"/>-->
+<!--    </HBox>-->
+<!--</VBox>-->
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+
+<!--<?import javafx.scene.control.*?>-->
+<!--<?import javafx.scene.layout.*?>-->
+<!--<?import javafx.scene.text.*?>-->
+
+<!--<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"-->
+<!--      fx:controller="tn.esprit.controller.chatbot.ChatbotController"-->
+<!--      spacing="10" style="-fx-padding: 10; -fx-background-color: white;">-->
+
+<!--    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vvalue="1.0">-->
+<!--        <VBox fx:id="messagesContainer" spacing="5"/>-->
+<!--    </ScrollPane>-->
+
+<!--    <HBox spacing="10" alignment="CENTER">-->
+<!--        <TextField fx:id="messageField" promptText="Tapez votre message..." HBox.hgrow="ALWAYS"/>-->
+<!--        <Button fx:id="sendButton" text="Envoyer" style="-fx-background-color: #dbb3f5; -fx-text-fill: white;"/>-->
+<!--        <Button fx:id="historyButton" text="Historique" style="-fx-background-color: #a3a3a3; -fx-text-fill: white;"/>-->
+<!--        <Button fx:id="clearButton" text="Effacer" style="-fx-background-color: #f5b3b3; -fx-text-fill: white;"/>-->
+<!--    </HBox>-->
+<!--</VBox>-->
