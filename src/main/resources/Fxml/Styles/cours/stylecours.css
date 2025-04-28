@@ -1,0 +1,40 @@
+.button {
+    -fx-background-color: #8b008b;
+    -fx-text-fill: #fff;
+    -fx-transition: all 0.3s;
+}
+
+.button:hover {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #8b008b;
+}
+.toggle-button {
+    -fx-background-color: #8b008b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-text-transform: uppercase;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-transition: 0.3s;
+}
+
+.toggle-button:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #8b008b;
+    -fx-cursor: hand;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #4b004b;
+    -fx-text-fill: white;
+}
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: #8b008b;
+    -fx-border-radius: 8px;
+}
+
+.label {
+    -fx-font-family: "Arial";
+}

@@ -1,8 +1,10 @@
 package tn.esprit.controller.Admin.Magasins;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.Collections;
 
 public class AjoutMagasin {
 
@@ -79,24 +82,46 @@ public class AjoutMagasin {
             return;
         }
 
-        // Copie de l’image
-        String destinationPath = "src/main/resources/image/magasin/";
-        String fileName = System.currentTimeMillis() + "_" + imageMagasin.getName();
-        File destFile = new File(destinationPath + fileName);
-
         try {
-            Files.copy(imageMagasin.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            if (imageMagasin == null) {
+                System.out.println("Aucune image sélectionnée");
+                return;
+            }
+
+            // Chemin relatif dans votre projet
+            String projectImageDir = "target/classes/image/magasin/";
+            File directory = new File(projectImageDir);
+
+            // Créer le dossier s'il n'existe pas
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            // Nom de fichier sécurisé avec timestamp
+            String originalName = imageMagasin.getName();
+            String safeFileName = System.currentTimeMillis() + "_" +
+                    originalName.replaceAll("[^a-zA-Z0-9.-]", "_");
+
+            // Chemin complet de destination
+            File destFile = new File(projectImageDir + safeFileName);
+
+            // Copier le fichier
+            Files.copy(imageMagasin.toPath(), destFile.toPath(),
+                    StandardCopyOption.REPLACE_EXISTING);
+
+            System.out.println("Image sauvegardée dans : " + destFile.getAbsolutePath());
 
             Magasin magasin = new Magasin();
             magasin.setNom_m(nom);
             magasin.setType_m(type);
-            magasin.setPhoto_m(fileName);
+            magasin.setPhoto_m(safeFileName); // Stocker uniquement le nom du fichier
 
             new ServiceMagasin().ajouter(magasin);
             retournerAccueil();
             System.out.println("Magasin ajouté avec succès !");
         } catch (IOException | SQLException e) {
             e.printStackTrace();
+            // Ajouter un feedback utilisateur ici
         }
     }
 
@@ -126,16 +151,38 @@ public class AjoutMagasin {
     @FXML
     private void retournerAccueil() {
         try {
+            // Charger la page FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/GestionMagasins/MagasinAdmin.fxml"));
             AnchorPane pageAccueil = loader.load();
 
-            // Remplace l'affichage actuel par celui des magasins
-            tfNom.getScene().lookup("#contenuPane"); // Assure-toi que contenuPane existe dans la page d'origine
-            AnchorPane root = (AnchorPane) tfNom.getScene().lookup("#contenuPane");
-            root.getChildren().setAll(pageAccueil);
+            // Obtenir la référence au contenuPane
+            AnchorPane root = (AnchorPane) btnAjouter.getScene().lookup("#contenuPane");
 
+            if (root != null) {
+                // Solution 1: Utiliser une liste pour éviter l'ambiguïté
+//                root.getChildren().setAll(Collections.singletonList(pageAccueil));
+
+                // Solution alternative: Utiliser clear() puis add()
+                 root.getChildren().clear();
+                 root.getChildren().add(pageAccueil);
+
+                // Obtenir le contrôleur
+                AdminMagasinController controller = loader.getController();
+
+                // Rafraîchir les données
+                Platform.runLater(controller::rafraichirPage);
+            } else {
+                System.err.println("Erreur: contenuPane non trouvé dans la scène");
+            }
         } catch (IOException e) {
+            System.err.println("Erreur lors du chargement de la page d'accueil: " + e.getMessage());
             e.printStackTrace();
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Impossible de charger la page d'accueil.");
+            alert.showAndWait();
         }
     }
 

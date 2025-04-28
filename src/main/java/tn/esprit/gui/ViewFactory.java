@@ -161,7 +161,7 @@ public class ViewFactory
         if(magasinView == null)
         {
             try{
-                magasinView = new FXMLLoader(getClass().getResource("/Fxml/users/Magasin.fxml")).load();
+                magasinView = new FXMLLoader(getClass().getResource("/Fxml/users/Magasins/Magasin.fxml")).load();
             }catch(Exception e)
             {
                 e.printStackTrace();

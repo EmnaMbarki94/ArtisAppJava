@@ -7,16 +7,16 @@ public class Comment {
     private Piece_art piece_art;
     private String content;
     private LocalDateTime creation_date;
-    private int user_id;
+    private Personne user;
     private int likes;
 
     public Comment() {}
 
-    public Comment(Piece_art piece_art, String content, LocalDateTime creation_date, int user_id, int likes) {
+    public Comment(Piece_art piece_art, String content, LocalDateTime creation_date, Personne user, int likes) {
         this.piece_art = piece_art;
         this.content = content;
         this.creation_date = creation_date;
-        this.user_id = user_id;
+        this.user = user;
         this.likes = likes;
     }
     public int getId() {
@@ -44,11 +44,11 @@ public class Comment {
     public void setCreation_date(LocalDateTime creation_date) {
         this.creation_date = creation_date;
     }
-    public int getUser_id() {
-        return user_id;
+    public Personne getUser() {
+        return user;
     }
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser(Personne user) {
+        this.user = user;
     }
     public int getLikes() {
         return likes;
@@ -64,7 +64,7 @@ public class Comment {
                 ", piece_art_id=" + piece_art.getId() +
                 ", content='" + content + '\'' +
                 ", creation_date=" + creation_date +
-                ", user_id=" + user_id +
+                ", user_id=" + user.getId() +
                 ", likes=" + likes +
                 '}';
     }

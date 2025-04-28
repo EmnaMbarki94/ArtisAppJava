@@ -128,4 +128,24 @@ public class ServiceCours implements CRUD<Cours> {
         }
         return lcours;
     }
+    public int countTotalCourses() {
+        try {
+            return selectAll().size();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int countCoursesWithQuizzes() {
+        String sql = "SELECT COUNT(DISTINCT cours_id) FROM quiz";
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet rs =statement.executeQuery(sql);
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

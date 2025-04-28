@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import tn.esprit.entities.Piece_art;
@@ -28,8 +25,6 @@ public class AjoutPieceArt {
     private Label ajoutPL;
     @FXML
     private TextField nomPTF;
-    @FXML
-    private TextField datePTF;
     @FXML
     private Label descPL;
     @FXML
@@ -54,6 +49,11 @@ public class AjoutPieceArt {
     private Button retour;
     @FXML
     private AnchorPane users_parent;
+    @FXML
+    private DatePicker datePTF;
+    @FXML
+    private AnchorPane formCard;
+
 
     public AjoutPieceArt() {
         this.servicePieceArt = new ServicePieceArt();
@@ -67,9 +67,9 @@ public class AjoutPieceArt {
         nomPTF.textProperty().addListener((observable, oldValue, newValue) -> {
             validateNomPiece(newValue);
         });
-        datePTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            validateDatePiece(newValue);
-        });
+        //datePTF.textProperty().addListener((observable, oldValue, newValue) -> {
+           // validateDatePiece(newValue);
+        //});
         descPTF.textProperty().addListener((observable, oldValue, newValue) -> {
             validateDescPiece(newValue);
         });
@@ -126,11 +126,12 @@ public class AjoutPieceArt {
     @FXML
     public void AjouterPiece(ActionEvent actionEvent) {
         String nom = nomPTF.getText();
-        String dateStr = datePTF.getText();
+        //String dateStr = datePTF.getText();
+        LocalDate dateCrea = datePTF.getValue();
         String desc = descPTF.getText();
 
         // Validation des champs
-        if (nompErrorLabel.isVisible() || descpErrorLabel.isVisible() || datepErrorLabel.isVisible()) {
+        if (nompErrorLabel.isVisible() || descpErrorLabel.isVisible() || dateCrea==null) {
             return; // Quitte la méthode si une erreur est détectée
         }
         boolean hasError = false;
@@ -147,29 +148,29 @@ public class AjoutPieceArt {
             hasError = true;
         }
 
-        if (dateStr.isEmpty()) {
+        if (dateCrea == null) {
             datepErrorLabel.setVisible(true);
             datepErrorLabel.setText("La date ne peut pas être vide.");
             hasError = true;
-        } else if (!dateStr.matches("\\d{4}-\\d{2}-\\d{2}")) { // Vérification du format
-            datepErrorLabel.setVisible(true);
-            datepErrorLabel.setText("Format: yyyy-MM-dd.");
-            hasError = true;
         }
+        // else if (!dateStr.matches("\\d{4}-\\d{2}-\\d{2}")) { // Vérification du format
+            //datepErrorLabel.setVisible(true);
+            //datepErrorLabel.setText("Format: yyyy-MM-dd.");
+           // hasError = true;
+        //}
 
         // Si une erreur est détectée, quitter la méthode
         if (hasError) {
-            return; // Empêcher l'ajout de la pièce d'art
-        }
-
-        LocalDate dateCrea;
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            dateCrea = LocalDate.parse(dateStr, formatter);
-        } catch (DateTimeParseException e) {
             return;
         }
 
+        //LocalDate dateCrea;
+        //try {
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            //dateCrea = LocalDate.parse(dateStr, formatter);
+        //} catch (DateTimeParseException e) {
+           // return;
+        //}
         // Création de la pièce d'art
         Galerie galerie = new Galerie();
         galerie.setId(galerieId);
@@ -183,6 +184,7 @@ public class AjoutPieceArt {
             alert.setContentText("Pièce d'art ajoutée avec succès !");
             alert.showAndWait();
             clearFields();
+            retourVersDetails(actionEvent);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Echec");
@@ -194,7 +196,7 @@ public class AjoutPieceArt {
 
     private void clearFields() {
         nomPTF.clear();
-        datePTF.clear();
+        //datePTF.clear();
         descPTF.clear();
         photoPTF.setImage(null);
         photoPath = null;
@@ -215,4 +217,5 @@ public class AjoutPieceArt {
             e.printStackTrace();
         }
     }
+
 }

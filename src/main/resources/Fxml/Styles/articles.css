@@ -1,0 +1,169 @@
+/* Style général */
+.root {
+    -fx-background-color: #f8fafc;
+}
+
+/* En-tête */
+.header {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 0, 2, 0, 1);
+}
+
+.header-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7e22ce;
+}
+
+/* Bouton panier */
+.cart-container {
+    -fx-spacing: 10;
+    -fx-padding: 0 20 0 0;
+}
+
+.cart-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5;
+}
+
+.cart-button:hover {
+    -fx-background-color: #f3e8ff;
+    -fx-background-radius: 20;
+}
+
+.cart-badge {
+    -fx-background-color: #7e22ce;
+    -fx-background-radius: 10;
+    -fx-padding: 2 6;
+    -fx-alignment: center;
+    -fx-translate-x: -10;
+    -fx-translate-y: -10;
+}
+
+.badge-text {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* Zone de défilement */
+.main-scroll {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.main-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Grille d'articles */
+.article-grid {
+    -fx-padding: 20;
+    -fx-hgap: 25;
+    -fx-vgap: 25;
+    -fx-alignment: top-center;
+}
+
+/* Carte d'article */
+.card {
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-background-color: white;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(126, 34, 206, 0.1), 8, 0, 0, 2);
+    -fx-spacing: 12;
+    -fx-alignment: top-center;
+    -fx-pref-width: 220;
+}
+
+.card:hover {
+    -fx-background-color: #faf5ff;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(126, 34, 206, 0.2), 10, 0, 0, 3);
+    -fx-border-color: #c4b5fd;
+}
+
+.image-container {
+    -fx-pref-width: 180;
+    -fx-pref-height: 140;
+    -fx-background-color: #f5f3ff;
+    -fx-alignment: center;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1);
+}
+
+.nom-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-fill: #1e293b;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-max-width: 180;
+}
+
+.prix-label {
+    -fx-text-fill: #7e22ce;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.desc-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #64748b;
+    -fx-wrap-text: true;
+    -fx-max-width: 180;
+}
+
+/* Bouton "Ajouter au panier" */
+.add-button {
+    -fx-background-color: #7e22ce;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.add-button:hover {
+    -fx-background-color: #9963c5;
+}
+/* Style pour le header */
+.header {
+    -fx-background-color: #6E15D3FF;
+    -fx-padding: 15px;
+    -fx-alignment: center-left;
+}
+
+.header-title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Style pour la ComboBox */
+.magasin-combo {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+    -fx-pref-height: 35px;
+    -fx-font-size: 14px;
+}
+
+.magasin-combo .list-cell {
+    -fx-padding: 5px 10px;
+}
+
+/* Style pour le bouton panier */
+.cart-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.cart-button:hover {
+    -fx-opacity: 0.8;
+}

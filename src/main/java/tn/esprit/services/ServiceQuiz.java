@@ -1,9 +1,9 @@
 package tn.esprit.services;
+import java.util.*;
 
 import tn.esprit.entities.Cours;
 import tn.esprit.entities.Quiz;
 import tn.esprit.utils.DBConnection;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ServiceQuiz implements CRUD<Quiz> {
     public void ajouter(Quiz quiz) throws SQLException {
         String sql = "INSERT INTO quiz (cours_id, titre_c) VALUES (?, ?)";
         PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        pst.setLong(1, quiz.getCours().getId()); // Assure-toi que le Cours a déjà été inséré
+        pst.setLong(1, quiz.getCours().getId());
         pst.setString(2, quiz.getTitre_c());
 
         pst.executeUpdate();
@@ -28,7 +28,7 @@ public class ServiceQuiz implements CRUD<Quiz> {
         ResultSet rs = pst.getGeneratedKeys();
         if (rs.next()) {
             int generatedId = rs.getInt(1);
-            quiz.setId(generatedId); // Assigne l’ID à l’objet Quiz
+            quiz.setId(generatedId);
         } else {
             throw new SQLException("Impossible de récupérer l’ID généré pour le quiz.");
         }

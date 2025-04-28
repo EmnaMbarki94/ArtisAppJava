@@ -3,15 +3,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchor" prefHeight="662.0" prefWidth="1223.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Cours.CoursDetailsController">
+<AnchorPane fx:id="anchor" prefHeight="662.0" prefWidth="1223.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Cours.CoursDetailsController">
    <children>
-      <Label fx:id="titreLabel" layoutX="282.0" layoutY="371.0" prefHeight="35.0" prefWidth="465.0" text="Label" underline="true">
+      <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #8b008b;" fx:id="titreLabel" layoutX="282.0" layoutY="371.0" prefHeight="35.0" prefWidth="465.0" text="Label" underline="true">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
@@ -20,12 +20,8 @@
             <Font name="System Bold" size="13.0" />
          </font></Label>
       <Text fx:id="descriptionText" layoutX="284.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="465.0" />
-      <ImageView fitHeight="310.0" fitWidth="486.0" layoutX="284.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../image/art.jpg" />
-         </image>
-      </ImageView>
-      <Button fx:id="retour" layoutX="36.0" layoutY="31.0" mnemonicParsing="false" onAction="#retour" text="&lt;--" />
+      <javafx.scene.image.ImageView fx:id="imageView" fitHeight="310.0" fitWidth="486.0" layoutX="284.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="retour" layoutX="21.0" layoutY="22.0" mnemonicParsing="false" onAction="#retour" text="&lt;--" />
       <Label fx:id="datec" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="130.0" prefHeight="30.0" prefWidth="173.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
@@ -42,6 +38,9 @@
       <Button fx:id="addQuizBtn" layoutX="770.0" layoutY="572.0" onAction="#handleAddQuiz" prefHeight="35.0" prefWidth="173.0" text="Ajouter un quiz à ce cours" visible="false" />
       <Button fx:id="editButton" layoutX="780.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="25.0" prefWidth="58.0" text="edit" />
       <Button fx:id="deleteButton" layoutX="876.0" layoutY="538.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="25.0" prefWidth="58.0" text="delete" />
+      <Button fx:id="exportPdfButton" layoutX="956.0" layoutY="573.0" onAction="#handleExportPdf" prefHeight="35.0" prefWidth="173.0" text="Exporter en PDF" />
+      <ToggleButton fx:id="langToggleButton" contentDisplay="RIGHT" layoutX="780.0" layoutY="31.0" onAction="#handleLanguageToggle" prefHeight="57.0" prefWidth="92.0" text="EN" />
+      <ToggleButton fx:id="ttsButton" layoutX="877.0" layoutY="31.0" onAction="#handleSpeak" prefHeight="57.0" prefWidth="92.0" text="Écouter" />
       <Text layoutX="110.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ajouté par : ">
          <font>
             <Font size="16.0" />

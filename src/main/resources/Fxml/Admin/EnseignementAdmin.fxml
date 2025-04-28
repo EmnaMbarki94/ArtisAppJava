@@ -12,20 +12,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchor" prefHeight="868.0" prefWidth="1258.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.AdminEnseignementController">
+<AnchorPane stylesheets="@../Styles/cours/stylecours.css" fx:id="anchor" prefHeight="868.0" prefWidth="1258.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.AdminEnseignementController">
    <children>
       <VBox layoutX="10.0" layoutY="13.0" prefHeight="853.0" prefWidth="1244.0">
          <children>
             <HBox>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cours " wrappingWidth="88.68994140625">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
+                  <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #8b008b;" strokeType="OUTSIDE" strokeWidth="0.0" text="Cours " wrappingWidth="88.68994140625">
                   </Text>
                   <Pane prefHeight="86.0" prefWidth="1153.0">
                      <children>
-                        <Button fx:id="navtoajout" alignment="CENTER" layoutX="899.0" layoutY="18.0" mnemonicParsing="false" onAction="#goToAjoutCours" prefHeight="35.0" prefWidth="204.0" text="Ajouter Cours" />
+                        <Button styleClass="button" fx:id="navtoajout" alignment="CENTER" layoutX="899.0" layoutY="18.0" mnemonicParsing="false" onAction="#goToAjoutCours" prefHeight="35.0" prefWidth="204.0" text="Ajouter Cours" />
+                        <Button styleClass="button" fx:id="goToStats" alignment="CENTER" layoutX="683.0" layoutY="18.0" mnemonicParsing="false" onAction="#goToStats" prefHeight="35.0" prefWidth="204.0" text="Statistiques Cours" />
                         <TextField fx:id="searchField" layoutX="124.0" layoutY="14.0" prefHeight="43.0" prefWidth="453.0" promptText="Rechercher cours ...">
                            <font>
                               <Font size="15.0" />

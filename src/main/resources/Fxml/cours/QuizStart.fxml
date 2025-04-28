@@ -7,21 +7,33 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="anchor" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Cours.QuizStartController">
 
+<AnchorPane fx:id="anchor" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f9f9f9;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Cours.QuizStartController">
 
-    <Label fx:id="quizTitleLabel" layoutX="30.0" layoutY="20.0" prefHeight="35.0" prefWidth="740.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Quiz Title" />
+    <!-- Quiz Title -->
+    <Label fx:id="quizTitleLabel" layoutX="30.0" layoutY="20.0" prefHeight="35.0" prefWidth="840.0"
+           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #8b008b;"
+           text="Quiz Title" />
 
-    <ScrollPane layoutX="30.0" layoutY="93.0" prefHeight="377.0" prefWidth="740.0">
-        <VBox fx:id="questionsContainer" spacing="10.0" style="-fx-padding: 20;" />
+    <!-- Questions Scroll -->
+    <ScrollPane layoutX="30.0" layoutY="80.0" prefHeight="400.0" prefWidth="840.0" style="-fx-background: white; -fx-border-color: #8b008b; -fx-border-radius: 10;">
+        <VBox fx:id="questionsContainer" spacing="20.0" style="-fx-padding: 20;" />
     </ScrollPane>
 
+    <!-- Navigation Buttons -->
     <HBox layoutX="30.0" layoutY="500.0" spacing="10.0">
-        <Button fx:id="prevButton" onAction="#handlePrev" text="Précédent" />
-        <Button fx:id="nextButton" onAction="#handleNext" text="Suivant" />
+        <Button fx:id="prevButton" onAction="#handlePrev" text="Précédent" styleClass="button" />
+        <Button fx:id="nextButton" onAction="#handleNext" text="Suivant" styleClass="button" />
     </HBox>
 
-    <Button fx:id="submitButton" layoutX="700.0" layoutY="500.0" text="Soumettre" />
-   <Button fx:id="exit" onAction="#handleExit" layoutX="30.0" layoutY="542.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Exit" />
+    <!-- Submit and Add Question Buttons -->
+    <Button fx:id="ajouterq" layoutX="574.0" layoutY="500.0" onAction="#handleAddQuestion"
+            text="Ajouter question" visible="false" styleClass="button"/>
+
+    <Button fx:id="submitButton" onAction="#handleSubmit" layoutX="700.0" layoutY="500.0" text="Soumettre" styleClass="button" />
+
+    <!-- Exit Button -->
+    <Button fx:id="exit" layoutX="30.0" layoutY="550.0" mnemonicParsing="false" onAction="#handleExit"
+            prefHeight="25.0" prefWidth="70.0" text="Exit" style="-fx-background-color: #8b008b; -fx-text-fill: white; -fx-font-weight: bold;"/>
 
 </AnchorPane>

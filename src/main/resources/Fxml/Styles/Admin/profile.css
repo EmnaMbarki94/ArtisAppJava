@@ -1,0 +1,58 @@
+.button {
+  -fx-background-color: linear-gradient(
+    to right,
+    #6a5acd,
+    #9370db
+  ); /* Dégradé bleu-violet */
+  -fx-text-fill: white;
+  -fx-background-radius: 15;
+  -fx-padding: 10 10;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
+.button:hover {
+  -fx-background-color: linear-gradient(
+    to right,
+    #7b68ee,
+    #ab82ff
+  ); /* Dégradé plus clair au survol */
+}
+
+.split-menu-button {
+  -fx-background-color: linear-gradient(to right, #6a5acd, #9370db);
+  -fx-text-fill: white;
+  -fx-background-radius: 15;
+  -fx-padding: 10 20;
+  -fx-font-size: 14px;
+}
+
+.split-menu-button:hover {
+  -fx-background-color: linear-gradient(to right, #7b68ee, #ab82ff);
+}
+
+.split-menu-button .label {
+  -fx-text-fill: white;
+}
+
+.split-menu-button .arrow-button {
+  -fx-background-color: linear-gradient(to right, #7b68ee, #ab82ff);
+}
+
+.split-menu-button .arrow-button:hover {
+  -fx-background-color: linear-gradient(to right, #bca9f5, #c7b2e2);
+}
+
+/* Style pour le sous-menu */
+.split-menu-button .context-menu {
+  -fx-background-color: linear-gradient(to right, #6a5acd, #9370db);
+  -fx-text-fill: white;
+}
+
+.split-menu-button .context-menu .label {
+  -fx-text-fill: white;
+}
+
+.split-menu-button .context-menu:hover {
+  -fx-background-color: linear-gradient(to right, #7b68ee, #ab82ff);
+}

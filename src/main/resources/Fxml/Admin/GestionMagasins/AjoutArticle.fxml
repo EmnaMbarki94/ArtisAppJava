@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,31 +11,36 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.TextArea?>
-<AnchorPane prefHeight="805.0" prefWidth="1293.0" styleClass="root" stylesheets="@../../Styles/magasin.css"
-            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="tn.esprit.controller.Admin.Magasins.AjoutArticle">
+<AnchorPane prefHeight="1008.0" prefWidth="1456.0" styleClass="root" stylesheets="@../../Styles/magasin.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.Magasins.AjoutArticle">
 
     <children>
-        <VBox alignment="TOP_CENTER" layoutX="240.0" layoutY="70.0" prefHeight="640.0" prefWidth="802.0" spacing="20" styleClass="vbox-form">
+        <VBox alignment="TOP_CENTER" layoutX="368.0" layoutY="38.0" prefHeight="830.0" prefWidth="778.0" spacing="20" styleClass="vbox-form">
 
             <Label styleClass="label-title" text="Ajouter un Article" />
 
             <!-- Nom de l'article -->
-            <TextField fx:id="tfNom" promptText="Nom de l'article" styleClass="text-field-style" />
-            <Label fx:id="lblErrorNom" styleClass="label-error" text="" />
+            <VBox spacing="2">
+                <TextField fx:id="tfNom" promptText="Nom de l'article" styleClass="text-field-style" />
+                <Label fx:id="lblErrorNom" styleClass="label-error" text="" />
+            </VBox>
 
             <!-- Description de l'article -->
-            <TextArea fx:id="tfDescription" layoutX="100" layoutY="150" prefWidth="300" prefHeight="150" />
-            <Label fx:id="lblErrorDescription" styleClass="label-error" text="" />
+            <VBox spacing="2">
+                <TextArea fx:id="tfDescription" prefRowCount="3" promptText="Description" styleClass="text-area-style" wrapText="true" />
+                <Label fx:id="lblErrorDescription" styleClass="label-error" text="" />
+            </VBox>
 
             <!-- Prix -->
-            <TextField fx:id="tfPrix" promptText="Prix" styleClass="text-field-style" />
-            <Label fx:id="lblErrorPrix" styleClass="label-error" text="" />
+            <VBox spacing="2">
+                <TextField fx:id="tfPrix" promptText="Prix" styleClass="text-field-style" />
+                <Label fx:id="lblErrorPrix" styleClass="label-error" text="" />
+            </VBox>
 
             <!-- Quantité -->
-            <TextField fx:id="tfQuantite" promptText="Quantité" styleClass="text-field-style" />
-            <Label fx:id="lblErrorQuantite" styleClass="label-error" text="" />
+            <VBox spacing="2">
+                <TextField fx:id="tfQuantite" promptText="Quantité" styleClass="text-field-style" />
+                <Label fx:id="lblErrorQuantite" styleClass="label-error" text="" />
+            </VBox>
 
             <!-- Image et bouton pour choisir une image -->
             <HBox alignment="CENTER" prefHeight="147.0" prefWidth="715.0" spacing="10">
@@ -45,21 +51,23 @@
                 </ImageView>
                 <Button onAction="#choisirImage" prefHeight="41.0" prefWidth="181.0" styleClass="button-style" text="Choisir une image" />
             </HBox>
+
             <Label fx:id="lblErrorImage" styleClass="label-error" text="" />
 
-            <!-- Bouton Ajouter -->
-            <Button fx:id="btnAjouter" onAction="#ajouterArticle" prefWidth="250" styleClass="button-style" text="Ajouter">
-                <font>
-                    <Font name="Arial Nova" size="15.0" />
-                </font>
-            </Button>
+            <!-- Boutons Ajouter et Retour côte à côte -->
+            <HBox alignment="CENTER" spacing="20">
+                <Button fx:id="btnAjouter" onAction="#ajouterArticle" prefWidth="150" styleClass="button-style" text="Ajouter">
+                    <font>
+                        <Font name="Arial Nova" size="15.0" />
+                    </font>
+                </Button>
 
-            <!-- Bouton Retour -->
-            <Button onAction="#retournerListeArticles" prefWidth="250" styleClass="button-style" text="Retour">
-                <font>
-                    <Font name="Arial" size="15.0" />
-                </font>
-            </Button>
+                <Button onAction="#retournerListeArticles" prefWidth="150" styleClass="button-style" text="Retour">
+                    <font>
+                        <Font name="Arial" size="15.0" />
+                    </font>
+                </Button>
+            </HBox>
 
         </VBox>
     </children>

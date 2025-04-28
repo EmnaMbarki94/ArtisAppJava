@@ -3,45 +3,62 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.*?>
-
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
             fx:id="contenuPane"
             fx:controller="tn.esprit.controller.reservation.ReservationController"
-            prefWidth="600" prefHeight="600"
-            style="-fx-background-color: #f5f0ff;">
+            prefWidth="800" prefHeight="700"
+            style="-fx-background-color: #f5f0ff;"
+            stylesheets="@../../Styles/reservationform.css">
 
-    <VBox spacing="15" alignment="TOP_CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
-        <HBox alignment="CENTER_LEFT">
-            <Button text="← Retour à la liste" onAction="#handleRetour"
-                    style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px; -fx-cursor: hand;" />
-        </HBox>
+    <StackPane prefWidth="800" prefHeight="700" layoutX="300.0" layoutY="40.0">
+        <VBox spacing="25"
+              alignment="CENTER"
+              prefWidth="600"
+              styleClass="form-container"
+              StackPane.alignment="CENTER">
 
-        <Label text="Réservation pour l'Événement"
-               style="-fx-font-size: 22px; -fx-text-fill: #4B0082;" />
+            <!-- Bouton retour -->
+            <HBox alignment="CENTER_LEFT">
+                <Button text="← Retour à la liste" onAction="#handleRetour"
+                        style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px; -fx-cursor: hand;"/>
+            </HBox>
 
-        <!-- Infos de l'événement -->
-        <TextField fx:id="eventNameField" style="-fx-font-size: 16px; -fx-text-fill: #000;" editable="false" />
-        <TextField fx:id="eventDateField" style="-fx-font-size: 14px; -fx-text-fill: #555;" editable="false" />
+            <!-- Titre -->
+            <Label text="Réservation pour l'Événement"
+                   style="-fx-font-size: 24px; -fx-text-fill: #4B0082; -fx-font-weight: bold;"/>
 
-        <!-- Nombre de places -->
-        <VBox>
-            <TextField fx:id="nbPlaceField" promptText="Nombre de places" />
-            <Label fx:id="errorNbPlace" textFill="red" style="-fx-font-size: 11;" />
+            <!-- Infos de l'événement -->
+            <VBox spacing="15" prefWidth="100">
+                <TextField fx:id="eventNameField" styleClass="text-field-readonly" editable="false"/>
+                <TextField fx:id="eventDateField" styleClass="text-field-readonly" editable="false"/>
+            </VBox>
+
+            <!-- Nombre de places -->
+            <VBox prefWidth="100">
+                <TextField fx:id="nbPlaceField" promptText="Nombre de places" styleClass="input-field"/>
+                <Label fx:id="errorNbPlace" textFill="red" style="-fx-font-size: 11px;"/>
+            </VBox>
+
+            <!-- Libellé -->
+            <VBox prefWidth="100">
+                <TextField fx:id="libelleField" promptText="Libellé" styleClass="input-field"/>
+                <Label fx:id="errorLibelle" textFill="red" style="-fx-font-size: 11px;"/>
+            </VBox>
+
+            <!-- État -->
+            <VBox prefWidth="100">
+                <ComboBox fx:id="etatComboBox"
+                          promptText="Sélectionner l'état"
+                          styleClass="input-field"
+                          maxWidth="Infinity"
+                          prefWidth="100"/>
+                <Label fx:id="errorEtat" textFill="red" style="-fx-font-size: 11px;"/>
+            </VBox>
+
+
+            <!-- Bouton réserver -->
+            <Button text="Réserver" onAction="#handleReservation"
+                    styleClass="button-reserver"/>
         </VBox>
-
-        <!-- Libellé -->
-        <VBox>
-            <TextField fx:id="libelleField" promptText="Libellé" />
-            <Label fx:id="errorLibelle" textFill="red" style="-fx-font-size: 11;" />
-        </VBox>
-
-        <!-- État -->
-        <VBox>
-            <ComboBox fx:id="etatComboBox" style="-fx-font-size: 14px; -fx-text-fill: #555;" promptText="Sélectionner l'état" />
-            <Label fx:id="errorEtat" textFill="red" style="-fx-font-size: 11;" />
-        </VBox>
-
-        <Button text="Réserver" onAction="#handleReservation"
-                style="-fx-background-color: #8A2BE2; -fx-text-fill: white; -fx-font-weight: bold;" />
-    </VBox>
+    </StackPane>
 </AnchorPane>

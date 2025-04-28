@@ -3,20 +3,18 @@ package tn.esprit.controller.Admin.Magasins;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import tn.esprit.entities.Article;
 import tn.esprit.services.ServiceArticle;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,8 +31,9 @@ public class ArticleController {
     private Button btnAjouterArticle;
     @FXML
     private Button btnRetourMagasins;
-//    private Button supprimerBtn;
 
+    @FXML
+    private TextField searchField;
 
     private final ServiceArticle serviceArticle = new ServiceArticle();
     private int magasinId;
@@ -44,65 +43,125 @@ public class ArticleController {
     loadArticlesDuMagasin();
         btnAjouterArticle.setOnAction(event -> ouvrirFormulaireAjout());
         btnRetourMagasins.setOnAction(event -> retournerVersListeMagasins());
-
+        // Ajoutez cet écouteur pour la recherche dynamique
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtrerArticles(newValue);
+        });
     }
 
     private VBox createArticleCard(Article article) {
+        // Création de la carte principale
         VBox card = new VBox();
         card.setSpacing(10);
-        card.setAlignment(Pos.CENTER);
-        card.setStyle("-fx-background-color: white; -fx-background-radius: 10;" +
+        card.setAlignment(Pos.TOP_CENTER); // Alignement en haut pour une meilleure uniformité
+        card.setStyle("-fx-background-color: white; -fx-background-radius: 10; " +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); " +
-                "-fx-padding: 20; -fx-pref-width: 260;");
+                "-fx-padding: 15; -fx-pref-width: 280; -fx-pref-height: 400;"); // Hauteur fixe
 
-        ImageView image = new ImageView();
-        String imagePath = "/image/article/" + article.getImage_path();
-        URL imageURL = getClass().getResource(imagePath);
+        // Conteneur d'image avec taille fixe
+        StackPane imageContainer = new StackPane();
+        imageContainer.setPrefSize(250, 180); // Taille fixe
+        imageContainer.setMinSize(250, 180);
+        imageContainer.setMaxSize(250, 180);
+        imageContainer.setStyle("-fx-background-radius: 8; -fx-background-color: #f5f5f5;");
 
-        if (imageURL != null) {
-            image.setImage(new Image(imageURL.toExternalForm()));
-        } else {
-            URL defaultImageURL = getClass().getResource("/image/magasin/imagedf.jpg");
-            if (defaultImageURL != null) {
-                image.setImage(new Image(defaultImageURL.toExternalForm()));
+        // ImageView avec configuration de redimensionnement
+        ImageView imageView = new ImageView();
+        imageView.setPreserveRatio(false); // Ne pas conserver le ratio
+        imageView.setFitWidth(250); // Largeur fixe
+        imageView.setFitHeight(180); // Hauteur fixe
+        imageView.setSmooth(true); // Lissage de l'image
+
+        // Chargement de l'image
+        try {
+            // 1. Essayer depuis le dossier uploads
+            File imageFile = new File("/image/article/" + article.getImage_path());
+            if (imageFile.exists()) {
+                Image image = new Image(imageFile.toURI().toString(), true); // Chargement asynchrone
+                imageView.setImage(image);
             }
+            // 2. Fallback: ressources
+            else {
+                InputStream is = getClass().getResourceAsStream("/image/article/" + article.getImage_path());
+                if (is != null) {
+                    imageView.setImage(new Image(is));
+                }
+                // 3. Image par défaut
+                else {
+                    URL defaultImageURL = getClass().getResource("/image/article/default.jpg");
+                    if (defaultImageURL != null) {
+                        imageView.setImage(new Image(defaultImageURL.toString()));
+                    }
+                }
+            }
+
+            // Clip pour coins arrondis
+            Rectangle clip = new Rectangle(250, 180);
+            clip.setArcWidth(10);
+            clip.setArcHeight(10);
+            imageView.setClip(clip);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Fallback ultime
+            imageView.setStyle("-fx-background-color: #e0e0e0;");
         }
 
-        image.setFitWidth(200);
-        image.setFitHeight(120);
+        imageContainer.getChildren().add(imageView);
 
-        Label nom = new Label(article.getNom_a());
-        nom.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2d3436;");
+        // Conteneur pour le texte avec taille fixe
+        VBox textContainer = new VBox(5);
+        textContainer.setPrefHeight(150); // Hauteur fixe pour le texte
+        textContainer.setAlignment(Pos.TOP_CENTER);
 
-        Label prix = new Label(article.getPrix_a() + " DT");
-        prix.setStyle("-fx-font-size: 14; -fx-text-fill: #636e72;");
+        // Nom du produit
+        Label nomLabel = new Label(article.getNom_a());
+        nomLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2d3436;");
+        nomLabel.setMaxWidth(240);
+        nomLabel.setWrapText(true);
 
-        Label description = new Label(article.getDesc_a());
-        description.setWrapText(true);
-        description.setStyle("-fx-font-size: 12; -fx-text-fill: #7f8c8d;");
+        // Prix
+        Label prixLabel = new Label(String.format("%.3f DT", article.getPrix_a()));
+        prixLabel.setStyle("-fx-text-fill: #9d97f8;-fx-font-weight: bold;  ");
 
-        Label quantite = new Label("Quantité : " + article.getQuantite());
-        quantite.setStyle("-fx-font-size: 13; -fx-text-fill: #2c3e50;");
+        // Description (avec hauteur fixe et scroll si nécessaire)
+        TextArea descriptionArea = new TextArea(article.getDesc_a());
+        descriptionArea.setEditable(false);
+        descriptionArea.setWrapText(true);
+        descriptionArea.setPrefHeight(60);
+        descriptionArea.setMaxHeight(60);
+        descriptionArea.setStyle("-fx-background-color: transparent; -fx-border-color: transparent; " +
+                "-fx-font-size: 12; -fx-text-fill: #7f8c8d;");
 
-        HBox actions = new HBox(10);
-        actions.setAlignment(Pos.CENTER);
+        // Quantité
+        Label quantiteLabel = new Label("Stock: " + article.getQuantite());
+        quantiteLabel.setStyle("-fx-font-size: 13; -fx-text-fill: #2c3e50;");
 
-        Button modifierBtn = new Button("Modifier");
-        modifierBtn.setStyle("-fx-background-color: #a29bfe; -fx-text-fill: white; -fx-background-radius: 5;");
+        textContainer.getChildren().addAll(nomLabel, prixLabel, descriptionArea, quantiteLabel);
 
-        Button supprimerBtn = new Button("Supprimer");
-        supprimerBtn.setStyle("-fx-background-color: #a29bfe; -fx-text-fill: white; -fx-background-radius: 5;");
+        // Boutons d'action
+        HBox buttonBox = new HBox(10);
+        buttonBox.setAlignment(Pos.CENTER);
 
-        actions.getChildren().addAll(modifierBtn, supprimerBtn);
+        Button modifierBtn = createActionButton("Modifier", "#3498db");
+        Button supprimerBtn = createActionButton("Supprimer", "#e74c3c");
 
-        card.getChildren().addAll(image, nom, prix, description, quantite, actions);
+        buttonBox.getChildren().addAll(modifierBtn, supprimerBtn);
 
-        // Tu peux lier ici tes méthodes de modification / suppression si tu veux
+        // Ajout de tous les éléments à la carte
+        card.getChildren().addAll(imageContainer, textContainer, buttonBox);
+
+        // Événements
         modifierBtn.setOnAction(e -> modifierArticle(article));
         supprimerBtn.setOnAction(e -> supprimerArticle(article, card));
 
-
         return card;
+    }
+
+    private Button createActionButton(String text, String color) {
+        Button button = new Button(text);
+        button.setStyle("-fx-background-color: #a29bfe; -fx-text-fill: white; -fx-background-radius: 5;");
+        button.setPrefWidth(100);
+        return button;
     }
 
     private void modifierArticle(Article article) {
@@ -209,8 +268,35 @@ public class ArticleController {
             e.printStackTrace();
         }
     }
+    // Méthode pour filtrer les articles
+    private void filtrerArticles(String recherche) {
+        try {
+            List<Article> tousLesArticles = serviceArticle.getArticlesByMagasinId(magasinId);
+            cardsContainer.getChildren().clear();
 
+            for (Article article : tousLesArticles) {
+                if (articleCorrespond(article, recherche)) {
+                    VBox articleCard = createArticleCard(article);
+                    cardsContainer.getChildren().add(articleCard);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    // Méthode pour vérifier si un article correspond à la recherche
+    private boolean articleCorrespond(Article article, String recherche) {
+        if (recherche == null || recherche.isEmpty()) {
+            return true;
+        }
+
+        String rechercheLower = recherche.toLowerCase();
+        return article.getNom_a().toLowerCase().contains(rechercheLower) ||
+                article.getDesc_a().toLowerCase().contains(rechercheLower) ||
+                String.valueOf(article.getPrix_a()).contains(recherche) ||
+                String.valueOf(article.getQuantite()).contains(recherche);
+    }
 
 
 }

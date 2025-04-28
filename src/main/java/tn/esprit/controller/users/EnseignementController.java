@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import tn.esprit.entities.Cours;
 import tn.esprit.services.ServiceCours;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -101,8 +102,16 @@ public class EnseignementController implements Initializable {
 
         ImageView imageView = new ImageView();
         try {
-            Image image = new Image(getClass().getResource("/image/art.jpg").toExternalForm());
-            imageView.setImage(image);
+            String imagePath = System.getProperty("user.dir") + File.separator + "uploads" + File.separator + "cours" + File.separator + cours.getImage();
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                Image image = new Image(imageFile.toURI().toString(), false);
+                imageView.setImage(image);
+            } else {
+                System.out.println("Image file not found: " + imagePath);
+                Image fallbackImage = new Image(getClass().getResource("/image/art.jpg").toExternalForm(), false);
+                imageView.setImage(fallbackImage);
+            }
         } catch (Exception e) {
             System.out.println("Image not found for course: " + cours.getNom_c());
         }

@@ -13,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import tn.esprit.entities.Galerie;
 import tn.esprit.entities.Personne;
 import tn.esprit.entities.Session;
@@ -20,7 +22,13 @@ import tn.esprit.services.ServiceGalerie;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Objects;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.io.*;
+import javafx.application.Platform;
 
 public class AjoutGalerie {
 
@@ -48,6 +56,8 @@ public class AjoutGalerie {
     private AnchorPane users_parent;
     @javafx.fxml.FXML
     private Button retour;
+    @javafx.fxml.FXML
+    private AnchorPane formCard;
 
     public AjoutGalerie() {
         // Initialiser l'objet galerie
@@ -161,6 +171,7 @@ public class AjoutGalerie {
             alert.setTitle("Ajout avec succès!");
             alert.setHeaderText("Votre galerie a été ajoutée avec succès.");
             alert.showAndWait();
+            retourVersAffGal(actionEvent);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur d'ajout");
@@ -209,8 +220,8 @@ public class AjoutGalerie {
             users_parent.getChildren().add(root); // Ajoute la nouvelle vue
 
             // Optionnel : Vous pouvez également définir le titre de la fenêtre ici si nécessaire
-            Stage stage = (Stage) retour.getScene().getWindow(); // Récupérer la fenêtre actuelle
-            stage.setTitle("Liste des Galeries");
+            //Stage stage = (Stage) retour.getScene().getWindow(); // Récupérer la fenêtre actuelle
+            //stage.setTitle("Liste des Galeries");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -221,4 +232,99 @@ public class AjoutGalerie {
             alert.showAndWait();
         }
     }
+
+    @javafx.fxml.FXML
+    public void genererImage(ActionEvent actionEvent) {
+        String prompt = descgTF.getText().trim();
+
+        if (prompt.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "La description est vide !");
+            alert.showAndWait();
+            return;
+        }
+
+        new Thread(() -> {
+            try {
+                String imageUrl = appelerModelslab(prompt);
+                Platform.runLater(() -> {
+                    if (imageUrl != null) {
+                        Image img = new Image(imageUrl);
+                        System.out.println("Image path: " + imageUrl);
+                        imageView.setImage(img);
+                        imageView.setFitWidth(200);
+                        imageView.setFitHeight(180);
+                        imageView.setPreserveRatio(true);
+                        galerie.setPhoto_g(imageUrl);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la génération de l'image.");
+                        alert.showAndWait();
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private String appelerModelslab(String prompt) throws Exception {
+        URL url = new URL("https://modelslab.com/api/v6/images/text2img");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setDoOutput(true);
+
+        String payload = "{"
+                + "\"key\": \"twT8UkYrYSSCUVpOFQXY12CyIopjEb3wzum1QF46zsF5vbCZYb74tGfcTwPi\","
+                + "\"model_id\": \"Flux\","
+                + "\"prompt\": \"" + prompt + "\","
+                + "\"negative_prompt\": \"painting, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, deformed, ugly, blurry, bad anatomy, bad proportions, extra limbs, cloned face, skinny, glitchy, double torso, extra arms, extra hands, mangled fingers, missing lips, ugly face, distorted legs, anime\","
+                + "\"width\": \"512\","
+                + "\"height\": \"512\","
+                + "\"samples\": \"1\","
+                + "\"num_inference_steps\": \"30\","
+                + "\"safety_checker\": \"no\","
+                + "\"enhance_prompt\": \"yes\","
+                + "\"seed\": null,"
+                + "\"guidance_scale\": 7.5,"
+                + "\"panorama\": \"no\","
+                + "\"self_attention\": \"no\","
+                + "\"upscale\": \"no\","
+                + "\"tomesd\": \"yes\","
+                + "\"use_karras_sigmas\": \"yes\","
+                + "\"scheduler\": \"UniPCMultistepScheduler\""
+                + "}";
+
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = payload.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+
+        InputStream responseStream = conn.getInputStream();
+        StringBuilder response = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+        }
+
+        System.out.println("Modelslab Response: " + response);
+
+        JSONObject jsonResponse = new JSONObject(response.toString());
+
+
+        if (jsonResponse.has("output")) {
+            return jsonResponse.getJSONArray("output").getString(0);
+        } else if (jsonResponse.has("status") && jsonResponse.getString("status").equalsIgnoreCase("error")) {
+            System.err.println("Erreur Modelslab : " + jsonResponse.optString("message", "Erreur inconnue"));
+            return null;
+        } else {
+            System.err.println("Réponse inattendue de Modelslab : " + jsonResponse.toString());
+            return null;
+        }
+    }
+
+
 }

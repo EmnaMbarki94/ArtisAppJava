@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.geometry.*?>
+<?import javafx.util.Callback?>
+<?import java.net.URL?>
+<?import javafx.beans.property.SimpleStringProperty?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.esprit.controller.users.magasins.HistoriqueCommandesController"
+            style="-fx-background-color: #f5f5fa;"
+            stylesheets="@/Fxml/Styles/historique.css"
+            prefHeight="800" prefWidth="1300">
+
+    <VBox spacing="20" alignment="TOP_CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <!-- En-tête -->
+        <HBox alignment="CENTER" spacing="10" style="-fx-background-color: #6a1b9a; -fx-background-radius: 5; -fx-padding: 15;">
+            <ImageView fitHeight="30" fitWidth="30">
+                <Image url="/image/historique.png" />
+            </ImageView>
+            <Label text="Historique des Commandes" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <!-- Tableau des commandes -->
+        <TableView fx:id="commandesTable"
+                   style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);"
+                   VBox.vgrow="ALWAYS"
+                   prefHeight="600" prefWidth="1200">
+            <columns>
+                <!-- Colonne N° Commande -->
+                <TableColumn fx:id="idColumn" text="N° Commande" prefWidth="150">
+                    <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+                </TableColumn>
+
+                <!-- Colonne Date -->
+                <TableColumn fx:id="dateColumn" text="Date" prefWidth="200">
+                    <cellValueFactory><PropertyValueFactory property="date_c"/></cellValueFactory>
+                </TableColumn>
+
+                <!-- Colonne Adresse -->
+                <TableColumn fx:id="adresseColumn" text="Adresse" prefWidth="400">
+                    <cellValueFactory><PropertyValueFactory property="adresse_c"/></cellValueFactory>
+                </TableColumn>
+
+                <!-- Colonne Montant -->
+                <TableColumn fx:id="montantColumn" text="Montant (TND)" prefWidth="250">
+                    <cellValueFactory><PropertyValueFactory property="total"/></cellValueFactory>
+                </TableColumn>
+
+                <!-- Colonne Actions -->
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="250">
+                    <!-- pas besoin de cellValueFactory ici pour Void -->
+                </TableColumn>
+            </columns>
+        </TableView>
+
+        <!-- Pied de page -->
+        <HBox spacing="20" alignment="CENTER_RIGHT">
+            <Button text="Retour à l'accueil" onAction="#retournerALAccueil"
+                    style="-fx-background-color: #6a1b9a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;">
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16">
+                        <Image url="/image/home.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+
+</AnchorPane>

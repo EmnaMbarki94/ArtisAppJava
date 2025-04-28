@@ -153,4 +153,78 @@ public class ServiceArticle implements CRUD<Article> {
     public void supprimer(int id) throws SQLException {
 
     }
+    public List<Article> getAllArticles() {
+        List<Article> articles = new ArrayList<>();
+        String sql = "SELECT a.*, m.id as magasin_id, m.nom_m FROM article a LEFT JOIN magasin m ON a.magasin_id = m.id";
+
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Article article = new Article();
+                article.setId(rs.getInt("id"));
+                article.setNom_a(rs.getString("nom_a"));
+                article.setPrix_a(rs.getDouble("prix_a"));
+                article.setDesc_a(rs.getString("desc_a"));
+                article.setImage_path(rs.getString("image_path"));
+                article.setQuantite(rs.getInt("quantite"));
+
+                // Ajout du magasin
+                Magasin magasin = new Magasin();
+                magasin.setId(rs.getInt("magasin_id"));
+                magasin.setNom_m(rs.getString("nom_m"));
+                article.setMagasin(magasin);
+
+                articles.add(article);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des articles: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return articles;
+    }
+    public List<Magasin> getMagasins() {
+        List<Magasin> magasins = new ArrayList<>();
+
+        String query = "SELECT DISTINCT m.* FROM magasin m JOIN article a ON m.id = a.magasin_id";
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(query)) {
+
+            while (rs.next()) {
+                Magasin magasin = new Magasin();
+                magasin.setId(rs.getInt("id"));
+                magasin.setNom_m(rs.getString("nom_m")); // Corrigé: utiliser "nom_m" au lieu de "nom"
+                magasins.add(magasin);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des magasins: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return magasins;
+    }
+
+    public boolean decrementerStock(int articleId, int quantite, Connection conn) throws SQLException {
+        String sql = "UPDATE article SET quantite = quantite - ? WHERE id = ? AND quantite >= ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, quantite);
+            ps.setInt(2, articleId);
+            ps.setInt(3, quantite);
+            return ps.executeUpdate() > 0;
+        }
+    }
+    public Article getArticleById(int id, Connection conn) throws SQLException {
+        String sql = "SELECT quantite FROM article WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Article a = new Article();
+                a.setId(id);
+                a.setQuantite(rs.getInt("quantite"));
+                return a;
+            }
+        }
+        return null;
+    }
 }
