@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<VBox fx:id="stat_parent" alignment="TOP_CENTER" spacing="30" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.StatG">
+
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button fx:id="btnRetour" onAction="#retour" style="-fx-background-color: #9b4f96; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 20; -fx-padding: 8 16;">
+        <graphic>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@/image/photos_galeries/retour.png" />
+                </image>
+            </ImageView>
+        </graphic>
+        </Button>
+    </HBox>
+    <!-- Titre de la vue -->
+    <Label alignment="CENTER" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #4B0082;" text="Statistiques de Galeries et Pièces d'Art" />
+    <!-- Conteneur principal en HBox pour placer à gauche les statistiques et à droite le PieChart -->
+    <HBox alignment="CENTER" spacing="40">
+
+        <!-- Zone à gauche -->
+        <VBox alignment="TOP_CENTER" prefWidth="600" spacing="40">
+
+            <!-- Cartes statistiques -->
+            <HBox alignment="CENTER" spacing="20">
+                <StackPane fx:id="cardGaleries" prefHeight="120" prefWidth="180" style="-fx-background-color: #d9b3ff; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10,0,0,5);">
+                    <Label fx:id="nombreGaleries" style="-fx-font-size: 18px; -fx-text-fill: white;" />
+                </StackPane>
+
+                <StackPane fx:id="cardPieces" prefHeight="120" prefWidth="180" style="-fx-background-color: #b3e0ff; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10,0,0,5);">
+                    <Label fx:id="nombrePieces" style="-fx-font-size: 18px; -fx-text-fill: white;" />
+                </StackPane>
+
+                <StackPane fx:id="cardGaleriesActives" prefHeight="120" prefWidth="180" style="-fx-background-color: #b3ffc2; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10,0,0,5);">
+                    <Label fx:id="nombreGaleriesActives" style="-fx-font-size: 18px; -fx-text-fill: white;" />
+                </StackPane>
+            </HBox>
+
+            <!-- Graphique en barres juste en dessous -->
+            <BarChart fx:id="barChart" prefHeight="400" prefWidth="600" style="CHART_COLOR_1: #b39ddb;">
+                <xAxis>
+                    <CategoryAxis label="Catégorie" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Nombre" />
+                </yAxis>
+            </BarChart>
+
+        </VBox>
+
+        <!-- Zone à droite pour PieChart -->
+        <VBox alignment="CENTER" prefWidth="400" spacing="20">
+            <PieChart fx:id="pieChart" prefHeight="520" prefWidth="400" style="-fx-pie-label-visible: true;" />
+        </VBox>
+
+    </HBox>
+</VBox>

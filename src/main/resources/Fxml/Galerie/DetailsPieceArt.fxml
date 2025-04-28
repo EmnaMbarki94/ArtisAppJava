@@ -2,40 +2,91 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="users_parent" prefHeight="690.0" prefWidth="1456.0" stylesheets="@../Styles/global.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.DetailsPieceArt">
     <children>
-        <Label fx:id="detailsLabel" layoutX="655.0" layoutY="22.0" prefHeight="59.0" prefWidth="146.0" text="Details de la Pièce" />
-        <Label layoutX="233.0" layoutY="186.0" text="Nom:" />
-        <Label layoutX="233.0" layoutY="238.0" text="Description:" />
-        <Label layoutX="226.0" layoutY="290.0" text="Date de création:" />
-        <ImageView fx:id="photoP" fitHeight="184.0" fitWidth="400.0" layoutX="728.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true" />
-        <TextField fx:id="nomP" editable="false" layoutX="334.0" layoutY="180.0" />
-        <TextField fx:id="descP" editable="false" layoutX="334.0" layoutY="232.0" />
-        <TextField fx:id="dateP" editable="false" layoutX="334.0" layoutY="284.0" />
-        <Button fx:id="modP" layoutX="151.0" layoutY="436.0" mnemonicParsing="false" onAction="#modifierPiece" text="Modifier votre pièce" />
 
-        <Button fx:id="suppP" layoutX="1315.0" layoutY="15.0" mnemonicParsing="false" onAction="#supprimerPiece">
+        <!-- Grand Cadre principal -->
+        <AnchorPane fx:id="formCard" layoutX="52.0" layoutY="65.0" prefHeight="622.0" prefWidth="1287.0" style="-fx-background-color: #f9f9ff; -fx-border-color: #c5b3f2; -fx-border-width: 2px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+            <children>
+
+                <!-- Titre principal -->
+                <Label fx:id="detailsLabel" layoutX="540.0" layoutY="20.0" prefHeight="50.0" prefWidth="262.0" style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-alignment: center;" text="Détails de la Pièce" />
+
+                <!-- Informations sur la pièce d'art -->
+                <AnchorPane layoutX="50.0" layoutY="90.0" prefHeight="250.0" prefWidth="550.0" style="-fx-background-color: #ffffff; -fx-border-color: #d6c8f5; -fx-border-width: 1.5px; -fx-border-radius: 15px; -fx-background-radius: 15px;">
+                    <children>
+                        <Label layoutX="20.0" layoutY="30.0" style="-fx-font-size: 16px;" text="Nom:" />
+                        <TextField fx:id="nomP" editable="false" layoutX="180.0" layoutY="25.0" prefWidth="320.0" />
+
+                        <Label layoutX="20.0" layoutY="100.0" style="-fx-font-size: 16px;" text="Description:" />
+                        <TextField fx:id="descP" editable="false" layoutX="180.0" layoutY="95.0" prefWidth="320.0" />
+
+                        <Label layoutX="20.0" layoutY="170.0" style="-fx-font-size: 16px;" text="Date de création:" />
+                        <TextField fx:id="dateP" editable="false" layoutX="180.0" layoutY="165.0" prefWidth="320.0" />
+                    </children>
+                </AnchorPane>
+
+                <!-- Image de la pièce d'art -->
+                <ImageView fx:id="photoP" fitHeight="250.0" fitWidth="410.0" layoutX="680.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #ffffff; -fx-border-color: #d6c8f5; -fx-border-radius: 15px; -fx-background-radius: 15px;" />
+
+                <!-- Bouton Modifier -->
+                <Button fx:id="modP" layoutX="225.0" layoutY="359.0" mnemonicParsing="false" onAction="#modifierPiece" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #6a11cb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20;" text="Modifier la pièce" />
+
+                <!-- Section Commentaires -->
+                <Label layoutX="680.0" layoutY="340.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-underline: true;" text="Commentaires" />
+
+                <ScrollPane fx:id="commentsScrollPane" hbarPolicy="NEVER" layoutX="680.0" layoutY="379.0" prefHeight="180.0" prefWidth="550.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-background-insets: 0; -fx-padding: 0;" vbarPolicy="NEVER">
+                    <content>
+                        <VBox fx:id="commentsVBox" prefHeight="177.0" prefWidth="547.0" spacing="10.0" style="-fx-padding: 10; -fx-background-color: transparent; -fx-border-color: #dcdcdc; -fx-border-width: 1; -fx-background-radius: 15; -fx-border-radius: 15;">
+                            <!-- Comments ajoutés ici -->
+                        </VBox>
+                    </content>
+                </ScrollPane>
+
+                <!-- Champ Ajouter Commentaire -->
+                <TextField fx:id="comment" layoutX="680.0" layoutY="568.0" prefHeight="35.0" prefWidth="380.0" style="-fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-color: #dcdcdc;" />
+                <Button layoutX="1068.0" layoutY="569.0" mnemonicParsing="false" onAction="#ajouterComment" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #2575fc; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20;" text="Commenter" />
+
+                <!-- Bouton Suppression -->
+                <Button fx:id="suppP" layoutX="1230.0" layoutY="23.0" mnemonicParsing="false" onAction="#supprimerPiece" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/image/photos_galeries/corbeille.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            <Button fx:id="partage" layoutX="225.0" layoutY="449.0" mnemonicParsing="false" onAction="#Partager" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: #6a11cb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20;" text="Partager sur Facebook">
+                <graphic>
+                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/image/photos_galeries/envoyer.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            </children>
+        </AnchorPane>
+
+        <!-- Bouton Retour -->
+        <Button fx:id="retour" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#retourVersDetailsG" style="-fx-background-color: transparent;">
             <graphic>
-                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@/image/photos_galeries/corbeille.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="retour" layoutX="12.0" layoutY="15.0" mnemonicParsing="false" onAction="#retourVersDetailsG" prefHeight="7.0" prefWidth="15.0">
-            <graphic>
-                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@/image/photos_galeries/retour.png" />
                     </image>
                 </ImageView>
             </graphic>
         </Button>
+
     </children>
 </AnchorPane>

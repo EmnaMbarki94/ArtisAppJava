@@ -1,17 +1,25 @@
 package tn.esprit.controller.Galerie;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import tn.esprit.entities.Piece_art;
 import tn.esprit.services.ServicePieceArt;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -38,6 +46,12 @@ public class ModifierPieceArt {
     private Label nomErrLabel;
     @FXML
     private Label dateErrLabel;
+    @FXML
+    private Button retour;
+    @FXML
+    private AnchorPane users_parent;
+    @FXML
+    private AnchorPane formCard;
 
     public ModifierPieceArt() {
         servicePieceArt = new ServicePieceArt();
@@ -58,7 +72,7 @@ public class ModifierPieceArt {
 
         // Formatage de la date
         if (pieceArt.getDate_crea() != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = pieceArt.getDate_crea().format(formatter);
             datepTF.setText(formattedDate);
         }
@@ -157,7 +171,7 @@ public class ModifierPieceArt {
                 // Récupérer la date sous forme de LocalDate
                 LocalDate dateCrea = null;
                 if (!dateStr.isEmpty()) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     dateCrea = LocalDate.parse(dateStr, formatter); // Parsing de la date
                 }
 
@@ -168,10 +182,39 @@ public class ModifierPieceArt {
                 pieceArt.setDesc_p(desc);
                 servicePieceArt.modifier(pieceArt);
                 System.out.println("La pièce d'art a été modifiée avec succès !");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Modifiée avec succès!");
+                alert.setHeaderText("Votre pièce d'art a été modifiée avec succès.");
+                alert.showAndWait();
+                retourVersDetails(actionEvent);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Erreur : " + e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    public void retourVersDetails(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Galerie/DetailsPieceArt.fxml"));
+            Parent root = loader.load();
+
+            DetailsPieceArt detailsPieceArtController = loader.getController();
+            detailsPieceArtController.setPieceArtId(pieceArt.getId());
+
+            users_parent.getChildren().clear();
+            users_parent.getChildren().add(root);
+            FadeTransition ft = new FadeTransition(Duration.millis(500), root); // 500 ms = 0.5s
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            ft.play();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Erreur");
+            errorAlert.setContentText("Une erreur est survenue lors de la tentative de retour.");
+            errorAlert.showAndWait();
         }
     }
 }

@@ -1,22 +1,27 @@
 package tn.esprit.controller.Admin;
 
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
+import tn.esprit.controller.Galerie.DetailsGalerie;
 import tn.esprit.entities.Galerie;
 import tn.esprit.entities.Personne;
 import tn.esprit.services.ServiceGalerie;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
@@ -25,11 +30,21 @@ public class AdminArtisteController {
 
     public static Personne user;
     @FXML
-    private ListView<Galerie> listGaleries;
-    @FXML
     private TextField searchField;
 
     private ServiceGalerie serviceGalerie;
+    @FXML
+    private StackPane mainContainer;
+    @FXML
+    private GridPane galerieGrid;
+    @FXML
+    private MenuButton trier;
+    @FXML
+    private Button buttonStat;
+    @FXML
+    private AnchorPane parent;
+    @FXML
+    private Button commentsAdmin;
 
     public AdminArtisteController() {
         serviceGalerie = new ServiceGalerie();
@@ -37,76 +52,104 @@ public class AdminArtisteController {
 
     @FXML
     public void initialize() {
-        loadGaleries(); // Charger les galeries au démarrage
-
-        // Listener pour le champ de recherche
+        List<Galerie> galeries = null;
+        try {
+            galeries = serviceGalerie.afficher();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        loadGaleries(galeries);
         searchField.textProperty().addListener((observable, oldValue, newValue) -> filterGareries(newValue));
     }
 
-    private void loadGaleries() {
-        try {
-            List<Galerie> galeries = serviceGalerie.afficher();
+    private void loadGaleries(List<Galerie> galeries) {
+        int column = 0;
+        int row = 0;
 
-            listGaleries.getItems().addAll(galeries);
+        galerieGrid.getChildren().clear();
+        galerieGrid.setHgap(20); // Espace entre les colonnes
+        galerieGrid.setVgap(20); // Espace entre les lignes
 
-            listGaleries.setCellFactory(param -> new ListCell<Galerie>() {
-                private final HBox hbox = new HBox(10);
-                private final VBox vbox = new VBox();
-                private final Label nameLabel = new Label();
-                private final Label descLabel = new Label();
-                private final Label typeLabel = new Label();
-                private final Label userLabel = new Label();
+        for (Galerie galerie : galeries) {
+            try {
+                // Chargement de l'image
+                ImageView imageView = new ImageView(new Image(galerie.getPhoto_g()));
+                imageView.setFitWidth(200);
+                imageView.setFitHeight(150);
+                imageView.setPreserveRatio(true);
+                imageView.setSmooth(true);
+                imageView.setEffect(new DropShadow(10, Color.GRAY));
 
-                // Création du bouton avec une icône
-                private final Button deleteButton = new Button();
-                private final ImageView deleteIcon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/photos_galeries/corbeille.png"))));
+                // Nom de la galerie
+                Label label = new Label(galerie.getNom_g());
+                label.setWrapText(true);
+                label.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #4B0082;");
 
-                @Override
-                protected void updateItem(Galerie gallery, boolean empty) {
-                    super.updateItem(gallery, empty);
-                    if (empty || gallery == null) {
-                        setGraphic(null);
-                    } else {
-                        nameLabel.setText("Nom : " + gallery.getNom_g());
-                        descLabel.setText("Description : " + gallery.getDesc_g());
-                        typeLabel.setText("Type : " + gallery.getType_g());
-                        userLabel.setText("User ID : " + (gallery.getUser()));
+                // Bouton de suppression
+                Button deleteButton = new Button();
+                Image deleteImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/photos_galeries/corbeille.png")));
+                ImageView deleteIcon = new ImageView(deleteImage);
+                deleteIcon.setFitWidth(20);
+                deleteIcon.setFitHeight(20);
+                deleteButton.setGraphic(deleteIcon);
+                deleteButton.setStyle("-fx-background-color: transparent;");
+                deleteButton.setOnAction(event -> removeGallery(galerie));
 
-                        deleteIcon.setFitHeight(20); // Ajustez la taille si nécessaire
-                        deleteIcon.setFitWidth(20);
-                        deleteButton.setGraphic(deleteIcon);
-                        deleteButton.setOnAction(event -> removeGallery(gallery));
+                // VBox contenant tout
+                VBox vBox = new VBox(imageView, label, deleteButton);
+                vBox.setAlignment(Pos.CENTER);
+                vBox.setSpacing(10);
+                vBox.setPadding(new Insets(10));
+                vBox.setStyle("-fx-background-color: white; " +
+                        "-fx-background-radius: 15; " +
+                        "-fx-border-radius: 15; " +
+                        "-fx-border-color: #d1c4e9; " +
+                        "-fx-border-width: 1;");
+                vBox.setPrefWidth(220);
 
-                        // Ajout des éléments dans hbox
-                        vbox.getChildren().setAll(nameLabel, descLabel, typeLabel, userLabel);
-                        HBox.setHgrow(vbox, javafx.scene.layout.Priority.ALWAYS);
-                        hbox.getChildren().setAll(vbox, deleteButton);
-                        setGraphic(hbox);
-                    }
+                // Effet au survol
+                vBox.setOnMouseEntered(e -> vBox.setStyle("-fx-background-color: #f0e8ff; " +
+                        "-fx-background-radius: 15; " +
+                        "-fx-border-radius: 15; " +
+                        "-fx-border-color: #c5b8e0; " +
+                        "-fx-border-width: 1;"));
+                vBox.setOnMouseExited(e -> vBox.setStyle("-fx-background-color: white; " +
+                        "-fx-background-radius: 15; " +
+                        "-fx-border-radius: 15; " +
+                        "-fx-border-color: #d1c4e9; " +
+                        "-fx-border-width: 1;"));
+
+                // Ajout dans la grille
+                galerieGrid.add(vBox, column, row);
+
+                column++;
+                if (column == 2) {
+                    column = 0;
+                    row++;
                 }
-            });
-        } catch (SQLException e) {
-            e.printStackTrace(); // Gérer l'erreur selon vos besoins
+
+            } catch (Exception e) {
+                System.out.println("Erreur chargement galerie: " + e.getMessage());
+            }
         }
     }
 
-    // Méthode pour filtrer les galeries selon la recherche
+
     private void filterGareries(String searchTerm) {
-        listGaleries.getItems().clear();
+        galerieGrid.getChildren().clear();
         try {
             List<Galerie> galeries = serviceGalerie.afficher();
             for (Galerie gallery : galeries) {
-                if (gallery.getNom_g().toLowerCase().contains(searchTerm.toLowerCase())) {
-                    listGaleries.getItems().add(gallery);
+                if (gallery.getNom_g().toLowerCase().contains(searchTerm.toLowerCase()) || gallery.getType_g().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    loadGalleryCell(gallery);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Gérer l'erreur selon vos besoins
+            e.printStackTrace();
         }
     }
 
     private void removeGallery(Galerie gallery) {
-
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation de Suppression");
         alert.setHeaderText("Êtes-vous sûr de vouloir supprimer cette galerie ?");
@@ -117,8 +160,8 @@ public class AdminArtisteController {
                 try {
                     // Appel de la méthode supprimer avec l'identifiant de la galerie
                     serviceGalerie.supprimer(gallery.getId());
-                    // Actualiser la liste après la suppression
-                    loadGaleries();
+                    refreshGaleries();
+
                 } catch (SQLException e) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setTitle("Erreur de Suppression");
@@ -128,5 +171,138 @@ public class AdminArtisteController {
                 }
             }
         });
+    }
+
+    // Méthode pour rafraîchir l'affichage des galeries
+    private void refreshGaleries() {
+        galerieGrid.getChildren().clear();
+        List<Galerie> galeries;
+        try {
+            galeries = serviceGalerie.afficher();
+            loadGaleries(galeries);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadGalleryCell(Galerie galerie) {
+        try {
+            // Chargement de l'image
+            ImageView imageView = new ImageView(new Image(galerie.getPhoto_g()));
+            imageView.setFitWidth(200);
+            imageView.setFitHeight(150);
+            imageView.setPreserveRatio(true);
+            imageView.setSmooth(true);
+            imageView.setEffect(new DropShadow(10, Color.GRAY));
+
+            // Nom de la galerie
+            Label label = new Label(galerie.getNom_g());
+            label.setWrapText(true);
+            label.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #4B0082;");
+
+            // Bouton de suppression
+            Button deleteButton = new Button();
+            Image deleteImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/photos_galeries/corbeille.png")));
+            ImageView deleteIcon = new ImageView(deleteImage);
+            deleteIcon.setFitWidth(20);
+            deleteIcon.setFitHeight(20);
+            deleteButton.setGraphic(deleteIcon);
+            deleteButton.setStyle("-fx-background-color: transparent;");
+            deleteButton.setOnAction(event -> removeGallery(galerie));
+
+            // VBox contenant l'image, le label, et le bouton
+            VBox vBox = new VBox(imageView, label, deleteButton);
+            vBox.setAlignment(Pos.CENTER);
+            vBox.setSpacing(10);
+            vBox.setPadding(new Insets(10));
+            vBox.setStyle("-fx-background-color: white; " +
+                    "-fx-background-radius: 15; " +
+                    "-fx-border-radius: 15; " +
+                    "-fx-border-color: #d1c4e9; " +
+                    "-fx-border-width: 1;");
+            vBox.setPrefWidth(220);
+
+            // Effet au survol
+            vBox.setOnMouseEntered(e -> vBox.setStyle("-fx-background-color: #f0e8ff; " +
+                    "-fx-background-radius: 15; " +
+                    "-fx-border-radius: 15; " +
+                    "-fx-border-color: #c5b8e0; " +
+                    "-fx-border-width: 1;"));
+            vBox.setOnMouseExited(e -> vBox.setStyle("-fx-background-color: white; " +
+                    "-fx-background-radius: 15; " +
+                    "-fx-border-radius: 15; " +
+                    "-fx-border-color: #d1c4e9; " +
+                    "-fx-border-width: 1;"));
+
+            // Ajout dans la grille
+            int column = galerieGrid.getChildren().size() % 2;
+            int row = galerieGrid.getChildren().size() / 2;
+            galerieGrid.add(vBox, column, row);
+
+        } catch (Exception e) {
+            System.out.println("Erreur chargement cellule galerie: " + e.getMessage());
+        }
+    }
+
+
+
+    @FXML
+    public void triParNom(ActionEvent actionEvent) {
+        try {
+            List<Galerie> galeries = serviceGalerie.afficher();
+            galeries.sort((g1, g2) -> g1.getNom_g().compareToIgnoreCase(g2.getNom_g())); // Sort by name
+            loadGaleries(galeries);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void triParId(ActionEvent actionEvent) {
+        try {
+            List<Galerie> galeries = serviceGalerie.afficher();
+            galeries.sort((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
+            loadGaleries(galeries);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void statistiques(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/StatG.fxml"));
+            Parent root = loader.load();
+
+            StatG stat = loader.getController();
+
+            parent.getChildren().clear();
+            parent.getChildren().add(root);
+            FadeTransition ft = new FadeTransition(Duration.millis(500), root); // 500 ms = 0.5s
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            ft.play();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void commentsAdmin(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/CommentsA.fxml"));
+            Parent root = loader.load();
+
+            CommentsA comment = loader.getController();
+
+            parent.getChildren().clear();
+            parent.getChildren().add(root);
+            FadeTransition ft = new FadeTransition(Duration.millis(500), root); // 500 ms = 0.5s
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            ft.play();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
