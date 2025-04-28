@@ -33,6 +33,10 @@
       <TextField fx:id="titreC" layoutX="342.0" layoutY="171.0" prefHeight="40.0" prefWidth="368.0" promptText="titre" />
       <TextField fx:id="categC" layoutX="342.0" layoutY="257.0" prefHeight="40.0" prefWidth="368.0" promptText="categorie" />
       <TextArea fx:id="contenuC" layoutX="342.0" layoutY="354.0" prefHeight="130.0" prefWidth="368.0" promptText="contenu" />
+      <Button fx:id="uploadImageButton" layoutX="342.0" layoutY="500.0" mnemonicParsing="false" text="Uploader Image" onAction="#handleUploadImage"/>
+      <Label fx:id="imagePathLabel" layoutX="500.0" layoutY="510.0" prefWidth="400.0" text="Aucune image sélectionnée" />
+      <javafx.scene.image.ImageView fx:id="previewImage" layoutX="760.0" layoutY="410.0" fitHeight="100.0" fitWidth="100.0" preserveRatio="true"/>
+      <Text fx:id="errImage" fill="#b20000" layoutX="810.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="184.13671875" />
       <Button fx:id="validerButton" layoutX="825.0" layoutY="542.0" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="65.0" prefWidth="154.0" text="Valider">
          <font>
             <Font size="20.0" />
