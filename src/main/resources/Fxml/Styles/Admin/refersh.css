@@ -1,0 +1,14 @@
+.refresh-btn {
+  -fx-background-color: linear-gradient(
+    to right,
+    #7b2ff7,
+    #00c6ff
+  ); /* violet -> bleu */
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-background-radius: 15;
+  -fx-border-radius: 15;
+  -fx-padding: 10 20 10 20;
+  -fx-font-size: 14px;
+  -fx-cursor: hand;
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AdminEditFileWindow" prefHeight="780.0" prefWidth="1200.0" stylesheets="@../Styles/Admin/DashboardAdmin.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.AdminEditerFichierController">
+
+    <VBox fx:id="mainBox" layoutX="265.0" layoutY="92.0" prefHeight="673.0" prefWidth="700.0" spacing="10">
+        <TextArea fx:id="ta" prefHeight="517.0" prefWidth="832.0" />
+
+        <VBox alignment="CENTER" spacing="15">
+            <Slider fx:id="sl" prefWidth="300" />
+
+            <DatePicker fx:id="dp" />
+
+            <ColorPicker fx:id="cp" />
+         <HBox alignment="CENTER" prefHeight="41.0" prefWidth="232.0">
+            <children>
+      
+                  <Button fx:id="openFileBtn" text="ouvrir un fichier">
+                  <HBox.margin>
+                     <Insets right="20.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font name="System Italic" size="12.0" />
+                  </font></Button>
+               <Button fx:id="saveFileBtn" mnemonicParsing="false" text="sauvegarde" />
+            </children>
+         </HBox>
+        </VBox>
+    </VBox>
+   <Label layoutX="544.0" layoutY="14.0" text="editer fichiers" textFill="#ac1ea7">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font>
+   </Label>
+   <Button fx:id="closeFileBtn" layoutX="929.0" layoutY="50.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="41.0">
+      <graphic>
+         <ImageView fitHeight="15.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../image/icons8-x-52.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </Button>
+   <Button fx:id="retour_btn" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleMetier" prefHeight="51.0" prefWidth="92.0">
+      <graphic>
+         <ImageView fitHeight="30.0" fitWidth="60.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../image/icons8-flèche-50.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </Button>
+</AnchorPane>
