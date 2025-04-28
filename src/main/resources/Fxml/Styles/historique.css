@@ -1,0 +1,31 @@
+/* Couleurs principales */
+.root {
+    -fx-background-color: #f5f5fa;
+}
+
+/* Style du tableau */
+.table-view {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.table-view .column-header {
+    -fx-background-color: #d2b3f3; /* Remplacé la variable par la vraie couleur */
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header-background {
+    -fx-background-radius: 5 5 0 0;
+}
+
+/* Boutons */
+.button {
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgb(107, 76, 168), 3, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-opacity: 0.9;
+}

@@ -1,10 +1,12 @@
 package tn.esprit.services;
 
 import tn.esprit.entities.Magasin;
+import tn.esprit.entities.MagasinStatDTO;
 import tn.esprit.entities.Personne;
 import tn.esprit.utils.DBConnection;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -87,5 +89,27 @@ public class ServiceMagasin implements CRUD<Magasin> {
     @Override
     public void supprimer(int id) throws SQLException {
 
+    }
+
+    public List<MagasinStatDTO> getStatsVentesParMagasin() throws SQLException {
+        List<MagasinStatDTO> stats = new ArrayList<>();
+        String sql = "SELECT m.id, m.nom_m, SUM(lc.quantite * a.prix_a) as chiffre_affaire " +
+                "FROM ligne_commande lc " +
+                "JOIN article a ON lc.article_id = a.id " +
+                "JOIN magasin m ON a.magasin_id = m.id " +
+                "GROUP BY m.id, m.nom_m " +
+                "ORDER BY chiffre_affaire DESC";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                stats.add(new MagasinStatDTO(
+                        rs.getInt("id"),
+                        rs.getString("nom_m"),
+                        rs.getDouble("chiffre_affaire")
+                ));
+            }
+        }
+        return stats;
     }
 }

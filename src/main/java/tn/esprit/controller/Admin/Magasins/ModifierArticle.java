@@ -15,6 +15,7 @@ import tn.esprit.services.ServiceArticle;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
@@ -47,10 +48,22 @@ public class ModifierArticle {
         tfQuantite.setText(String.valueOf(article.getQuantite()));
         tfDescription.setText(article.getDesc_a());
 
-        if (article.getImage_path() != null) {
-            String path = "/image/article/" + article.getImage_path();
-            Image image = new Image(getClass().getResource(path).toExternalForm());
-            imageViewArticle.setImage(image);
+        if (article.getImage_path() != null && !article.getImage_path().isEmpty()) {
+            // Essayer d'abord de charger depuis le dossier uploads
+            File imageFile = new File("/image/article/" + article.getImage_path());
+            if (imageFile.exists()) {
+                imageViewArticle.setImage(new Image(imageFile.toURI().toString()));
+            } else {
+                // Fallback: essayer depuis les ressources
+                try {
+                    InputStream is = getClass().getResourceAsStream("/image/article/" + article.getImage_path());
+                    if (is != null) {
+                        imageViewArticle.setImage(new Image(is));
+                    }
+                } catch (Exception e) {
+                    System.err.println("Image non trouvée: " + article.getImage_path());
+                }
+            }
         }
     }
 
@@ -118,8 +131,6 @@ public class ModifierArticle {
             valid = false;
         }
 
-        if (!valid) return;
-
         try {
             articleExistant.setNom_a(nom);
             articleExistant.setPrix_a(prix);
@@ -127,20 +138,46 @@ public class ModifierArticle {
             articleExistant.setDesc_a(description);
 
             if (nouvelleImage != null) {
-                String destinationPath = "src/main/resources/image/article/";
-                String fileName = System.currentTimeMillis() + "_" + nouvelleImage.getName();
-                File destFile = new File(destinationPath + fileName);
-                Files.copy(nouvelleImage.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                // 1. Supprimer l'ancienne image
+                deleteOldImage(articleExistant.getImage_path());
+
+                // 2. Chemin unique pour le stockage
+                String uploadDir = "target/classes/image/article/";
+                new File(uploadDir).mkdirs();
+
+                // 3. Générer un nom unique
+                String fileName = System.currentTimeMillis() + "_" +
+                        nouvelleImage.getName().replaceAll("[^a-zA-Z0-9.-]", "_");
+
+                // 4. Sauvegarder seulement dans uploads
+                File destFile = new File(uploadDir + fileName);
+                Files.copy(nouvelleImage.toPath(), destFile.toPath(),
+                        StandardCopyOption.REPLACE_EXISTING);
+
+                // 5. Mettre à jour le chemin relatif
                 articleExistant.setImage_path(fileName);
+
+                // 6. Rafraîchir l'affichage
+                imageViewArticle.setImage(new Image(destFile.toURI().toString()));
             }
 
             new ServiceArticle().modifier(articleExistant);
             retournerListeArticles();
-
         } catch (Exception e) {
             e.printStackTrace();
+            lblErrorImage.setText("Erreur lors de la modification");
+        }
+
+    }
+    private void deleteOldImage(String oldFileName) {
+        if (oldFileName != null && !oldFileName.isEmpty()) {
+            File oldFile = new File("/image/article/" + oldFileName);
+            if (oldFile.exists()) {
+                oldFile.delete();
+            }
         }
     }
+
     private void resetStyles() {
         tfNom.setStyle(null);
         tfPrix.setStyle(null);
