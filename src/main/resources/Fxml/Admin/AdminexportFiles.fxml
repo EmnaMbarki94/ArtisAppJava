@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AdminExportFileWindow" prefHeight="690.0" prefWidth="1456.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Admin.ExportFileController">
+   <children>
+      <TableView fx:id="user_admin_tableView" layoutX="205.0" layoutY="422.0" prefHeight="240.0" prefWidth="1126.0" />
+      <Button fx:id="exportPdfButton" layoutX="225.0" layoutY="117.0" mnemonicParsing="false" onAction="#exportToPdf">
+         <graphic>
+            <ImageView fitHeight="263.0" fitWidth="306.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../image/vecteezy_pdf-document-download-vector_12799850.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="exportCsvButton" layoutX="954.0" layoutY="117.0" mnemonicParsing="false" onAction="#exportToCsv" prefHeight="206.0" prefWidth="241.0">
+         <graphic>
+            <ImageView fitHeight="249.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../image/vecteezy_microsoft-excel-icon-logo-symbol_27179371.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="728.0" layoutY="36.0" text="Exportation de Fichier" textFill="#a305bf">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="retour_btn" layoutX="173.0" layoutY="24.0" mnemonicParsing="false" onAction="#handelReturnToMetier" prefHeight="51.0" prefWidth="66.0" stylesheets="@../Styles/Admin/DashboardAdmin.css">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="50.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../image/icons8-flèche-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
