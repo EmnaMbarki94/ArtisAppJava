@@ -9,7 +9,8 @@
             fx:id="contenuPane"
             fx:controller="tn.esprit.controller.evenement.AjouterEvenementController"
             prefWidth="600" prefHeight="650"
-            style="-fx-background-color: #f5f0ff;">
+            style="-fx-background-color: #f5f0ff;"
+            stylesheets="@../../Styles/reservationform.css">
 
     <VBox spacing="10" alignment="TOP_CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
         <Button text="← Retour à la liste" onAction="#handleRetour"

@@ -1,0 +1,132 @@
+/* Style général pour l'interface */
+* {
+    -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    -fx-base: #f7f5ff;
+}
+
+/* Style pour la zone de recherche */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #9c4dcc;
+    -fx-border-radius: 25px;
+    -fx-padding: 8 15;
+    -fx-font-size: 14px;
+    -fx-text-fill: #444;
+    -fx-cursor: text;
+    -fx-focus-color: #7f56d9;
+}
+
+/* Style pour le ComboBox de tri */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #9c4dcc;
+    -fx-border-radius: 25px;
+    -fx-font-size: 14px;
+    -fx-padding: 8 15;
+    -fx-text-fill: #444;
+    -fx-cursor: hand;
+    -fx-focus-color: #7f56d9;
+}
+
+/* Style pour le bouton de retour */
+.button {
+    -fx-background-color: #9c4dcc;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-border-radius: 8px;
+    -fx-cursor: hand;
+}
+
+/* Style pour le bouton réserver */
+#reserverButton {
+    -fx-background-color: linear-gradient(to bottom, #7f56d9, #5c3dc7);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-border-radius: 10px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+/* Style pour le conteneur principal HBox */
+#hbox {
+    -fx-background-color: white;
+    -fx-padding: 30px;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+    -fx-border-color: #7f56d9;
+    -fx-border-width: 3px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 15, 0, 4, 4);
+}
+
+/* Style pour la zone de description à gauche */
+#descriptionBox {
+    -fx-padding-right: 30px;
+}
+
+/* Style pour l'image de l'événement */
+#eventImage {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 20, 0.1, 0, 5);
+    -fx-border-radius: 12px;
+    -fx-cursor: hand;
+}
+
+/* Style pour les labels de texte */
+.label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #444;
+}
+
+/* Style pour le titre de l'événement */
+#eventNom {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5e35b1;
+}
+
+/* Style pour les labels spécifiques */
+#eventDate,
+#eventType,
+#eventInfo {
+    -fx-font-size: 16px;
+    -fx-text-fill: #444;
+}
+
+/* Style pour la zone de prix */
+#prixStandard,
+#prixVIP {
+    -fx-font-size: 16px;
+    -fx-text-fill: #444;
+}
+
+/* Style pour la disponibilité des tickets */
+#ticketsRestants {
+    -fx-font-size: 16px;
+    -fx-text-fill: #444;
+}
+
+/* Style pour le statut de l'événement */
+#statut {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff6347;
+}
+
+/* Style pour le label "Complet" si l'événement est complet */
+#complet {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff6347;
+}
+
+/* Ajout d'une animation pour le bouton "Réserver" */
+#reserverButton:hover {
+    -fx-background-color: linear-gradient(to bottom, #5c3dc7, #7f56d9);
+}
+
+/* Style pour les bordures du champ de texte lors du focus */
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #7f56d9;
+    -fx-background-color: white;
+}

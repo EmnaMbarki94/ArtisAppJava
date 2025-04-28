@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane fx:id="contenuPane" xmlns:fx="http://javafx.com/fxml" fx:controller="tn.esprit.controller.reservation.StatsController" prefWidth="800" prefHeight="600" style="-fx-background-color: #f9f9f9;">
+    <Button text="← Retour à la liste" onAction="#handleRetour" style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px; -fx-cursor: hand;"/>
+    <HBox fx:id="headerBox" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>
+    <BarChart fx:id="barChart" layoutX="50" layoutY="80" prefWidth="700" prefHeight="450" animated="true">
+        <xAxis>
+            <CategoryAxis label="Événements">
+                <!-- Modifier la rotation des labels pour les rendre lisibles sous les barres -->
+                <tickLabelRotation>-45</tickLabelRotation> <!-- Rotation des labels de -45 degrés -->
+            </CategoryAxis>
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Nombre de réservations"/>
+        </yAxis>
+    </BarChart>
+    <ComboBox fx:id="comboStatType" layoutX="100" layoutY="20" prefWidth="200"/>
+
+    <VBox fx:id="topEventBox" layoutX="1700" layoutY="80" spacing="10" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10"/>
+</AnchorPane>
