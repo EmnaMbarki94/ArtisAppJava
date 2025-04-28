@@ -8,28 +8,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane prefHeight="527.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reponse.ListReController">
    <children>
-      <AnchorPane prefHeight="119.0" prefWidth="746.0" style="-fx-background-color: #dbb3f5;">
+      <AnchorPane prefHeight="792.0" prefWidth="1393.0" style="-fx-background-color: #dbb3f5;">
          <children>
-            <Label alignment="CENTER" layoutX="185.0" layoutY="40.0" prefHeight="40.0" prefWidth="358.0" text="Listes Des Reclamations">
+            <Label alignment="CENTER" layoutX="516.0" layoutY="46.0" prefHeight="40.0" prefWidth="358.0" text="Listes Des Reclamations">
                <font>
                   <Font name="System Bold Italic" size="28.0" />
                </font>
             </Label>
+      
+            <Button fx:id="RepButton" layoutX="372.0" layoutY="575.0" mnemonicParsing="false" onAction="#onAfficherListeReponse" prefHeight="56.0" prefWidth="619.0" style="-fx-background-color: #dbb3f5;" text="Afficher Listes Des Reponses">
+               <font>
+                  <Font name="Arial Bold Italic" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="statsButton" layoutX="1143.0" layoutY="158.0" onAction="#onAfficherStatistiques" text="Voir Statistiques" />
+            <Label alignment="CENTER" contentDisplay="TOP" layoutX="99.0" layoutY="155.0" prefHeight="34.0" prefWidth="403.0" text="Les Reclamations:">
+               <font>
+                  <Font name="System Bold Italic" size="19.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" contentDisplay="TOP" layoutX="149.0" layoutY="146.0" prefHeight="34.0" prefWidth="403.0" text="Les Reclamations:">
-         <font>
-            <Font name="System Bold Italic" size="19.0" />
-         </font>
-      </Label>
-      <TableView fx:id="TabelViewRec" layoutX="20.0" layoutY="223.0" prefHeight="254.0" prefWidth="685.0">
+      <TableView fx:id="TabelViewRec" layoutX="20.0" layoutY="223.0" prefHeight="292.0" prefWidth="1317.0">
          <columns>
-            <TableColumn fx:id="Desc" prefWidth="268.0" text="Description" />
-            <TableColumn fx:id="Type" prefWidth="128.0" text="Type" />
-            <TableColumn fx:id="Date" prefWidth="126.0" text="Date" />
-            <TableColumn fx:id="ActionRec" prefWidth="163.0" text="Action" />
+            <TableColumn fx:id="Desc" prefWidth="346.0" text="Description" />
+            <TableColumn fx:id="Type" prefWidth="100.0" text="Type" />
+            <TableColumn fx:id="Date" prefWidth="248.0" text="Date" />
+            <TableColumn fx:id="EmailUser" prefWidth="272.0" text="Email utilisateur" />
+<!--            <TableColumn fx:id="NameUser" prefWidth="180.0" text="Nom utilisateur" />-->
+<!--            <TableColumn fx:id="LastNameUser" prefWidth="180.0" text="Prenom utilisateur" />-->
+
+
+            <TableColumn fx:id="ActionRec" prefWidth="347.0" text="Action" />
+
 
 
 
@@ -38,10 +54,10 @@
             <DropShadow />
          </effect>
       </TableView>
-      <Button fx:id="RepButton" layoutX="166.0" layoutY="488.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="433.0" style="-fx-background-color: #dbb3f5;" text="Afficher Listes Des Reponses" onAction="#onAfficherListeReponse">
-         <font>
-            <Font name="Arial Bold Italic" size="16.0" />
-         </font>
-      </Button>
+      <HBox spacing="10" alignment="CENTER_LEFT" layoutX="20.0" layoutY="60.0">
+         <TextField fx:id="searchField" promptText="Rechercher..." prefWidth="200.0" />
+         <ComboBox fx:id="typeFilterComboBox" promptText="Filtrer par type" prefWidth="150.0" />
+      </HBox>
+
    </children>
 </AnchorPane>

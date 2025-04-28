@@ -34,7 +34,7 @@
             <MenuItem mnemonicParsing="false" text="user" />
         </items>
       </SplitMenuButton>
-      <Button fx:id="register_signIn_btn" layoutX="1282.0" layoutY="735.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="96.0" text="REGISTER">
+      <Button fx:id="register_signIn_btn" layoutX="1122.0" layoutY="641.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="96.0" text="REGISTER">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

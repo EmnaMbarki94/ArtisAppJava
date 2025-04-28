@@ -43,11 +43,18 @@
             <Font name="Arial Bold Italic" size="17.0" />
          </font>
       </Label>
-      <DatePicker fx:id="date" layoutX="102.0" layoutY="390.0" prefHeight="33.0" prefWidth="398.0" promptText="Date">
+<!--      <DatePicker fx:id="date" layoutX="102.0" layoutY="390.0" prefHeight="33.0" prefWidth="398.0" promptText="Date">-->
+<!--         <effect>-->
+<!--            <DropShadow />-->
+<!--         </effect>-->
+<!--      </DatePicker>-->
+      <DatePicker fx:id="date" layoutX="102.0" layoutY="390.0" prefHeight="33.0" prefWidth="398.0" promptText="Date" editable="false" disable="true">
          <effect>
             <DropShadow />
          </effect>
       </DatePicker>
+
+
       <Button fx:id="AjouterBt" layoutX="102.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleAjouter" prefHeight="25.0" prefWidth="398.0" style="-fx-background-color: #dbb3f5;" text="Ajouter" textAlignment="CENTER">
          <font>
             <Font name="System Bold Italic" size="15.0" />

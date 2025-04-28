@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="tn.esprit.controller.chatbot.ChatbotController"
+      spacing="10" style="-fx-padding: 10; -fx-background-color: white;">
+
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vvalue="1.0">
+        <VBox fx:id="messagesContainer" spacing="5"/>
+    </ScrollPane>
+
+    <HBox spacing="10" alignment="CENTER">
+        <TextField fx:id="messageField" promptText="Tapez votre message..." HBox.hgrow="ALWAYS"/>
+        <Button fx:id="sendButton" text="Envoyer" style="-fx-background-color: #dbb3f5; -fx-text-fill: white;"/>
+        <Button fx:id="historyButton" text="Historique" style="-fx-background-color: #a3a3a3; -fx-text-fill: white;"/>
+        <Button fx:id="clearButton" text="Effacer" style="-fx-background-color: #f5b3b3; -fx-text-fill: white;"/>
+    </HBox>
+</VBox>

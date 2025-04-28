@@ -29,8 +29,8 @@ public class AjouterReController {
     @FXML
     private Button AfficherBt;
     @FXML
-    private Label DateLabel;
-
+//    private Label DateLabel;
+    private DatePicker date;
     @FXML
     private Label DescLabel;
     @FXML
@@ -46,15 +46,18 @@ public class AjouterReController {
     @FXML
     private ComboBox<String> TypeComboBox;
 
-    @FXML
-    private DatePicker date;
+
 
     private final ServiceReclamation serviceReclamation = new ServiceReclamation();
     private final List<String> badWords = Arrays.asList("idiot", "nul", "stupide", "bête");
 
     @FXML
     public void initialize() {
+
         TypeComboBox.getItems().addAll("Technique", "Service", "Produit", "Autre");
+        // Affiche la date du jour dans le champ, mais désactivé
+        date.setValue(LocalDate.now());
+        date.setDisable(true);
     }
 
     @FXML
@@ -63,11 +66,12 @@ public class AjouterReController {
         // Nettoyer les labels d'erreur
         DescLabel.setText("");
         TypeLabel.setText("");
-        DateLabel.setText("");
+//        DateLabel.setText("");
 
         String desc = DescriptionTextField.getText().trim();
         String type = TypeComboBox.getValue();
-        LocalDate localDate = date.getValue();
+//        LocalDate localDate = date.getValue();
+        LocalDate localDate = LocalDate.now();
 
         boolean hasError = false;
 
@@ -87,10 +91,10 @@ public class AjouterReController {
             hasError = true;
         }
 
-        if (localDate == null) {
-            DateLabel.setText("Veuillez choisir une date.");
-            hasError = true;
-        }
+//        if (localDate == null) {
+//            DateLabel.setText("Veuillez choisir une date.");
+//            hasError = true;
+//        }
 
         if (hasError) return;
 
