@@ -5,12 +5,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import java.io.File;
 import tn.esprit.entities.Cours;
 import tn.esprit.entities.Personne;
 import tn.esprit.entities.Session;
@@ -55,7 +57,22 @@ public class AjoutCoursController implements Initializable {
     @FXML
     private Button validerButton;
 
+    @FXML
+    private Button uploadImageButton;
+
+    @FXML
+    private Label imagePathLabel;
+
+    @FXML
+    private ImageView previewImage;
+
+    @FXML
+    private Text errImage;
+
     private final ServiceCours serviceCours = new ServiceCours();
+
+    private String existingImagePath = null;
+    private String selectedImagePath = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,6 +89,7 @@ public class AjoutCoursController implements Initializable {
         err1.setText("");
         err2.setText("");
         err3.setText("");
+        errImage.setText("");
 
         String titre = titreC.getText().trim();
         String categ = categC.getText().trim();
@@ -96,6 +114,12 @@ public class AjoutCoursController implements Initializable {
             err3.setText("Contenu est requis");
             isValid = false;
         }
+        if (selectedImagePath == null || selectedImagePath.isEmpty()) {
+            if(existingImagePath==null){
+                errImage.setText("Image est requise");
+                isValid = false;
+            }
+        }
 
         if (isValid) {
             try{
@@ -103,7 +127,7 @@ public class AjoutCoursController implements Initializable {
                     Cours cours = new Cours();
                     cours.setNom_c(titre);
                     cours.setCateg_c(categ);
-                    cours.setImage("  ");
+                    cours.setImage(selectedImagePath);
                     cours.setContenu_c(contenu);
                     cours.setDate_c(LocalDate.now());
                     cours.setHeure_c(LocalTime.now());
@@ -130,7 +154,11 @@ public class AjoutCoursController implements Initializable {
                     coursModif.setNom_c(titre);
                     coursModif.setCateg_c(categ);
                     coursModif.setContenu_c(contenu);
-
+                    if (selectedImagePath != null) {
+                        coursModif.setImage(selectedImagePath);
+                    } else {
+                        coursModif.setImage(existingImagePath);
+                    }
                     serviceCours.modifier(coursModif);
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -157,6 +185,43 @@ public class AjoutCoursController implements Initializable {
         }
     }
 
+    @FXML
+    private void handleUploadImage() {
+        String projectRoot = System.getProperty("user.dir");
+        String targetDir = projectRoot + File.separator + "uploads" + File.separator + "cours";
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir une image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Fichiers image", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+        Window stage = anchor.getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedFile != null) {
+            try {
+                String fileName = System.currentTimeMillis() + "_" + selectedFile.getName();
+                File destFile = new File(targetDir, fileName);
+
+                java.nio.file.Files.copy(selectedFile.toPath(), destFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                selectedImagePath = fileName;
+                imagePathLabel.setText(fileName);
+
+                if (destFile.exists()) {
+                    Image image = new Image(destFile.toURI().toString(), false);
+                    previewImage.setImage(image);
+                    errImage.setText("");
+                } else {
+                    errImage.setText("Erreur: image non trouvée après la copie");
+                    System.err.println("Image non trouvée après la copie: " + destFile.getAbsolutePath());
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                errImage.setText("Erreur lors de la copie de l'image");
+            }
+        }
+    }
+
     public void handleAnnuler(ActionEvent actionEvent) {
         try {
             System.out.println("back to cours menu!");
@@ -177,6 +242,18 @@ public class AjoutCoursController implements Initializable {
             titreC.setText(coursModif.getNom_c());
             categC.setText(coursModif.getCateg_c());
             contenuC.setText(coursModif.getContenu_c());
+            existingImagePath = coursModif.getImage();
+            String imagePath = System.getProperty("user.dir") + File.separator + "uploads" + File.separator + "cours" + File.separator + existingImagePath;
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                Image image = new Image(imageFile.toURI().toString(), false);
+                previewImage.setImage(image);
+                imagePathLabel.setText(existingImagePath);
+            } else {
+                System.out.println("Image file not found: " + imagePath);
+                Image fallbackImage = new Image(getClass().getResource("/image/art.jpg").toExternalForm(), false);
+                previewImage.setImage(fallbackImage);
+            }
 
         }
     }

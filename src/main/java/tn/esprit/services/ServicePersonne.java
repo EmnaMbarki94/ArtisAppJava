@@ -84,6 +84,18 @@ public class ServicePersonne implements CRUD<Personne> {
         }
     }
 
+    public void modifierPoint(Personne user) {
+        String req = "UPDATE user SET point=? WHERE email=?";
+        try (PreparedStatement ps = cnx.prepareStatement(req)) {
+            ps.setInt(1, user.getPoint());
+            ps.setString(2, user.getEmail());
+            int rows = ps.executeUpdate();
+            System.out.println(rows > 0 ? "Mise à jour réussie" : "Échec de la mise à jour");
+        } catch (SQLException e) {
+            System.err.println("Erreur de modification : " + e.getMessage());
+        }
+    }
+
     @Override
     public List<Personne> selectAll() {
         List<Personne> personnes = new ArrayList<>();

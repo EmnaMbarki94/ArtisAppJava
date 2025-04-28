@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="anchor" prefHeight="662.0" prefWidth="1223.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Cours.CoursStatsController">
+    <Button fx:id="retour" layoutX="21.0" layoutY="22.0" mnemonicParsing="false" onAction="#retour" text="&lt;--" />
+    <HBox layoutX="127.0" layoutY="22.0" spacing="20">
+        <VBox fx:id="totalCoursesCard" alignment="CENTER" prefHeight="100" prefWidth="200" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 20; -fx-background-radius: 10;">
+            <Label style="-fx-font-size: 16px;" text="Total Cours" />
+            <Label fx:id="totalCoursesLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="0" />
+        </VBox>
+
+        <VBox fx:id="coursesWithQuizzesCard" alignment="CENTER" prefHeight="100" prefWidth="200" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 20; -fx-background-radius: 10;">
+            <Label style="-fx-font-size: 16px;" text="Cours avec quiz" />
+            <Label fx:id="coursesWithQuizzesLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="0" />
+        </VBox>
+
+        <VBox fx:id="coursesWithoutQuizzesCard" alignment="CENTER" prefHeight="100" prefWidth="200" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 20; -fx-background-radius: 10;">
+            <Label style="-fx-font-size: 16px;" text="Courses sans quiz" />
+            <Label fx:id="coursesWithoutQuizzesLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="0" />
+        </VBox>
+    </HBox>
+
+    <PieChart fx:id="coursePieChart" layoutX="20" layoutY="150" prefHeight="300" prefWidth="450" />
+
+    <BarChart fx:id="topQuizzesBarChart" layoutX="626.0" layoutY="150.0" prefHeight="464.0" prefWidth="633.0">
+        <xAxis>
+            <CategoryAxis label="titre du quiz" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Nombre de tentatives" />
+        </yAxis>
+    </BarChart>
+
+    <TableView fx:id="leaderboardTable" layoutX="21.0" layoutY="476.0" prefHeight="148.0" prefWidth="602.0">
+        <columns>
+            <TableColumn fx:id="userColumn" prefWidth="382.0" text="User" />
+            <TableColumn fx:id="attemptsColumn" prefWidth="218.0" text="Nombre de tentatives" />
+        </columns>
+    </TableView>
+
+</AnchorPane>

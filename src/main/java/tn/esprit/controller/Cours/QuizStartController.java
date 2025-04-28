@@ -8,18 +8,15 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import tn.esprit.entities.Personne;
-import tn.esprit.entities.Question;
-import tn.esprit.entities.Quiz;
-import tn.esprit.entities.Session;
+import tn.esprit.entities.*;
+import tn.esprit.services.ServicePersonne;
 import tn.esprit.services.ServiceQuestion;
+import tn.esprit.services.ServiceQuizAttempt;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class QuizStartController implements Initializable {
@@ -45,6 +42,9 @@ public class QuizStartController implements Initializable {
     private Button prevButton;
 
     @FXML
+    private Button ajouterq;
+
+    @FXML
     private Button exit;
 
     private Question currentQuestion = null;
@@ -52,6 +52,9 @@ public class QuizStartController implements Initializable {
     private Quiz quiz;
     private List<Question> questions;
     private int currentIndex = 0;
+    private final java.util.Map<Question, ToggleGroup> questionToggleGroups = new java.util.HashMap<>();
+    private final java.util.Map<Question, String> selectedAnswers = new java.util.HashMap<>();
+
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
@@ -107,16 +110,26 @@ public class QuizStartController implements Initializable {
 
         System.out.println(answers);
 
-        for (String answer : answers) {
-            RadioButton rb = new RadioButton(answer);
+        List<AnswerOption> answerOptions = new ArrayList<>();
+        for (int i = 0; i < answers.size(); i++) {
+            answerOptions.add(new AnswerOption(answers.get(i), i == 0));
+        }
+        Collections.shuffle(answerOptions);
+        questionToggleGroups.put(question, toggleGroup);
+
+        for (AnswerOption option : answerOptions) {
+            RadioButton rb = new RadioButton(option.getText());
             rb.setStyle("-fx-font-size: 14px;");
+            rb.setUserData(option.isCorrect());
             rb.setToggleGroup(toggleGroup);
+            if (selectedAnswers.containsKey(question) && selectedAnswers.get(question).equals(option.getText())) {
+                rb.setSelected(true);
+            }
             box.getChildren().add(rb);
         }
+
         System.out.println("question box created");
-        if (user.getRoles().contains("ROLE_USER")) {
-        }
-        else {
+        if (user.getRoles().contains("ROLE_ADMIN") || user.getRoles().contains("ROLE_ENSEIGNANT")) {
             Button editBtn = new Button("Modifier cette question");
             editBtn.setOnAction(e -> handleEditQuestion(question));
             box.getChildren().add(editBtn);
@@ -124,9 +137,12 @@ public class QuizStartController implements Initializable {
             Button deleteBtn = new Button("Supprimer cette question");
             deleteBtn.setOnAction(e -> handleDeleteQuestion(question));
             box.getChildren().add(deleteBtn);
+
+            ajouterq.setVisible(true);
         }
         return box;
     }
+
 
     private void handleDeleteQuestion(Question question) {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
@@ -175,9 +191,25 @@ public class QuizStartController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void handleAddQuestion() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/cours/AjoutQuestionAdmin.fxml"));
+            Parent ajoutQuestionView = loader.load();
+
+            AjoutQuestionController controller = loader.getController();
+            controller.setQuiz(quiz);
+
+            anchor.getChildren().setAll(ajoutQuestionView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void handleNext(ActionEvent event) {
+        saveAnswer(currentIndex);
         if (currentIndex < questions.size() - 1) {
             currentIndex++;
             showQuestion(currentIndex);
@@ -186,27 +218,71 @@ public class QuizStartController implements Initializable {
 
     @FXML
     private void handlePrev(ActionEvent event) {
+        saveAnswer(currentIndex);
         if (currentIndex > 0) {
             currentIndex--;
             showQuestion(currentIndex);
         }
     }
+    private void saveAnswer(int index) {
+        if (index >= 0 && index < questions.size()) {
+            Question question = questions.get(index);
+            ToggleGroup group = questionToggleGroups.get(question);
+            if (group != null && group.getSelectedToggle() != null) {
+                RadioButton selected = (RadioButton) group.getSelectedToggle();
+                selectedAnswers.put(question, selected.getText());
+            }
+        }
+    }
 
     @FXML
     private void handleSubmit(ActionEvent event) {
-        //metier
+        int score = 0;
+
+        for (Question question : questions) {
+            ToggleGroup group = questionToggleGroups.get(question);
+            if (group != null) {
+                RadioButton selected = (RadioButton) group.getSelectedToggle();
+                if (selected != null && Boolean.TRUE.equals(selected.getUserData())) {
+                    score++;
+                }
+            }
+        }
+
+        Alert resultDialog = new Alert(Alert.AlertType.INFORMATION);
+        resultDialog.setTitle("Résultat du Quiz");
+        resultDialog.setHeaderText(null);
+        if (score>questions.size()*0.7){
+            resultDialog.setContentText("Félicitations, Votre score est : " + score + " / " + questions.size());
+        }
+        else{
+            resultDialog.setContentText("Malheureusement, Votre score est : " + score + " / " + questions.size());
+        }
+        resultDialog.showAndWait();
+        Quiz_attempt quiz_attempt = new Quiz_attempt();
+        quiz_attempt.setNote(score);
+        quiz_attempt.setUser(user);
+        quiz_attempt.setQuiz(quiz);
+        ServiceQuizAttempt serviceQuizAttempt = new ServiceQuizAttempt();
+        try {
+            serviceQuizAttempt.ajouter(quiz_attempt);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        user.setPoint(user.getPoint()+score);
+        ServicePersonne servicePersonne = new ServicePersonne();
+        servicePersonne.modifierPoint(user);
+
+        handleExit(null);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("quiz start initialized ");
-
     }
     public void handleExit(ActionEvent actionEvent) {
         try {
             System.out.println("back to cours menu!");
-
-
 
             if(user.getRoles().contains("ROLE_ADMIN")) {
                 Parent EnscoursView = FXMLLoader.load(getClass().getResource("/Fxml/Admin/EnseignementAdmin.fxml"));
@@ -218,6 +294,23 @@ public class QuizStartController implements Initializable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    private static class AnswerOption {
+        private final String text;
+        private final boolean isCorrect;
+
+        public AnswerOption(String text, boolean isCorrect) {
+            this.text = text;
+            this.isCorrect = isCorrect;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public boolean isCorrect() {
+            return isCorrect;
         }
     }
 }
