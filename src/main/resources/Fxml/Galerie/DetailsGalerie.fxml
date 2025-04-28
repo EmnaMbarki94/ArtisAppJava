@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,46 +12,80 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane fx:id="users_parent" prefHeight="690.0" prefWidth="1456.0" stylesheets="@../Styles/global.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.DetailsGalerie">
-   <children>
-      <Label fx:id="detailsLabel" layoutX="631.0" layoutY="26.0" prefHeight="50.0" prefWidth="147.0" text="Details de la galerie" />
-      <GridPane fx:id="gridPieces" layoutX="485.0" layoutY="313.0" prefHeight="354.0" prefWidth="741.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
-      <Label layoutX="236.0" layoutY="115.0" text="Nom:" />
-      <Label layoutX="235.0" layoutY="186.0" text="Description:" />
-      <Label layoutX="234.0" layoutY="252.0" text="Type:" />
-      <ImageView fx:id="photoG" fitHeight="183.0" fitWidth="431.0" layoutX="796.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField fx:id="nomG" editable="false" layoutX="339.0" layoutY="109.0" />
-      <TextField fx:id="descG" editable="false" layoutX="339.0" layoutY="180.0" />
-      <TextField fx:id="typeG" editable="false" layoutX="339.0" layoutY="246.0" />
-      <Button fx:id="ajoutP" layoutX="93.0" layoutY="500.0" mnemonicParsing="false" onAction="#ajouterPiece" prefHeight="42.0" prefWidth="182.0" text="Ajouter une pièce d'art" />
-      <Button fx:id="modG" layoutX="93.0" layoutY="440.0" mnemonicParsing="false" onAction="#modifierG" prefHeight="41.0" prefWidth="182.0" text="Modifier votre galerie" />
-       
-       <Button fx:id="suppG" layoutX="1291.0" layoutY="15.0" mnemonicParsing="false" onAction="#supprimerGalerie" prefHeight="25.0" prefWidth="47.0">
-           <graphic>
-               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                   <image>
-                       <Image url="@/image/photos_galeries/corbeille.png" />
-                   </image>
-               </ImageView>
-           </graphic>
-       </Button>
-      <Button fx:id="retour" layoutX="12.0" layoutY="15.0" mnemonicParsing="false" onAction="#retourVersAffGal" prefHeight="7.0" prefWidth="15.0">
-       <graphic>
-           <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                   <Image url="@/image/photos_galeries/retour.png" />
-               </image>
-           </ImageView>
-       </graphic>
-      </Button>
-   </children>
+    <children>
+
+        <!-- Grand Cadre principal -->
+        <AnchorPane layoutX="52.0" layoutY="85.0" prefHeight="590.0" prefWidth="1256.0" style="-fx-background-color: #f9f9ff; -fx-border-color: #c5b3f2; -fx-border-width: 2px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+            <children>
+
+                <!-- Titre principal -->
+                <Label fx:id="detailsLabel" layoutX="400.0" layoutY="20.0" prefHeight="50.0" prefWidth="450.0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-alignment: center;" text="Détails de la Galerie" />
+
+                <!-- Informations sur la galerie -->
+                <AnchorPane layoutX="50.0" layoutY="90.0" prefHeight="200.0" prefWidth="550.0" style="-fx-background-color: #ffffff; -fx-border-color: #d6c8f5; -fx-border-width: 1.5px; -fx-border-radius: 15px; -fx-background-radius: 15px;">
+                    <children>
+                        <Label layoutX="20.0" layoutY="20.0" style="-fx-font-size: 16px;" text="Nom:" />
+                        <TextField fx:id="nomG" editable="false" layoutX="150.0" layoutY="15.0" prefWidth="350.0" />
+
+                        <Label layoutX="20.0" layoutY="80.0" style="-fx-font-size: 16px;" text="Description:" />
+                        <TextField fx:id="descG" editable="false" layoutX="150.0" layoutY="75.0" prefWidth="350.0" />
+
+                        <Label layoutX="20.0" layoutY="140.0" style="-fx-font-size: 16px;" text="Type:" />
+                        <TextField fx:id="typeG" editable="false" layoutX="150.0" layoutY="135.0" prefWidth="350.0" />
+                    </children>
+                </AnchorPane>
+
+                <!-- Image de la galerie -->
+                <ImageView fx:id="photoG" fitHeight="200.0" fitWidth="320.0" layoutX="660.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #ffffff; -fx-border-color: #d6c8f5; -fx-border-radius: 15px; -fx-background-radius: 15px;" />
+
+                <!-- Boutons Modifier / Ajouter -->
+                <Button fx:id="modG" layoutX="1009.0" layoutY="142.0" mnemonicParsing="false" onAction="#modifierG" prefHeight="40.0" prefWidth="190.0" style="-fx-background-color: #6a11cb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20;" text="Modifier la galerie" />
+                <Button fx:id="ajoutP" layoutX="1009.0" layoutY="196.0" mnemonicParsing="false" onAction="#ajouterPiece" prefHeight="40.0" prefWidth="190.0" style="-fx-background-color: #2575fc; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20;" text="Ajouter une œuvre" />
+
+                <!-- Titre pour GridPane -->
+                <Label layoutX="50.0" layoutY="320.0" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-underline: true;" text="Œuvres d'art" />
+            <ScrollPane hbarPolicy="NEVER" layoutX="45.0" layoutY="366.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-background-insets: 0; -fx-padding: 0;" vbarPolicy="NEVER">
+               <content>
+      
+                      <!-- GridPane des œuvres d'art -->
+                      <GridPane fx:id="gridPieces" hgap="30.0" prefHeight="200.0" prefWidth="1150.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0d6f5; -fx-border-width: 1.5px; -fx-border-radius: 15px; -fx-background-radius: 15px;" vgap="30.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" />
+                              <ColumnConstraints hgrow="ALWAYS" />
+                              <ColumnConstraints hgrow="ALWAYS" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints vgrow="ALWAYS" />
+                              <RowConstraints vgrow="ALWAYS" />
+                          </rowConstraints>
+                      </GridPane>
+               </content>
+            </ScrollPane>
+
+            </children>
+        </AnchorPane>
+
+        <!-- Bouton Suppression Galerie -->
+        <Button fx:id="suppG" layoutX="1400.0" layoutY="15.0" mnemonicParsing="false" onAction="#supprimerGalerie" style="-fx-background-color: transparent;">
+            <graphic>
+                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/image/photos_galeries/corbeille.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <!-- Bouton Retour -->
+        <Button fx:id="retour" layoutX="20.0" layoutY="15.0" mnemonicParsing="false" onAction="#retourVersAffGal" style="-fx-background-color: transparent;">
+            <graphic>
+                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/image/photos_galeries/retour.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+    </children>
 </AnchorPane>

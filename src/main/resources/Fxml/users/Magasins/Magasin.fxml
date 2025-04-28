@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<AnchorPane fx:id="contenuPane" prefHeight="800.0" prefWidth="1443.0"
+            stylesheets="@/Fxml/Styles/articles.css"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.esprit.controller.users.magasins.MagasinController">
+
+    <!-- En-tête -->
+    <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+
+        <Label styleClass="header-title" text="Boutique en Ligne" />
+
+        <!-- ComboBox pour les magasins -->
+        <ComboBox fx:id="magasinComboBox" prefWidth="200.0" promptText="Tous les magasins" styleClass="magasin-combo" HBox.hgrow="NEVER" />
+
+        <!-- Espacer pour pousser le bouton panier à droite -->
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Consulter l'historique des mes commandes"
+                onAction="#consulterHistorique"
+                style="-fx-background-color: #6a1b9a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;">
+            <graphic>
+                <ImageView fitHeight="16" fitWidth="16">
+                    <Image url="/image/historique.png" />
+                </ImageView>
+            </graphic>
+        </Button>
+        <!-- Bouton Panier -->
+        <Button fx:id="btnOuvrirPanier" onAction="#ouvrirPanier" styleClass="cart-button">
+            <graphic>
+                <ImageView fitHeight="28" fitWidth="31.0">
+                    <Image url="@/icons/cart.png" />
+                </ImageView>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <ScrollPane fx:id="scrollPane" fitToWidth="true"
+                AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80"
+                hbarPolicy="NEVER" vbarPolicy="NEVER"
+                style="-fx-background: transparent; -fx-background-color: transparent;">
+        <GridPane fx:id="articleGrid" alignment="CENTER"
+                  hgap="20" styleClass="article-grid" vgap="20" />
+    </ScrollPane>
+
+</AnchorPane>

@@ -14,6 +14,7 @@ import tn.esprit.services.ServiceMagasin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
@@ -46,14 +47,20 @@ public class ModifierMagasin {
 
     public void setMagasin(Magasin magasin) {
         this.magasinActuel = magasin;
-
         tfNom.setText(magasin.getNom_m());
         tfType.setText(magasin.getType_m());
 
         if (magasin.getPhoto_m() != null) {
-            File imageFile = new File("src/main/resources/image/magasin/" + magasin.getPhoto_m());
-            if (imageFile.exists()) {
-                imageViewMagasin.setImage(new Image(imageFile.toURI().toString()));
+            // Essayer d'abord le classpath (pour le runtime)
+            InputStream is = getClass().getResourceAsStream("/image/magasin/" + magasin.getPhoto_m());
+            if (is != null) {
+                imageViewMagasin.setImage(new Image(is));
+            } else {
+                // Fallback sur le dossier uploads
+                File imageFile = new File("/image/magasin/" + magasin.getPhoto_m());
+                if (imageFile.exists()) {
+                    imageViewMagasin.setImage(new Image(imageFile.toURI().toString()));
+                }
             }
         }
     }
@@ -92,10 +99,24 @@ public class ModifierMagasin {
 
         if (imageMagasin != null) {
             try {
-                String destinationPath = "src/main/resources/image/magasin/";
+                // Chemin pour le développement (stockage permanent)
+                String devPath = "uploads/images/magasin/";
+                new File(devPath).mkdirs();
+
+                // Chemin pour les ressources (classpath)
+                String resPath = "target/classes/image/magasin/";
+                new File(resPath).mkdirs();
+
                 String fileName = System.currentTimeMillis() + "_" + imageMagasin.getName();
-                File destFile = new File(destinationPath + fileName);
-                Files.copy(imageMagasin.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // Copie dans le dossier de développement
+                File devFile = new File(devPath + fileName);
+                Files.copy(imageMagasin.toPath(), devFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // Copie dans le classpath (pour le runtime)
+                File resFile = new File(resPath + fileName);
+                Files.copy(imageMagasin.toPath(), resFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
                 magasinActuel.setPhoto_m(fileName);
             } catch (IOException e) {
                 lblErrorImage.setText("Erreur lors de la sauvegarde de l'image");
@@ -106,7 +127,6 @@ public class ModifierMagasin {
         try {
             new ServiceMagasin().modifier(magasinActuel);
             retournerAccueil();
-
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }

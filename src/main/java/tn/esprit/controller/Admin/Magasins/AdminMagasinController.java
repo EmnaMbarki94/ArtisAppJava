@@ -1,5 +1,9 @@
 package tn.esprit.controller.Admin.Magasins;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -9,14 +13,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import tn.esprit.entities.ArticleStatDTO;
 import tn.esprit.entities.Magasin;
 import tn.esprit.entities.Personne;
+import tn.esprit.services.ServiceLigneCommande;
 import tn.esprit.services.ServiceMagasin;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class AdminMagasinController {
@@ -35,6 +43,8 @@ public class AdminMagasinController {
 
     @FXML
     private TextField searchField;
+    @FXML
+    private Button btnStats;
 
 
     //    private final ViewFactory viewFactory = new ViewFactory();
@@ -47,6 +57,27 @@ public class AdminMagasinController {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filtrerMagasins(newValue);
         });
+        // Ajoutez ceci pour configurer le bouton stats
+        btnStats.setOnAction(event -> afficherStatsGraphiques());
+        btnStats.setStyle("-fx-background-color: #6c5ce7; -fx-text-fill: white; -fx-font-weight: bold;");
+    }
+
+    private void afficherStatsGraphiques() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/GestionMagasins/StatsMagasins.fxml"));
+            AnchorPane statsView = loader.load();
+
+            // Optionnel: passer des données au contrôleur des stats si nécessaire
+            StatsMagasinsController statsController = loader.getController();
+            statsController.initialiserDonnees();
+
+            contenuPane.getChildren().setAll(statsView);
+        } catch (IOException e) {
+            e.printStackTrace();
+//            showAlert("Erreur", "Impossible de charger les statistiques", Alert.AlertType.ERROR);
+        }
+
+
 
     }
 
@@ -92,39 +123,47 @@ public class AdminMagasinController {
         VBox card = new VBox();
         card.setStyle("-fx-background-color: white; -fx-background-radius: 10; " +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); " +
-                "-fx-padding: 20; -fx-spacing: 10; -fx-pref-width: 320;");
+                "-fx-padding: 20; -fx-spacing: 10; -fx-pref-width: 230; -fx-cursor: hand;");
 
-        // Icône avec première lettre du nom
-        StackPane iconContainer = new StackPane();
-        iconContainer.setAlignment(Pos.TOP_LEFT);
+        // Conteneur pour l'image avec taille fixe
+        StackPane imageContainer = new StackPane();
+        imageContainer.setPrefSize(230, 120);
+        imageContainer.setStyle("-fx-background-radius: 10; -fx-background-color: #f5f5f5;");
 
-        Rectangle iconBackground = new Rectangle(40, 40);
-        iconBackground.setArcWidth(10);
-        iconBackground.setArcHeight(10);
-        iconBackground.setFill(Color.web("#e3f2fd")); // Couleur bleue claire
+        ImageView imageView = new ImageView();
+        imageView.setPreserveRatio(false);
+        imageView.setFitWidth(230);
+        imageView.setFitHeight(120);
 
-        // Image du magasin
-        ImageView image = new ImageView();
-        String imagePath = "/image/magasin/" + magasin.getPhoto_m();
-        URL imageURL = getClass().getResource(imagePath);
+// Chargement de l'image
+        try {
+            String imagePath = "/image/magasin/" + magasin.getPhoto_m();
+            URL imageURL = getClass().getResource(imagePath);
+            if (imageURL != null) {
+                Image image = new Image(imageURL.toURI().toASCIIString());
+                imageView.setImage(image);
 
-        if (imageURL != null) {
-            image.setImage(new Image(imageURL.toExternalForm()));
-        } else {
+        // Masquer les parties de l'image qui dépassent
+                Rectangle clip = new Rectangle(260, 140);
+                clip.setArcWidth(10);
+                clip.setArcHeight(10);
+                imageView.setClip(clip);
+            } else {
+        // Image par défaut
+                URL defaultImageURL = getClass().getResource("/image/magasin/imagedf.jpg");
+                if (defaultImageURL != null) {
+                    imageView.setImage(new Image(defaultImageURL.toURI().toASCIIString()));
+                }
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        // Fallback si erreur
             URL defaultImageURL = getClass().getResource("/image/magasin/imagedf.jpg");
             if (defaultImageURL != null) {
-                image.setImage(new Image(defaultImageURL.toExternalForm()));
+                imageView.setImage(new Image(defaultImageURL.toString()));
             }
         }
-
-        image.setFitWidth(280);
-        image.setFitHeight(160);
-        image.setStyle("-fx-background-radius: 12px;");
-
-
-        image.setFitWidth(280);
-        image.setFitHeight(160);
-        image.setStyle("-fx-background-radius: 12px;");
+        imageContainer.getChildren().add(imageView);
 
         // Titre et type
         Label nomLabel = new Label(magasin.getNom_m());
@@ -134,13 +173,8 @@ public class AdminMagasinController {
         typeLabel.setStyle("-fx-font-size: 14; -fx-text-fill: #636e72;");
 
         // Boutons d'action
-
         HBox buttonsBox = new HBox(15);
         buttonsBox.setAlignment(Pos.CENTER);
-
-        Button voirArticlesBtn = new Button("Voir Articles");
-        voirArticlesBtn.setStyle("-fx-background-color: #6b4ca8; -fx-text-fill: white; -fx-background-radius: 5;");
-        voirArticlesBtn.setOnAction(event -> ouvrirArticlesParMagasin(magasin.getId()));
 
         Button modifierBtn = new Button("Modifier");
         modifierBtn.setStyle("-fx-background-color: #a29bfe; -fx-text-fill: white; -fx-background-radius: 5;");
@@ -148,28 +182,38 @@ public class AdminMagasinController {
         Button supprimerBtn = new Button("Supprimer");
         supprimerBtn.setStyle("-fx-background-color: #a29bfe; -fx-text-fill: white; -fx-background-radius: 5;");
 
-        buttonsBox.getChildren().addAll(modifierBtn, supprimerBtn, voirArticlesBtn);
-
+        buttonsBox.getChildren().addAll(modifierBtn, supprimerBtn);
 
         // Ajout des éléments à la carte
-        card.getChildren().addAll(iconContainer, image, nomLabel, typeLabel, buttonsBox);
+        card.getChildren().addAll(imageContainer, nomLabel, typeLabel, buttonsBox);
 
-        // Actions des boutons
+        // Événements
+        card.setOnMouseClicked(event -> ouvrirArticlesParMagasin(magasin.getId()));
+
         modifierBtn.setOnAction(event -> {
-                modifierMagasin(magasin);
-                rafraichirPage();
-                }); // Rafraîchit après modifier
+            modifierMagasin(magasin);
+            rafraichirPage();
+            event.consume(); // Empêche la propagation du clic à la carte
+        });
 
         supprimerBtn.setOnAction(event -> {
             supprimerMagasin(magasin);
-            rafraichirPage();  // Rafraîchit la liste des magasins
+            rafraichirPage();
+            event.consume(); // Empêche la propagation du clic à la carte
         });
 
         // Effet hover
-        card.setOnMouseEntered(e -> card.setStyle(card.getStyle().replace("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0)",
-                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 0)")));
-        card.setOnMouseExited(e -> card.setStyle(card.getStyle().replace("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 0)",
-                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0)")));
+        card.setOnMouseEntered(e -> {
+            card.setStyle(card.getStyle().replace("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0)",
+                    "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 0)"));
+            card.setTranslateY(-2);
+        });
+
+        card.setOnMouseExited(e -> {
+            card.setStyle(card.getStyle().replace("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 0)",
+                    "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0)"));
+            card.setTranslateY(0);
+        });
 
         return card;
     }
@@ -281,5 +325,8 @@ public class AdminMagasinController {
         }
     }
 
+    //Stat
 
 }
+
+

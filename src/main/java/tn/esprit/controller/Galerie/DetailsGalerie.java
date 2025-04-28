@@ -1,5 +1,6 @@
 package tn.esprit.controller.Galerie;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import tn.esprit.entities.Galerie;
 import tn.esprit.entities.Personne;
 import tn.esprit.entities.Piece_art;
@@ -106,9 +108,9 @@ public class DetailsGalerie {
 
         for (Piece_art piece : piecesArt) {
             ImageView pieceImageView = new ImageView(new Image(piece.getPhoto_p()));
-            pieceImageView.setFitWidth(100);
+            pieceImageView.setFitWidth(200);
             pieceImageView.setFitHeight(100);
-            pieceImageView.setPreserveRatio(true);
+            //pieceImageView.setPreserveRatio(true);
 
             Label pieceLabel = new Label(piece.getNom_p());
 
@@ -139,12 +141,15 @@ public class DetailsGalerie {
 
             Stage stage = (Stage) users_parent.getScene().getWindow(); // On suppose que users_parent est déjà attaché à une scène
 
-            // Si users_parent n'est pas attaché à une scène, utilisez actionEvent pour obtenir le stage :
             // Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
             // Nettoyer le contenu actuel de users_parent avant d'ajouter la nouvelle vue
             users_parent.getChildren().clear();
             users_parent.getChildren().add(root);
+            FadeTransition ft = new FadeTransition(Duration.millis(500), root); // 500 ms = 0.5s
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            ft.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -164,9 +169,11 @@ public class DetailsGalerie {
             // Nettoyer le contenu actuel de users_parent avant d'ajouter la nouvelle vue
             users_parent.getChildren().clear();
             users_parent.getChildren().add(root);
+            FadeTransition ft = new FadeTransition(Duration.millis(500), root); // 500 ms = 0.5s
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            ft.play();
 
-            // Mettre à jour le titre de la scène
-            stage.setTitle("Ajouter une pièce d'art");
         } catch (IOException e) {
             // Gérer l'erreur d'affichage
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -214,19 +221,8 @@ public class DetailsGalerie {
                 serviceGalerie.supprimer(galerieId);
                 System.out.println("Galerie supprimée avec succès!");
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Galerie/AfficherGalerie.fxml"));
-                Parent root = loader.load();
-
-                // Remplacer le contenu actuel de users_parent par le nouvel affichage
-                users_parent.getChildren().clear(); // Nettoie l'AnchorPane
-
-                // Ajouter la nouvelle vue
-                users_parent.getChildren().add(root);
-
-                // Optionnel : Définir le titre de la scène
-                Stage stage = (Stage) retour.getScene().getWindow(); // On suppose qu'il y a un bouton retour dont l'ID est 'retour'
-                stage.setTitle("Liste des Galeries");
-            } catch (IOException | SQLException e) {
+                retourVersAffGal(actionEvent);
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
@@ -244,10 +240,14 @@ public class DetailsGalerie {
             // Remplacer le contenu actuel de users_parent par le nouveau contenu
             users_parent.getChildren().clear(); // Nettoie tout ce qui est présent dans l'AnchorPane
             users_parent.getChildren().add(root); // Ajoute la nouvelle vue
+            FadeTransition ft = new FadeTransition(Duration.millis(500), root); // 500 ms = 0.5s
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            ft.play();
 
             // Optionnel : Vous pouvez également définir le titre de la fenêtre ici si nécessaire
-            Stage stage = (Stage) retour.getScene().getWindow(); // Récupérer la fenêtre actuelle
-            stage.setTitle("Liste des Galeries"); // Définir le titre de la scène
+            //Stage stage = (Stage) retour.getScene().getWindow(); // Récupérer la fenêtre actuelle
+            //stage.setTitle("Liste des Galeries"); // Définir le titre de la scène
         } catch (IOException e) {
             // Gérer l'erreur en affichant un message d'erreur à l'utilisateur
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);

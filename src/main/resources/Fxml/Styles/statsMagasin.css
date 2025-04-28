@@ -1,0 +1,22 @@
+.chart {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.chart-title {
+    -fx-text-fill: #4A148C;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.axis-label {
+    -fx-text-fill: #6A1B9A;
+    -fx-font-weight: bold;
+}
+
+.chart-legend {
+    -fx-background-color: #F3E5F5;
+}
+.chart-bar {
+    -fx-background-radius: 3 3 0 0;
+}

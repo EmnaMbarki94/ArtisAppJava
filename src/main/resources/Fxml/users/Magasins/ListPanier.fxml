@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="contenuPane" prefHeight="770.0" prefWidth="1344.0" stylesheets="@/Fxml/Styles/panier.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.users.magasins.ListPanierController">
+
+    <VBox prefHeight="740.0" prefWidth="1175.0" spacing="20" styleClass="root" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="12.0">
+
+        <!-- Partie gauche - Liste des articles (70% de largeur) -->
+        <VBox prefHeight="500.0" prefWidth="661.0" styleClass="left-section">
+            <!-- Bouton de retour et titre -->
+            <HBox alignment="TOP_LEFT" prefHeight="26.0" prefWidth="729.0" spacing="10">
+                <Button fx:id="btnRetourMagasins" onAction="#retourMagasin" styleClass="btn-retour" text="←" />
+                <Label styleClass="titre-panier" text="🛒 Mon Panier" />
+            </HBox>
+
+            <!-- Liste des articles -->
+            <ScrollPane fx:id="scrollPane"
+                        fitToWidth="true"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="NEVER"
+                        prefHeight="456.0"
+                        prefWidth="1321.0"
+                        style="-fx-background-color: transparent; -fx-background-insets: 0; -fx-padding: 0;"
+                        styleClass="scroll-pane">
+
+                <VBox fx:id="articlesContainer" styleClass="articles-container">
+                    <!-- Structure d'article type -->
+                    <GridPane styleClass="article-item">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" percentWidth="60" />
+                            <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="40" />
+                        </columnConstraints>
+
+                        <!-- Partie gauche - Info produit -->
+                        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="product-info" GridPane.columnIndex="0">
+                            <ImageView fx:id="articleImageView" fitHeight="80" fitWidth="80" preserveRatio="true" />
+                            <VBox alignment="TOP_LEFT" spacing="5">
+                                <Label fx:id="articleNameLabel" styleClass="article-name" text="Nom du produit" />
+                            </VBox>
+                        </HBox>
+
+                        <!-- Partie droite - Prix -->
+                        <HBox alignment="CENTER_RIGHT" styleClass="price-section" GridPane.columnIndex="1">
+                            <Label fx:id="articlePriceLabel" styleClass="article-price" text="99.99 TND" />
+                        </HBox>
+
+                        <rowConstraints>
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+                </VBox>
+            </ScrollPane>
+
+        </VBox>
+
+        <!-- Partie droite - Récapitulatif de la commande -->
+        <VBox prefHeight="240.0" prefWidth="624.0" styleClass="right-section">
+            <VBox prefHeight="125.0" prefWidth="592.0" styleClass="summary-section">
+                <Label styleClass="summary-title" text="Récapitulatif de commande" />
+
+                <GridPane styleClass="summary-grid">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="NEVER" prefWidth="150" />
+                    </columnConstraints>
+
+                    <Label styleClass="summary-item" text="🛒 Sous-total" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label fx:id="subTotalLabel" styleClass="summary-value" text="0.00 TND" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label styleClass="summary-item" text="🚚 Frais de livraison" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label fx:id="deliveryLabel" styleClass="summary-value" text="+8.00 TND" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Separator prefHeight="30.0" prefWidth="592.0" style="-fx-padding: 5 0;" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+
+                    <Label styleClass="summary-total-label" text="💵 Total à payer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <Label fx:id="totalLabel" styleClass="summary-total-value" text="0.00 TND" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+            </VBox>
+
+            <!-- Boutons d'action -->
+            <HBox alignment="CENTER" styleClass="buttons-container">
+                <Button onAction="#viderPanier" styleClass="btn-secondaire" text="🧹 Vider le panier" />
+                <Button onAction="#passerCommande" styleClass="btn-principal" text="✅ Commander" />
+            </HBox>
+        </VBox>
+
+    </VBox>
+
+</AnchorPane>

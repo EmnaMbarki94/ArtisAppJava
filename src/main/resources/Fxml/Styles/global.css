@@ -48,3 +48,30 @@
     -fx-pref-height: 150;
     -fx-alignment: center;
 }
+
+#gridPieces {
+    -fx-background-color: #edd9ff; /* Couleur de fond du GridPane */
+    -fx-border-color: #edd9ff; /* Bordure */
+    -fx-background-radius: 16;
+    -fx-border-width: 1px; /* Épaisseur de la bordure */
+    -fx-padding: 10; /* Espace intérieur */
+    -fx-hgap: 15; /* Espacement horizontal entre les colonnes */
+    -fx-vgap: 15; /* Espacement vertical entre les lignes */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1); /* Ombre pour profondeur */
+}
+
+/* Styles pour les cellules du GridPane */
+.grid-cell {
+    -fx-background-color: #FFFFFF; /* Couleur de fond des cellules */
+    -fx-border-color: #E0E0E0; /* Bordure des cellules */
+    -fx-border-width: 1px; /* Épaisseur de la bordure des cellules */
+    -fx-padding: 10; /* Espace intérieur des cellules */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-text-fill: #333333; /* Couleur du texte */
+    -fx-background-radius: 5; /* Coins arrondis */
+}
+.form-card {
+    -fx-background-color: #edd9ff;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.3, 0, 4);
+}

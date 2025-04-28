@@ -1,5 +1,6 @@
 package tn.esprit.controller.Galerie;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import tn.esprit.entities.Galerie;
 import tn.esprit.services.ServiceGalerie;
 
@@ -49,6 +51,8 @@ public class ModifierGalerie {
     private Button retour;
     @FXML
     private AnchorPane users_parent;
+    @FXML
+    private AnchorPane formCard;
 
     public ModifierGalerie() {
         serviceGalerie = new ServiceGalerie();
@@ -163,6 +167,7 @@ public class ModifierGalerie {
             alert.setTitle("Modifiée avec succès!");
             alert.setHeaderText("Votre galerie a été modifiée avec succès.");
             alert.showAndWait();
+            retourVersDetails(actionEvent);
         }  catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -193,6 +198,10 @@ public class ModifierGalerie {
 
             users_parent.getChildren().clear(); // Vider le contenu actuel
             users_parent.getChildren().add(root);
+            FadeTransition ft = new FadeTransition(Duration.millis(500), root); // 500 ms = 0.5s
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            ft.play();
         } catch (IOException e) {
             e.printStackTrace();
         }

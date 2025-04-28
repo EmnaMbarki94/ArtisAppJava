@@ -1,23 +1,30 @@
 package tn.esprit.controller.Cours;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import tn.esprit.entities.Cours;
-import tn.esprit.entities.Personne;
-import tn.esprit.entities.Quiz;
-import tn.esprit.entities.Session;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import tn.esprit.entities.*;
 import tn.esprit.services.ServiceCours;
 import tn.esprit.services.ServiceQuiz;
+import tn.esprit.utils.TextToSpeech;
+import tn.esprit.utils.Translator;
 
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,7 +33,7 @@ import java.util.ResourceBundle;
 
 public class CoursDetailsController implements Initializable {
 
-    private Personne user= Session.getUser();
+    private final Personne user= Session.getUser();
 
     @FXML
     private AnchorPane anchor;
@@ -68,11 +75,31 @@ public class CoursDetailsController implements Initializable {
     private Button deleteButton;
     @FXML
     private Button editButton;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private Button exportPdfButton;
+    @FXML
+    private ToggleButton langToggleButton;
+    @FXML
+    private ToggleButton ttsButton;
+
+
+
+
+    private boolean isFrench = true;
+    private String originalTitle;
+    private String originalCategory;
+    private String originalContent;
 
     private Cours cours;
 
     public void setCours(Cours cours) {
         this.cours = cours;
+        originalTitle = cours.getNom_c();
+        originalCategory = cours.getCateg_c();
+        originalContent = cours.getContenu_c();
+
         titreLabel.setText(cours.getNom_c());
         categorieLabel.setText("Catégorie : " + cours.getCateg_c());
         descriptionText.setText(cours.getContenu_c());
@@ -87,7 +114,16 @@ public class CoursDetailsController implements Initializable {
             user_flname.setText("Ajouté par : Inconnu");
         }
 
-
+        String imagePath = System.getProperty("user.dir") + File.separator + "uploads" + File.separator + "cours" + File.separator + cours.getImage();
+        File imageFile = new File(imagePath);
+        if (imageFile.exists()) {
+            Image image = new Image(imageFile.toURI().toString(), false);
+            imageView.setImage(image);
+        } else {
+            System.out.println("Image file not found: " + imagePath);
+            Image fallbackImage = new Image(getClass().getResource("/image/art.jpg").toExternalForm(), false);
+            imageView.setImage(fallbackImage);
+        }
 
         ServiceQuiz serviceQuiz = new ServiceQuiz();
         try {
@@ -100,19 +136,22 @@ public class CoursDetailsController implements Initializable {
             quizButton.setVisible(false);
         }
 
-        if (user.getRoles().contains("ROLE_USER")) {
+        if (!user.getRoles().contains("ROLE_ADMIN") && !user.getRoles().contains("ROLE_ENSEIGNANT")) {
             deleteQuizBtn.setVisible(false);
             addQuizBtn.setVisible(false);
             editButton.setVisible(false);
             deleteButton.setVisible(false);
         }
-
+        Image icon=new Image(getClass().getResourceAsStream("/icons/translate.jpg"));
+        ImageView iconView = new ImageView(icon);
+        iconView.setFitHeight(40);
+        iconView.setFitWidth(40);
+        langToggleButton.setGraphic(iconView);
+        langToggleButton.setContentDisplay(ContentDisplay.LEFT);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
     }
 
     public void retour(ActionEvent actionEvent) {
@@ -269,4 +308,121 @@ public class CoursDetailsController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleExportPdf(ActionEvent event) {
+        Document document = new Document();
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Enregistrer le PDF");
+            fileChooser.setInitialFileName(cours.getNom_c() + ".pdf");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+            File file = fileChooser.showSaveDialog(exportPdfButton.getScene().getWindow());
+
+            if (file != null) {
+                PdfWriter.getInstance(document, new FileOutputStream(file));
+                document.open();
+                Font titleFont = new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD);
+                Font normalFont = new Font(Font.FontFamily.HELVETICA, 12);
+                Paragraph title = new Paragraph(titreLabel.getText(), titleFont);
+                document.add(title);
+                document.add(new Paragraph("\n"));
+                if (cours != null && cours.getImage() != null) {
+                    String imagePath = System.getProperty("user.dir") + File.separator + "uploads" + File.separator + "cours" + File.separator + cours.getImage();
+                    System.out.println("img path "+imagePath);
+                    File imageFile = new File(imagePath);
+
+                    if (imageFile.exists()) {
+                        com.itextpdf.text.Image pdfImage = com.itextpdf.text.Image.getInstance(imageFile.getAbsolutePath());
+                        pdfImage.scaleToFit(400f, 300f);
+                        document.add(pdfImage);
+                    } else {
+                        String fallbackImagePath = getClass().getResource("/image/art.jpg").getPath();
+                        com.itextpdf.text.Image fallbackPdfImage = com.itextpdf.text.Image.getInstance(fallbackImagePath);
+                        fallbackPdfImage.scaleToFit(400f, 300f);
+                        document.add(fallbackPdfImage);
+                    }
+                }
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph(categorieLabel.getText(), normalFont));
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph(descriptionText.getText(), normalFont));
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph("\n"));
+                document.add(new Paragraph("Date de creation: " + datec.getText() + "  "+heurec.getText(), normalFont));
+                document.add(new Paragraph("Cours Ajouté par: " + user_flname.getText() + "  " + user_email.getText(), normalFont));
+                document.add(new Paragraph("\n"));
+
+
+                document.close();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("PDF Exporté");
+                alert.setHeaderText(null);
+                alert.setContentText("Le cours a été exporté avec succès !");
+                alert.showAndWait();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur PDF");
+            alert.setHeaderText(null);
+            alert.setContentText("Une erreur s'est produite lors de l'exportation.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleLanguageToggle(ActionEvent event) {
+        new Thread(() -> {
+            try {
+                if (isFrench) {
+                    String translatedTitle = Translator.translate(originalTitle, "auto", "en");
+                    String translatedCategory = Translator.translate(originalCategory, "auto", "en");
+                    String translatedContent = Translator.translate(originalContent, "auto", "en");
+
+                    Platform.runLater(() -> {
+                        titreLabel.setText(translatedTitle);
+                        categorieLabel.setText("Category: " + translatedCategory);
+                        descriptionText.setText(translatedContent);
+                        langToggleButton.setText("FR");
+                    });
+                } else {
+                    Platform.runLater(() -> {
+                        titreLabel.setText(originalTitle);
+                        categorieLabel.setText("Catégorie : " + originalCategory);
+                        descriptionText.setText(originalContent);
+                        langToggleButton.setText("EN");
+                    });
+                }
+                isFrench = !isFrench;
+            } catch (Exception e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    descriptionText.setText("Erreur de traduction !");
+                });
+            }
+        }).start();
+    }
+    @FXML
+    private void handleSpeak() {
+        if (ttsButton.isSelected()) {
+            String content = descriptionText.getText();
+            String language;
+            if(isFrench){
+                language="fr-fr";
+            }
+            else{
+                language="en-us";
+            }
+            TextToSpeech.speak(content, language);
+
+        }
+        else{
+            TextToSpeech.pause();
+        }
+    }
 }
+

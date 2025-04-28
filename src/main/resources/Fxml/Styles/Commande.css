@@ -1,0 +1,166 @@
+/* Style général */
+.root {
+    -fx-background-color: #f5f3ff;
+}
+
+.form-container {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+}
+
+.main-container {
+    -fx-padding: 10 0;
+}
+
+/* Sections */
+.form-section {
+    -fx-padding: 0 20 0 0;
+    -fx-border-color: #e9d5ff;
+    -fx-border-width: 0 2px 0 0;
+}
+
+.cart-section {
+    -fx-padding: 0 0 0 20;
+}
+
+/* Formulaires */
+.form-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.form-value {
+    -fx-text-fill: #4c1d95;
+    -fx-font-size: 14px;
+}
+
+.form-input {
+    -fx-background-color: #f3e8ff;
+    -fx-background-radius: 8;
+    -fx-border-color: #d8b4fe;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+}
+
+/* Panier */
+.section-title {
+    -fx-text-fill: #7e22ce;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.items-container {
+    -fx-padding: 10;
+    -fx-background-color: #faf5ff;
+    -fx-background-radius: 10;
+}
+
+.cart-item {
+    -fx-padding: 10;
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 0);
+}
+
+.item-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4c1d95;
+}
+
+.item-details {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+
+.separator {
+    -fx-padding: 5 0;
+}
+
+.total-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6b7280;
+}
+
+.total-amount {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7e22ce;
+}
+
+/* Boutons */
+.buttons-container {
+    -fx-padding: 20 0 0 0;
+}
+
+.primary-button {
+    -fx-background-color: #7e22ce;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 25;
+    -fx-font-size: 14px;
+}
+
+.primary-button:hover {
+    -fx-background-color: #6b21a8;
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7e22ce;
+    -fx-border-color: #7e22ce;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-font-weight: bold;
+    -fx-padding: 8 25;
+    -fx-font-size: 14px;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #f3e8ff;
+}
+
+/* Messages */
+.status-message {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 0 0;
+}
+
+/* Carte */
+.map-view {
+    -fx-border-radius: 10;
+    -fx-border-color: #e9d5ff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+/* Style PayPal */
+
+.payment-section {
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+.paypal-button {
+    -fx-background-color: #0070ba;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+}
+
+.paypal-button:hover {
+    -fx-background-color: #005ea6;
+}
