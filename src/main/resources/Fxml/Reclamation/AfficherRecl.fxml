@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="730.0" prefWidth="1202.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.AfficherReController">
+<AnchorPane prefHeight="786.0" prefWidth="1393.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.AfficherReController">
+   <stylesheets>
+      <URL value="@/styles/reclamation.css" />
+   </stylesheets>
    <children>
-      <AnchorPane prefHeight="109.0" prefWidth="1282.0" style="-fx-background-color: #dbb3f5;">
+      <AnchorPane prefHeight="792.0" prefWidth="1393.0" style="-fx-background-color: #dbb3f5;">
          <children>
-            <Label alignment="CENTER" layoutX="550.0" layoutY="31.0" prefHeight="40.0" prefWidth="358.0" text="Listes Des Reclamations">
+            <Label alignment="CENTER" layoutX="550.0" layoutY="31.0" prefHeight="40.0" prefWidth="358.0" text="Listes Des Réclamations">
                <font>
                   <Font name="System Bold Italic" size="28.0" />
                </font>
             </Label>
+
+            <!-- Barre de recherche et filtre -->
+            <HBox layoutX="510.0" layoutY="90.0" spacing="10" alignment="CENTER_LEFT">
+               <TextField fx:id="searchField" promptText="Rechercher..." prefWidth="200.0" />
+               <ComboBox fx:id="typeFilterComboBox" promptText="Filtrer par type" prefWidth="150.0" />
+            </HBox>
+
+            <!-- ListView sans personnalisation des cellules ici -->
+            <ListView fx:id="listViewRec" layoutX="113.0" layoutY="180.0" prefHeight="500.0" prefWidth="1168.0" />
+
+            <!-- Boutons d'ajout et chatbot -->
+            <Button layoutX="1193.0" layoutY="141.0" text="Ajouter" styleClass="add-button" onAction="#openAjouterRecWindow" />
+            <Button layoutX="1080.0" layoutY="141.0" text="Assistant" styleClass="action-button" onAction="#openChatbotWindow" />
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" layoutX="378.0" layoutY="132.0" prefHeight="34.0" prefWidth="403.0" text="Les Reclamations:">
-         <font>
-            <Font name="System Bold Italic" size="19.0" />
-         </font>
-      </Label>
-      <ListView fx:id="listViewRec" layoutX="10.0" layoutY="213.0" prefHeight="400.0" prefWidth="1253.0">
-         <effect>
-            <DropShadow />
-         </effect>
-      </ListView>
-      <Button fx:id="AjouterBt" layoutX="1176.0" layoutY="157.0" mnemonicParsing="false" onAction="#openAjouterRecWindow" prefHeight="25.0" prefWidth="57.0" text="Ajouter" />
    </children>
 </AnchorPane>

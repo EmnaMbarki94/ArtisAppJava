@@ -242,8 +242,8 @@ public class ViewFactory
 
     public AnchorPane getReclamationView()
     {
-        if(reclamationView == null)
-        {
+        //if(reclamationView == null)
+        //{
             try{
                 reclamationView = new FXMLLoader(getClass().getResource("/Fxml/Reclamation/AfficherRecl.fxml")).load();
             }catch(Exception e)
@@ -251,7 +251,7 @@ public class ViewFactory
                 e.printStackTrace();
             }
 
-        }
+        //}
         return reclamationView;
     }
 

@@ -1,0 +1,81 @@
+.add-button {
+    -fx-background-color: #8c6af9;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.action-button {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+}
+
+.delete-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
+
+ListView {
+    -fx-background-color: #fff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 10;
+}
+
+ListCell {
+    -fx-padding: 10;
+    -fx-background-color: #f7f1ff;
+    -fx-background-radius: 10;
+}
+
+HBox {
+    -fx-padding: 10;
+}
+
+
+/* Styles pour le chatbot */
+.chatbot-container {
+    -fx-background-color: white;
+    -fx-border-color: #dbb3f5;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+}
+
+.chat-message {
+    -fx-padding: 5 10 5 10;
+    -fx-background-radius: 10;
+    -fx-font-size: 14px;
+    -fx-font-family: 'System';
+}
+
+.user-message {
+    -fx-background-color: #dbb3f5;
+    -fx-text-fill: black;
+}
+
+/* Styles du chatbot */
+#messagesContainer {
+    -fx-padding: 10;
+}
+
+.user-message {
+    -fx-background-color: #dbb3f5;
+    -fx-background-radius: 10;
+    -fx-padding: 5 10 5 10;
+    -fx-font-size: 14px;
+}
+
+.ai-message {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 10;
+    -fx-padding: 5 10 5 10;
+    -fx-font-size: 14px;
+}
+
+#historyListView {
+    -fx-font-family: 'Segoe UI';
+    -fx-font-size: 13px;
+}
+
+#messageField {
+    -fx-prompt-text-fill: #a0a0a0;
+    -fx-background-radius: 15;
+}

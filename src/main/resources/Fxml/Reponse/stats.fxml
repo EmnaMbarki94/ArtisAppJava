@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.chart.PieChart?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.esprit.controller.Reponse.StatsController">
+    <children>
+        <PieChart fx:id="pieChart" layoutX="150" layoutY="100" prefHeight="400" prefWidth="600"/>
+    </children>
+</AnchorPane>
