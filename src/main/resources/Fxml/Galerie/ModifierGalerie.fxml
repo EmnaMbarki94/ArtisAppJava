@@ -10,33 +10,52 @@
 
 <AnchorPane fx:id="users_parent" prefHeight="690.0" prefWidth="1456.0" stylesheets="@../Styles/AjoutGalerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Galerie.ModifierGalerie">
     <children>
-        <Label fx:id="titreG" layoutX="599.0" layoutY="38.0" text="Modifer votre galerie">
-            <font>
-                <Font size="32.0" />
-            </font></Label>
-        <Label layoutX="226.0" layoutY="135.0" text="Nom:" />
-        <Label layoutX="225.0" layoutY="275.0" />
-        <Label layoutX="227.0" layoutY="340.0" text="Type:" />
-        <TextField fx:id="nomgTF" layoutX="226.0" layoutY="163.0" />
-        <TextField fx:id="descgTF" layoutX="226.0" layoutY="269.0" />
-        <TextField fx:id="typegTF" layoutX="226.0" layoutY="368.0" />
-        <Button layoutX="604.0" layoutY="495.0" mnemonicParsing="false" onAction="#modifierG" prefHeight="48.0" prefWidth="129.0" text="Valider" />
-        <Label layoutX="228.0" layoutY="239.0" text="Description:" />
 
-        <!-- Ajout de l'ImageView pour afficher l'image -->
-        <ImageView fx:id="imageView" fitHeight="216.0" fitWidth="352.0" layoutX="763.0" layoutY="117.0" />
-        <Button layoutX="860.0" layoutY="351.0" mnemonicParsing="false" onAction="#importerImage" text="Importer une photo..." />
-      <Label fx:id="nomgErr" layoutX="227.0" layoutY="211.0" prefHeight="28.0" prefWidth="252.0" style="-fx-text-fill: red;" visible="false" />
-      <Label fx:id="typegErr" layoutX="227.0" layoutY="408.0" prefHeight="28.0" prefWidth="272.0" style="-fx-text-fill: red;" visible="false" />
-      <Label fx:id="descgErr" layoutX="227.0" layoutY="312.0" prefHeight="28.0" prefWidth="272.0" style="-fx-text-fill: red;" visible="false" />
-        <Button fx:id="retour" layoutX="12.0" layoutY="15.0" mnemonicParsing="false" onAction="#retourVersDetails" prefHeight="7.0" prefWidth="15.0">
+        <!-- Titre principal -->
+        <Label fx:id="titreG" layoutX="520.0" layoutY="30.0" text="Modifier votre galerie" style="-fx-font-size: 32px; -fx-font-weight: bold;" />
+
+        <!-- Formulaire -->
+        <AnchorPane fx:id="formCard" layoutX="153.0" layoutY="80.0" prefHeight="530.0" prefWidth="1150.0" styleClass="form-card">
+            <children>
+
+                <!-- Champ Nom -->
+                <Label layoutX="80.0" layoutY="100.0" text="Nom:" style="-fx-font-size: 16px;" />
+                <TextField fx:id="nomgTF" layoutX="80.0" layoutY="130.0" prefHeight="45.0" prefWidth="300.0" />
+                <Label fx:id="nomgErr" layoutX="80.0" layoutY="180.0" prefHeight="28.0" prefWidth="300.0" style="-fx-text-fill: red;" visible="false" />
+
+                <!-- Champ Description -->
+                <Label layoutX="80.0" layoutY="210.0" text="Description:" style="-fx-font-size: 16px;" />
+                <TextField fx:id="descgTF" layoutX="80.0" layoutY="240.0" prefHeight="45.0" prefWidth="300.0" />
+                <Label fx:id="descgErr" layoutX="80.0" layoutY="290.0" prefHeight="28.0" prefWidth="300.0" style="-fx-text-fill: red;" visible="false" />
+
+                <!-- Champ Type -->
+                <Label layoutX="80.0" layoutY="320.0" text="Type:" style="-fx-font-size: 16px;" />
+                <TextField fx:id="typegTF" layoutX="80.0" layoutY="350.0" prefHeight="45.0" prefWidth="300.0" />
+                <Label fx:id="typegErr" layoutX="80.0" layoutY="400.0" prefHeight="28.0" prefWidth="300.0" style="-fx-text-fill: red;" visible="false" />
+
+                <!-- ImageView -->
+                <ImageView fx:id="imageView" fitHeight="250.0" fitWidth="400.0" layoutX="620.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-border-radius: 10;" />
+
+                <!-- Bouton Importer une photo -->
+                <Button layoutX="620.0" layoutY="370.0" mnemonicParsing="false" onAction="#importerImage" text="Importer une photo..." prefHeight="40.0" prefWidth="400.0" style="-fx-background-radius: 15; -fx-background-color: #c480f0; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+                <!-- Bouton Valider -->
+                <Button layoutX="475.0" layoutY="460.0" mnemonicParsing="false" onAction="#modifierG" prefHeight="50.0" prefWidth="200.0" text="Valider" style="-fx-background-color: linear-gradient(to right, #6a11cb, #2575fc); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20;" />
+
+            </children>
+        </AnchorPane>
+
+        <!-- Bouton Retour -->
+        <Button fx:id="retour" layoutX="30.0" layoutY="20.0" mnemonicParsing="false" onAction="#retourVersDetails" style="-fx-background-color: transparent;">
             <graphic>
-                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@/image/photos_galeries/retour.png" />
                     </image>
                 </ImageView>
             </graphic>
         </Button>
+
     </children>
 </AnchorPane>
+

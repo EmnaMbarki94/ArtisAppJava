@@ -6,12 +6,18 @@
 
 /* Style pour les TextField */
 .text-field {
-    -fx-background-color: White; /* Couleur de fond pour les TextFields */
-    -fx-border-color: #ccc; /* Bordure propre */
-    -fx-border-radius: 5; /* Coins arrondis */
-    -fx-padding: 10; /* Padding interne */
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 14px;
+    -fx-border-color: #cccccc;
+    -fx-background-color: white;
 }
-
+.form-card {
+    -fx-background-color: #edd9ff;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.3, 0, 4);
+}
 /* Style pour les Buttons */
 .button {
     -fx-background-color: #5d29a8; /* Couleur de fond des boutons */
@@ -20,6 +26,8 @@
     -fx-padding: 10 20; /* Padding interne pour les boutons */
     -fx-border-radius: 5; /* Coins arrondis */
     -fx-font-family: 'Garamond', serif;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.2, 0, 2);
 }
 
 /* Style au survol pour les boutons */
@@ -42,9 +50,10 @@
     -fx-border-radius: 10; /* Coins arrondis */
     -fx-background-color: rgba(255, 255, 255, 0.8); /* Fond blanc semi-transparent */
     -fx-padding: 5; /* Padding interne */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 2); /* Ombre portée pour un effet de profondeur */
     -fx-opacity: 1; /* Opacité réglable (0 pour transparent, 1 pour opaque) */
     -fx-pref-width: 150; /* Largeur préférée */
     -fx-pref-height: 150;
     -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.3, 0, 2);
+    -fx-background-radius: 8;
 }
