@@ -3,44 +3,35 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane fx:id="contenuPane" prefHeight="800.0" prefWidth="1299.0"
-            style="-fx-background-color: #ffffff; -fx-padding: 30px;"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane fx:id="contenuPane" prefHeight="800.0" prefWidth="1299.0" style="-fx-background-color: #ffffff; -fx-padding: 30px;"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="tn.esprit.controller.Admin.Magasins.ArticleController">
 
     <children>
         <!-- Titre de la section -->
-        <Label layoutX="30" layoutY="10"
-               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3436;"
-               text="Articles" />
+        <Label layoutX="67.0" layoutY="27.0" prefHeight="40.0" prefWidth="314.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3436;" text="La liste des articles" />
 
+        <TextField fx:id="searchField" layoutX="342.0" layoutY="31.0" prefHeight="38.0" prefWidth="766.0" promptText="Rechercher un magasin..." style="-fx-font-size: 14px; -fx-padding: 8px; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #dfe6e9;" />
 
         <!-- Bouton pour retourner à la liste des magasins -->
-        <Button fx:id="btnRetourMagasins" layoutX="30.0" layoutY="55.0"
-                prefHeight="36.0" prefWidth="180.0"
-                style="-fx-background-color: #667eea; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8px;"
-                text="← Retour aux magasins" />
-
+        <Button fx:id="btnRetourMagasins" layoutX="11.0" layoutY="28.0" prefHeight="36.0" prefWidth="37.0" style="-fx-background-color: #667eea; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8px;" text="←" />
         <!-- ScrollPane contenant les cartes d’articles -->
-        <ScrollPane layoutX="30" layoutY="100" prefHeight="628.0" prefWidth="1221.0"
-                    style="-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0;">
+        <ScrollPane layoutX="71.0" layoutY="100" prefHeight="674.0" prefWidth="1354.0"
+                    hbarPolicy="NEVER" vbarPolicy="NEVER"
+                    style="-fx-background: transparent; -fx-background-color: transparent;">
             <content>
-                <FlowPane fx:id="cardsContainer" hgap="20" vgap="20"
-                          prefHeight="675.0" prefWidth="1225.0"
-                          style="-fx-padding: 10px;" />
+                <FlowPane fx:id="cardsContainer" hgap="20" prefHeight="675.0"
+                          prefWidth="1253.0" style="-fx-padding: 10px;" vgap="20" />
             </content>
         </ScrollPane>
 
 
         <!-- Bouton pour ajouter un article -->
-        <Button fx:id="btnAjouterArticle" layoutX="1141.0" layoutY="743.0"
-                prefHeight="36.0" prefWidth="107.0"
-                style="-fx-background-color: #667eea; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8px; -fx-padding: 8px 16px;"
-                text="Ajouter (+)" />
+        <Button fx:id="btnAjouterArticle" layoutX="1165.0" layoutY="32.0" prefHeight="36.0" prefWidth="168.0" style="-fx-background-color: #667eea; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8px; -fx-padding: 8px 16px;" text="Ajouter (+)" />
 
 
     </children>

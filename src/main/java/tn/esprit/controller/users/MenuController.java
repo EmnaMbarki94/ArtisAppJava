@@ -1,5 +1,6 @@
 package tn.esprit.controller.users;
 
+import javafx.fxml.FXML;
 import tn.esprit.controller.ProfileController;
 import tn.esprit.entities.Personne;
 import tn.esprit.entities.Session;
@@ -67,6 +68,7 @@ public class MenuController implements Initializable {
         gui.getInstance().getViewFactory().getUserSelectedMenuItem().set("Evenement");
     }
 
+    @FXML
     private void onMagasin()
     {
         gui.getInstance().getViewFactory().getUserSelectedMenuItem().set("Magasin");

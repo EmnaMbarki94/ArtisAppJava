@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="tn.esprit.controller.users.magasins.DetailsArticles"
+      alignment="CENTER" spacing="20"
+      prefWidth="600" prefHeight="600"
+      style="-fx-background-color: #faf5ff; -fx-padding: 30;"
+      stylesheets="@/Fxml/Styles/details.css">
+
+        <!-- En-tête -->
+        <Label text="Détails du Produit" styleClass="header-label"/>
+
+        <!-- Image du produit -->
+        <ImageView fx:id="imageView" fitWidth="250" fitHeight="200" preserveRatio="true" styleClass="product-image"/>
+
+        <!-- Informations produit -->
+        <VBox alignment="CENTER_LEFT" spacing="10" styleClass="info-container">
+                <Label fx:id="nomLabel" styleClass="product-name"/>
+                <Label fx:id="prixLabel" styleClass="product-price"/>
+
+                <Label text="Description:" styleClass="section-label"/>
+                <Label fx:id="descLabel" styleClass="product-desc" wrapText="true"/>
+
+                <!-- Sélection de quantité -->
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="quantity-container">
+                        <Label text="Quantité:" styleClass="quantity-label"/>
+                        <Spinner fx:id="quantiteSpinner" styleClass="quantity-spinner"/>
+                        <Text fx:id="stockMessage" styleClass="stock-message"/>
+                </HBox>
+        </VBox>
+
+        <!-- Boutons d'action -->
+        <VBox alignment="CENTER" spacing="15">
+                <Button fx:id="ajouterPanierButton"
+                        text="AJOUTER AU PANIER"
+                        onAction="#ajouterAuPanier"
+                        styleClass="add-to-cart-btn"/>
+                <Button text="RETOUR" onAction="#fermer" styleClass="back-btn"/>
+        </VBox>
+
+</VBox>

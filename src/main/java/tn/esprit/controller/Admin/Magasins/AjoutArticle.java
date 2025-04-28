@@ -17,6 +17,7 @@ import tn.esprit.services.ServiceArticle;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
@@ -149,14 +150,26 @@ public class AjoutArticle {
             return; // Si des erreurs sont présentes, on arrête l'ajout
         }
 
-        // Copie de l'image
         try {
-            String destinationPath = "src/main/resources/image/article/";
-            String fileName = System.currentTimeMillis() + "_" + imageArticle.getName();
-            File destFile = new File(destinationPath + fileName);
+            // 1. Créer le dossier de stockage s'il n'existe pas
+            String uploadDir = "target/classes/image/article/";
+            File directory = new File(uploadDir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            // 2. Générer un nom de fichier unique et sécurisé
+            String originalName = imageArticle.getName();
+            String safeFileName = System.currentTimeMillis() + "_" +
+                    originalName.replaceAll("[^a-zA-Z0-9.-]", "_");
+
+            // 3. Copier l'image dans le dossier uploads
+            File destFile = new File(uploadDir + safeFileName);
             Files.copy(imageArticle.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-            // Création de l'article
+            System.out.println("Image sauvegardée dans : " + destFile.getAbsolutePath());
+
+            // 4. Créer l'article avec le chemin relatif
             Magasin magasin = new Magasin();
             magasin.setId(magasinId);
 
@@ -165,15 +178,18 @@ public class AjoutArticle {
             article.setPrix_a(prix);
             article.setDesc_a(description);
             article.setQuantite(quantite);
-            article.setImage_path(fileName);
+            article.setImage_path(safeFileName); // Stocker uniquement le nom du fichier
             article.setMagasin(magasin);
 
+            // 5. Ajouter l'article
             new ServiceArticle().ajouter(article);
             System.out.println("✅ Article ajouté avec succès !");
+
+            // 6. Retour à la liste
             retournerListeArticles();
         } catch (IOException | SQLException e) {
             e.printStackTrace();
-            System.out.println("Erreur lors de la copie de l'image.");
+            lblErrorImage.setText("Erreur lors de l'ajout de l'article");
         }
     }
 
