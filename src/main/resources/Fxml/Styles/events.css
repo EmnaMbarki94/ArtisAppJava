@@ -1,0 +1,93 @@
+/* Barre supérieure avec un gradient plus moderne et transition douce */
+.top-bar {
+    -fx-padding: 12px 24px;
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f1f1f1);
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 8, 0, 0, 5);
+    -fx-transition: background-color 0.3s ease-in-out;
+}
+
+/* Champ de recherche plus doux avec ombre et animation */
+.search-field {
+    -fx-pref-width: 320px;
+    -fx-background-radius: 15px;
+    -fx-padding: 12px;
+    -fx-font-size: 16px;
+    -fx-border-color: #bbb;
+    -fx-background-color: #ffffff;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.1), 6, 0, 0, 3);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.search-field:hover {
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.15), 8, 0, 0, 4);
+}
+
+.search-field:focused {
+    -fx-border-color: #5f6368;
+    -fx-background-color: #f9f9f9;
+}
+
+/* ComboBox avec bord arrondi, fond neutre et animation */
+.sort-combo {
+    -fx-pref-width: 200px;
+    -fx-background-radius: 15px;
+    -fx-padding: 10px;
+    -fx-font-size: 15px;
+    -fx-border-color: #dcdcdc;
+    -fx-background-color: #fafafa;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 6, 0, 0, 3);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.sort-combo:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 8, 0, 0, 5);
+}
+
+/* Style des cartes avec ombre douce et fond plus clair */
+.card {
+    -fx-background-color: #ffffff;
+    -fx-padding: 18px;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 12, 0, 0, 10);
+    -fx-cursor: hand;
+    -fx-transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.card:hover {
+    -fx-background-color: #f7f7f7;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 16, 0, 0, 12);
+    -fx-transform: scale(1.05);
+}
+
+/* Titre des événements avec meilleure lisibilité et alignement */
+.event-title {
+    -fx-font-family: "Poppins", Arial, sans-serif;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-line-spacing: 2px;
+}
+
+/* Étiquettes de statut avec arrondi, fond coloré et ombre subtile */
+.label-complet {
+    -fx-text-fill: #d32f2f;
+    -fx-background-color: linear-gradient(to bottom, #ffebee, #f8d7da);
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 15px;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.1), 6, 0, 0, 3);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Effet au survol des étiquettes de statut */
+.label-complet:hover {
+    -fx-background-color: linear-gradient(to bottom, #f8d7da, #ffebee);
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.15), 8, 0, 0, 4);
+}

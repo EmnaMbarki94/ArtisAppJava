@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.esprit.controller.reservation.TicketController"
+            stylesheets="@../../Styles/ticket.css"
+            styleClass="ticket-background"
+            prefWidth="600" prefHeight="220">
+
+    <HBox spacing="30" alignment="CENTER" layoutX="20" layoutY="20">
+
+        <!-- Image de l'événement -->
+        <ImageView fx:id="eventImage" fitWidth="140" fitHeight="140" styleClass="ticket-image"/>
+
+        <!-- Informations de l'événement -->
+        <VBox spacing="10" alignment="CENTER_LEFT">
+            <Label fx:id="eventName" styleClass="event-name"/>
+            <Label fx:id="eventDate" styleClass="event-details"/>
+            <Label fx:id="eventType" styleClass="event-details"/>
+            <Label fx:id="reservationInfo" styleClass="event-details"/>
+        </VBox>
+
+        <!-- QR Code à droite -->
+        <ImageView fx:id="qrCodeImage" fitWidth="120" fitHeight="120" styleClass="qr-code-image"/>
+
+    </HBox>
+
+</AnchorPane>

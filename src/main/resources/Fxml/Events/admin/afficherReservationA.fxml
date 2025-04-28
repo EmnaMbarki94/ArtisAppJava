@@ -1,58 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            fx:id="contenuPane"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="tn.esprit.controller.reservation.AdminAfficherReservationController"
-            prefHeight="600.0" prefWidth="1000.0">
+<AnchorPane fx:id="contenuPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.reservation.AdminAfficherReservationController">
 
-    <StackPane fx:id="mainContainer" prefWidth="1000" prefHeight="600"
-               style="-fx-font-family: 'Segoe UI'; -fx-background-color: #f8f8fc;">
+    <StackPane fx:id="mainContainer" prefHeight="600" prefWidth="1000" style="-fx-font-family: 'Segoe UI'; -fx-background-color: #f8f8fc;">
         <children>
 
             <!-- Sidebar -->
-            <VBox prefWidth="180.0"
-                  style="-fx-background-color: #7f56d9; -fx-alignment: center; -fx-spacing: 20; -fx-padding: 20;"
-                  AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+            <VBox prefWidth="180.0" style="-fx-background-color: #7f56d9; -fx-alignment: center; -fx-spacing: 20; -fx-padding: 20;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <children>
-                    <ImageView fitHeight="80.0" fitWidth="80.0"/>
-                    <Text text="Admin Panel" fill="white">
+                    <ImageView fitHeight="80.0" fitWidth="80.0" />
+                    <Text fill="white" text="Admin Panel">
                         <font>
-                            <Font name="System Bold" size="20.0"/>
+                            <Font name="System Bold" size="20.0" />
                         </font>
                     </Text>
-
                 </children>
             </VBox>
 
             <!-- Main Content -->
-            <AnchorPane layoutX="180.0"
-                        AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-                        style="-fx-background-color: #f5f5f5;">
+            <AnchorPane layoutX="180.0" prefHeight="600.0" prefWidth="1030.0" style="-fx-background-color: #f5f5f5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <children>
-                    <HBox alignment="CENTER_LEFT">
-                        <Button text="← Retour à la liste" onAction="#handleRetour"
-                                style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px; -fx-cursor: hand;" />
+
+                    <!-- Retour -->
+                    <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="20.0">
+                        <Button onAction="#handleRetour" style="-fx-background-color: transparent; -fx-text-fill: #4B0082; -fx-font-size: 14px; -fx-cursor: hand;" text="← Retour à la liste" />
                     </HBox>
-                    <!-- Title -->
-                    <Text layoutX="30.0" layoutY="50.0" text="Liste des Réservations"
-                          style="-fx-font-size: 26px; -fx-fill: #4B0082; -fx-font-weight: bold;"/>
 
-                    <!-- Search Field -->
-                    <TextField fx:id="searchReservationField" layoutX="30.0" layoutY="100.0" prefWidth="300.0"
-                               promptText="Rechercher une réservation..."
-                               style="-fx-background-color: #e0e0e0; -fx-border-radius: 20; -fx-padding: 10; -fx-font-size: 16px;"/>
+                    <!-- Titre -->
+                    <Text layoutX="30.0" layoutY="70.0" style="-fx-font-size: 26px; -fx-fill: #4B0082; -fx-font-weight: bold;" text="Liste des Réservations" />
 
-                    <!-- ListView for reservations -->
-                    <ListView fx:id="listViewReservations" layoutX="30.0" layoutY="150.0"
-                              prefHeight="400.0" prefWidth="840.0"
-                              style="-fx-background-color: transparent;"/>
+                    <!-- Zone de recherche -->
+                    <TextField fx:id="searchReservationField" layoutX="30.0" layoutY="100.0" prefWidth="300.0" promptText="Rechercher une réservation..." style="-fx-background-color: #e0e0e0; -fx-border-radius: 20; -fx-padding: 10; -fx-font-size: 16px;" />
+
+                    <!-- GridPane pour afficher les réservations -->
+                    <ScrollPane layoutX="30.0" layoutY="150.0" prefHeight="550.0" prefWidth="1500.0" style="-fx-background-color: transparent;">
+                        <content>
+                            <GridPane fx:id="gridPaneReservations" hgap="20" style="-fx-padding: 10;" vgap="20" />
+                        </content>
+                    </ScrollPane>
 
                 </children>
             </AnchorPane>

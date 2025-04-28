@@ -1,11 +1,19 @@
 package tn.esprit.controller.evenement;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import tn.esprit.entities.Event;
+import tn.esprit.entities.Personne;
+import tn.esprit.entities.Session;
+import tn.esprit.services.ServicePersonne;
 import tn.esprit.utils.DBConnection;
+import org.controlsfx.control.Notifications;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -28,8 +36,11 @@ public class modifierEvenementController {
     @FXML private Label prixSErrorLabel;
     @FXML private Label prixVIPErrorLabel;
     @FXML private AnchorPane contenuPane;
+    private Personne user = Session.getUser(); // Assurez-vous que l'utilisateur connecté est correctement défini.
 
     private Event evenementModifie;
+
+    // Assurez-vous de mettre à jour l'objet "user" avec l'utilisateur authentifié
 
     public void setEvenementModifie(Event e) {
         this.evenementModifie = e;
@@ -79,6 +90,8 @@ public class modifierEvenementController {
                 int updated = stmt.executeUpdate();
                 if (updated > 0) {
                     System.out.println("✅ Événement modifié avec succès !");
+                    // Envoie la notification locale après mise à jour
+                    sendNotification();
                     // Redirection vers la liste après sauvegarde
                     handleRetour();
                 }
@@ -92,14 +105,51 @@ public class modifierEvenementController {
         }
     }
 
+    // Méthode pour afficher une notification locale dans l'application
+    private void sendNotification() {
+        Platform.runLater(() -> {
+            System.out.println("🔔 Notification en cours d'affichage...");
+
+            try {
+                // Création de la notification
+                Notifications notification = Notifications.create()
+                        .title("Modification d'événement")
+                        .text("L'événement a été modifié avec succès !")
+                        .position(Pos.TOP_RIGHT)
+                        .darkStyle();
+
+                // Si l'utilisateur a le bon rôle, afficher la notification
+                if (hasUserRole()) {
+                    notification.show();
+                    System.out.println("✅ Notification affichée !");
+                } else {
+                    System.out.println("❌ L'utilisateur n'a pas le bon rôle.");
+                }
+            } catch (Exception e) {
+                System.out.println("⚠️ Erreur dans sendNotification() : " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+    }
+
+    // Méthode pour vérifier si l'utilisateur connecté a un des rôles : "ROLE_ENSEIGNANT", "ROLE_ARTISTE", "ROLE_USER"
+    private boolean hasUserRole() {
+        // Assurez-vous que "user" est bien l'utilisateur connecté avec les rôles corrects
+        System.out.println("User roles: " + user.getRoles());
+
+        // Vérifier si "ROLE_ENSEIGNANT" est dans les rôles de l'utilisateur
+        return user.getRoles().contains("ROLE_ENSEIGNANT") ||
+                user.getRoles().contains("ROLE_ARTISTE") ||
+                user.getRoles().contains("ROLE_USER");
+    }
+
+
     @FXML
     private void handleRetour() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Events/admin/EvenementAdmin.fxml"));
-
             AnchorPane retourView = loader.load();
             contenuPane.getChildren().setAll(retourView);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

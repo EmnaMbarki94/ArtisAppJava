@@ -1,0 +1,40 @@
+.form-container {
+    -fx-background-color: white;
+    -fx-border-color: #8A2BE2;
+    -fx-border-width: 2px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(138,43,226,0.3), 10, 0, 0, 5);
+    -fx-padding: 35;
+}
+
+.input-field {
+    -fx-pref-width: 100%;
+
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #ccc;
+    -fx-padding: 10;
+    -fx-font-size: 15px;
+}
+
+.text-field-readonly {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #444;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6px;
+    -fx-padding: 10;
+    -fx-font-size: 15px;
+    -fx-pref-width: 100%;
+}
+
+.button-reserver {
+    -fx-background-color: #8A2BE2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 12 30;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
