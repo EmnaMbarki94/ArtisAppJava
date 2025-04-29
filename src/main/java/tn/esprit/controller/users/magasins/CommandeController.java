@@ -11,10 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -60,8 +57,10 @@ public class CommandeController implements Initializable, JavaBridge.NavigationH
         }
 
         // Map initialization
-        mapView.setPrefHeight(600); // Force une hauteur correcte
-        mapView.setPrefWidth(800);  // Force une largeur correcte
+        mapView.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        mapView.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        mapView.prefHeightProperty().bind(((Region)mapView.getParent()).heightProperty().multiply(0.7));
+        mapView.prefWidthProperty().bind(((Region)mapView.getParent()).widthProperty());
         webEngine = mapView.getEngine();
         configureWebEngine();
         webEngine.loadContent(getMapHtml());
@@ -179,97 +178,107 @@ public class CommandeController implements Initializable, JavaBridge.NavigationH
     }
     private String getMapHtml() {
         return """
-        <!DOCTYPE html>
-        <html lang="fr">
-        <head>
-            <meta charset="UTF-8">
-            <title>Carte Tunisie</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-            <style>
-                html, body {
-                    margin: 0;
-                    padding: 0;
-                    width: 100%;
-                    height: 100%;
-                    overflow: hidden;
-                    background: #f8f9fa;
-                }
-                #map {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                }
-                img.leaflet-tile {
-                    image-rendering: optimizeSpeed; /* améliore chargement */
-                }
-                .leaflet-popup-content-wrapper {
-                    font-size: 14px;
-                    line-height: 1.4;
-                }
-            </style>
-        </head>
-        <body>
-            <div id="map"></div>
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Carte Tunisie</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+                background: #f8f9fa;
+            }
 
-            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-            <script>
-                var map = L.map('map', {
-                    preferCanvas: true,
-                    zoomControl: true,
-                    attributionControl: true
-                }).setView([34.0, 9.0], 6);
+            #map {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+            }
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors',
-                    maxZoom: 19
-                }).addTo(map);
+            img.leaflet-tile {
+                image-rendering: pixelated !important;
+                backface-visibility: hidden;
+                will-change: transform;
+            }
 
-                var marker = null;
+            .leaflet-tile-container {
+                transform: translateZ(0); /* active accélération matérielle */
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
 
-                function sendAddressToJava(address) {
-                    alert('adresse:' + address);
-                }
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script>
+            var map = L.map('map', {
+                preferCanvas: true,
+                zoomControl: true,
+                attributionControl: true
+            }).setView([34.0, 9.0], 6);
 
-                function reverseGeocode(lat, lon) {
-                    var url = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lon;
-                    fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-                            var address = data.display_name || ("Lat: " + lat + ", Lng: " + lon);
+            var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 18,
+                tileSize: 256,
+                detectRetina: false,    // <== évite zoom HD
+                reuseTiles: true,       // <== empêche le flash gris
+                keepBuffer: 16,         // <== précharge
+                updateWhenIdle: true,
+                updateWhenZooming: false
+            }).addTo(map);
 
-                            if (marker) {
-                                marker.remove();
-                            }
-                            marker = L.marker([lat, lon]).addTo(map)
-                                .bindPopup("<b>Adresse :</b><br>" + address)
-                                .openPopup();
+            var marker = null;
 
-                            sendAddressToJava(address);
-                        })
-                        .catch(error => {
-                            console.error('Erreur de géocodage inverse:', error);
-                            var fallback = "Lat: " + lat.toFixed(5) + ", Lng: " + lon.toFixed(5);
-                            if (marker) {
-                                marker.remove();
-                            }
-                            marker = L.marker([lat, lon]).addTo(map)
-                                .bindPopup("<b>Coordonnées :</b><br>" + fallback)
-                                .openPopup();
-                            sendAddressToJava(fallback);
-                        });
-                }
+            function sendAddressToJava(address) {
+                alert('adresse:' + address);
+            }
 
-                map.on('click', function(e) {
-                    var latlng = e.latlng;
-                    reverseGeocode(latlng.lat, latlng.lng);
-                });
-            </script>
-        </body>
-        </html>
-        """;
+            function reverseGeocode(lat, lon) {
+                var url = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lon;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        var address = data.display_name || ("Lat: " + lat + ", Lng: " + lon);
+                        if (marker) {
+                            map.removeLayer(marker);
+                        }
+                        marker = L.marker([lat, lon]).addTo(map)
+                            .bindPopup("<b>Adresse :</b><br>" + address)
+                            .openPopup();
+                        sendAddressToJava(address);
+                    })
+                    .catch(error => {
+                        console.error('Erreur de géocodage inverse:', error);
+                        var fallback = "Lat: " + lat.toFixed(5) + ", Lng: " + lon.toFixed(5);
+                        if (marker) {
+                            map.removeLayer(marker);
+                        }
+                        marker = L.marker([lat, lon]).addTo(map)
+                            .bindPopup("<b>Coordonnées :</b><br>" + fallback)
+                            .openPopup();
+                        sendAddressToJava(fallback);
+                    });
+            }
+
+            map.on('click', function(e) {
+                var latlng = e.latlng;
+                reverseGeocode(latlng.lat, latlng.lng);
+            });
+        </script>
+    </body>
+    </html>
+    """;
     }
 
 

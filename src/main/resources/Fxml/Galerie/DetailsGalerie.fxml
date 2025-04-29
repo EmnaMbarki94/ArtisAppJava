@@ -61,20 +61,20 @@
                       </GridPane>
                </content>
             </ScrollPane>
+      
+              <!-- Bouton Suppression Galerie -->
+              <Button fx:id="suppG" layoutX="1162.0" layoutY="22.0" mnemonicParsing="false" onAction="#supprimerGalerie" style="-fx-background-color: transparent;">
+                  <graphic>
+                      <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@/image/photos_galeries/corbeille.png" />
+                          </image>
+                      </ImageView>
+                  </graphic>
+              </Button>
 
             </children>
         </AnchorPane>
-
-        <!-- Bouton Suppression Galerie -->
-        <Button fx:id="suppG" layoutX="1400.0" layoutY="15.0" mnemonicParsing="false" onAction="#supprimerGalerie" style="-fx-background-color: transparent;">
-            <graphic>
-                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@/image/photos_galeries/corbeille.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
 
         <!-- Bouton Retour -->
         <Button fx:id="retour" layoutX="20.0" layoutY="15.0" mnemonicParsing="false" onAction="#retourVersAffGal" style="-fx-background-color: transparent;">

@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="tn.esprit.controller.users.DashboardController"
-            prefHeight="690.0" prefWidth="1456.0">
+<AnchorPane prefHeight="690.0" prefWidth="1456.0" stylesheets="@/Fxml/Styles/user/dashboardF.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.users.DashboardController">
+
+    <!-- Fond animé -->
+    <Rectangle height="690" style="-fx-fill: linear-gradient(to bottom right, #f8f9fa, #e8eaf6);" width="1456">
+        <effect>
+            <Bloom threshold="0.7" />
+        </effect>
+    </Rectangle>
+
+    <!-- Titre principal avec animation -->
+    <VBox alignment="CENTER" spacing="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
+        <Label styleClass="title-label" text="Bienvenue sur Artis!">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Label>
+        <Label styleClass="subtitle-label" text="Explorez l'art sous toutes ses formes. Rejoignez une communauté passionnée de création, d'enseignement et d'expression." wrapText="true" />
+    </VBox>
+
+    <!-- Image de l'équipe avec animation -->
+    <ImageView fitHeight="297.0" fitWidth="388.0" pickOnBounds="true" preserveRatio="true" styleClass="logo-image" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="200.0">
+        <image>
+            <Image url="@/image/logoGrp.png" />
+        </image>
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+    </ImageView>
+
+    <!-- Présentation de l'équipe avec animation -->
+    <VBox layoutX="581.0" layoutY="287.0" prefWidth="500" spacing="10" styleClass="team-section" AnchorPane.rightAnchor="375.0" AnchorPane.topAnchor="287.0">
+        <Label styleClass="team-title" text="Notre Équipe" />
+        <Label styleClass="team-description" text="Nous sommes une équipe passionnée d'ingénieurs, artistes et éducateurs, réunis pour faire rayonner l'art à travers la technologie." wrapText="true" />
+        <Label styleClass="team-description" text="Chacun de nous met sa créativité et son expertise au service d'une plateforme moderne, intuitive et ouverte à tous." wrapText="true" />
+
+        <!-- Ajout de boutons animés -->
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Button styleClass="action-button" text="Nos Artistes" />
+            <Button styleClass="action-button" text="Nos Œuvres" />
+            <Button styleClass="action-button" text="Événements" />
+        </HBox>
+    </VBox>
+
+    <!-- Statistiques animées -->
+    <HBox alignment="CENTER" layoutX="93.0" layoutY="529.0" spacing="30" AnchorPane.bottomAnchor="65.39999999999998" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="107.0">
+        <VBox alignment="CENTER" prefWidth="250" spacing="10" styleClass="card">
+            <Label styleClass="card-title" text="Artistes" />
+            <Label style="-fx-font-size: 28px; -fx-text-fill: #6a11cb; -fx-font-weight: bold;" text="1,245" />
+            <Label styleClass="status-active" text="+15% ce mois" />
+        </VBox>
+
+        <VBox alignment="CENTER" prefWidth="250" spacing="10" styleClass="card">
+            <Label styleClass="card-title" text="Œuvres" />
+            <Label style="-fx-font-size: 28px; -fx-text-fill: #2575fc; -fx-font-weight: bold;" text="3,784" />
+            <Label styleClass="status-active" text="+28% ce mois" />
+        </VBox>
+
+        <VBox alignment="CENTER" prefWidth="250" spacing="10" styleClass="card">
+            <Label styleClass="card-title" text="Événements" />
+            <Label style="-fx-font-size: 28px; -fx-text-fill: #2ecc71; -fx-font-weight: bold;" text="12" />
+            <Label styleClass="status-active" text="Prochain: Demain" />
+        </VBox>
+    </HBox>
+
+    <!-- Footer avec effet de lumière -->
+    <Label styleClass="footer" text="© 2025 Artis. Tous droits réservés." AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+        <effect>
+            <Glow level="0.3" />
+        </effect>
+    </Label>
 
 </AnchorPane>

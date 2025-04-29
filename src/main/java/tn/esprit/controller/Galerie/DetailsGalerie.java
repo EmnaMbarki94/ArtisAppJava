@@ -220,7 +220,6 @@ public class DetailsGalerie {
             try {
                 serviceGalerie.supprimer(galerieId);
                 System.out.println("Galerie supprimée avec succès!");
-
                 retourVersAffGal(actionEvent);
             } catch (SQLException e) {
                 e.printStackTrace();

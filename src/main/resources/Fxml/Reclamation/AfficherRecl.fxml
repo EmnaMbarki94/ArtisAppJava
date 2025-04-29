@@ -13,12 +13,12 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="837.0" prefWidth="1187.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.AfficherReController">
+<AnchorPane prefHeight="837.0" prefWidth="1187.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reclamation.AfficherReController">
    <stylesheets>
       <URL value="@/styles/reclamation.css" />
    </stylesheets>
 
-   <VBox layoutX="-4.0" layoutY="-1.0" prefHeight="840.0" prefWidth="1193.0" spacing="20" style="-fx-background-color: #f5f7fa;">
+   <VBox layoutX="-4.0" layoutY="-1.0" prefHeight="840.0" prefWidth="1417.0" spacing="20" style="-fx-background-color: #f5f7fa;">
       <!-- Header -->
       <HBox alignment="CENTER" style="-fx-background-color: #6a1b9a; -fx-padding: 15;">
          <Label styleClass="header-title" text="Mes Réclamations" />

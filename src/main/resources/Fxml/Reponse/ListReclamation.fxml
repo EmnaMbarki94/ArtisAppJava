@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
 <AnchorPane prefHeight="527.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.Reponse.ListReController">
    <children>
       <AnchorPane prefHeight="792.0" prefWidth="1393.0" style="-fx-background-color: #dbb3f5;">
@@ -21,10 +21,13 @@
                </font>
             </Label>
       
-            <Button fx:id="RepButton" layoutX="372.0" layoutY="575.0" mnemonicParsing="false" onAction="#onAfficherListeReponse" prefHeight="56.0" prefWidth="619.0" style="-fx-background-color: #dbb3f5;" text="Afficher Listes Des Reponses">
+            <Button fx:id="RepButton" layoutX="372.0" layoutY="575.0" mnemonicParsing="false" onAction="#onAfficherListeReponse" prefHeight="56.0" prefWidth="619.0" style="-fx-background-color: #dad3de;" text="Afficher Listes Des Reponses">
                <font>
                   <Font name="Arial Bold Italic" size="16.0" />
                </font>
+               <effect>
+                  <DropShadow />
+               </effect>
             </Button>
             <Button fx:id="statsButton" layoutX="1143.0" layoutY="158.0" onAction="#onAfficherStatistiques" text="Voir Statistiques" />
             <Label alignment="CENTER" contentDisplay="TOP" layoutX="99.0" layoutY="155.0" prefHeight="34.0" prefWidth="403.0" text="Les Reclamations:">
@@ -54,9 +57,9 @@
             <DropShadow />
          </effect>
       </TableView>
-      <HBox spacing="10" alignment="CENTER_LEFT" layoutX="20.0" layoutY="60.0">
-         <TextField fx:id="searchField" promptText="Rechercher..." prefWidth="200.0" />
-         <ComboBox fx:id="typeFilterComboBox" promptText="Filtrer par type" prefWidth="150.0" />
+      <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="60.0" spacing="10">
+         <TextField fx:id="searchField" prefWidth="200.0" promptText="Rechercher..." />
+         <ComboBox fx:id="typeFilterComboBox" prefWidth="150.0" promptText="Filtrer par type" />
       </HBox>
 
    </children>

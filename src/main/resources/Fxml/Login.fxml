@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="571.0" fitWidth="642.0" layoutX="138.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/logo.png" />
+            <Image url="@../image/logoApp.jpg" />
          </image></ImageView>
       <TextField fx:id="email_login_field" layoutX="884.0" layoutY="161.0" prefHeight="43.0" prefWidth="442.0" />
       <Label fx:id="email_login_lbl" layoutX="854.0" layoutY="83.0" text="E-mail:">
