@@ -64,7 +64,7 @@ Libraries and APIs:
 
 ##Getting Started
   1-Clone the repository:
-  git clone [Visit my GitHub Repository](https://github.com/EmnaMbarki94/ArtisAppJava.git)
+  git clone [Repository](https://github.com/EmnaMbarki94/ArtisAppJava.git)
   
   2-Navigate to the project directory:
   cd ArtisAppJava
