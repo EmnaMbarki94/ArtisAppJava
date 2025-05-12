@@ -2,7 +2,7 @@
 Artis is a desktop application built with Java 17.
 
 ##Overview
-This projet was developed as part of the coursework PIDEV for third year engineering students at Esprit School of Engineering [Link Text](https://esprit.tn). 
+This projet was developed as part of the coursework PIDEV for third year engineering students at Esprit School of Engineering [Website Link](https://esprit.tn). 
 It provides various art related services for professional and social use as well as a real-time responsive interface that is easy to explore.
 
 ##Features
@@ -76,4 +76,4 @@ Libraries and APIs:
   mvn javafx:run
 
 ##Acknowledgments
-This project was compeleted with the help, supervision and guidance of our professor and tutor Ms Emna Charfi (emna.charfi@esprit.tn) at Esprit School of Engineering [Link Text](https://esprit.tn).
+This project was compeleted with the help, supervision and guidance of our professor and tutor Ms Emna Charfi (emna.charfi@esprit.tn) at Esprit School of Engineering [Website Link](https://esprit.tn).
